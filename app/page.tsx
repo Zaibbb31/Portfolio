@@ -436,15 +436,26 @@ export default function Home() {
               {/* Left Card: Details Panel (Order 2 on mobile, Order 1 on desktop) */}
               <div className="lg:col-span-5 bg-white dark:bg-[#f6f6f6] rounded-[28px] p-7 sm:p-9 flex flex-col justify-between order-2 lg:order-1">
                 <div>
-                  {/* Icon Badge */} 
-                  <div className={`w-12 h-12 rounded-xl ${project.iconBg} flex items-center justify-center text-white shadow-[0_8px_18px_rgba(255,80,40,0.3)] mb-6`}>
-                    <svg className="w-7 h-7 text-white fill-none stroke-current" viewBox="0 0 24 24" strokeWidth="2.8" strokeLinecap="round">
-                      <line x1="12" y1="3" x2="12" y2="21" />
-                      <line x1="3" y1="12" x2="21" y2="12" />
-                      <line x1="5.64" y1="5.64" x2="18.36" y2="18.36" />
-                      <line x1="5.64" y1="18.36" x2="18.36" y2="5.64" />
-                    </svg>
-                  </div>
+                  {/* Brand Logo or Icon Badge */} 
+                  {project.logo ? (
+                    <div className="relative w-40 h-11 mb-6 flex items-center">
+                      <Image
+                        src={project.logo}
+                        alt={`${project.title} logo`}
+                        fill
+                        className="object-contain object-left"
+                      />
+                    </div>
+                  ) : (
+                    <div className={`w-12 h-12 rounded-xl ${project.iconBg} flex items-center justify-center text-white shadow-[0_8px_18px_rgba(255,80,40,0.3)] mb-6`}>
+                      <svg className="w-7 h-7 text-white fill-none stroke-current" viewBox="0 0 24 24" strokeWidth="2.8" strokeLinecap="round">
+                        <line x1="12" y1="3" x2="12" y2="21" />
+                        <line x1="3" y1="12" x2="21" y2="12" />
+                        <line x1="5.64" y1="5.64" x2="18.36" y2="18.36" />
+                        <line x1="5.64" y1="18.36" x2="18.36" y2="5.64" />
+                      </svg>
+                    </div>
+                  )}
 
                   {/* Title */}
                   <h3 className="text-2xl sm:text-[26px] font-medium text-zinc-900 dark:text-black tracking-tight mb-2.5 font-outfit">
@@ -475,20 +486,43 @@ export default function Home() {
                     href={`/projects/${project.id}`}
                     className="block w-full py-3.5 px-6 rounded-2xl bg-[#09090b] hover:bg-zinc-800 text-white font-medium text-sm transition-all duration-200 text-center shadow-md active:scale-98 cursor-pointer"
                   >
-                    View Details
+                    {project.buttonText || "View Details"}
                   </Link>
                 </div>
               </div>
 
-              {/* Right Card: Black Frame Media Preview (Order 1 on mobile, Order 2 on desktop) */}
-              <div className="lg:col-span-7 w-full min-h-[340px] sm:min-h-[420px] lg:min-h-[460px] bg-black rounded-[28px] overflow-hidden relative group flex items-center justify-center p-4 order-1 lg:order-2">
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 60vw"
-                  className="object-contain transition-transform duration-700 ease-out group-hover:scale-105"
-                />
+              {/* Right Card: Media Preview (Order 1 on mobile, Order 2 on desktop) */}
+              <div className="lg:col-span-7 w-full min-h-[340px] sm:min-h-[420px] lg:min-h-[480px] bg-zinc-950 rounded-[28px] overflow-hidden relative group order-1 lg:order-2 flex items-center justify-center">
+                {project.mobileImage ? (
+                  <>
+                    <div className="block lg:hidden absolute inset-0">
+                      <Image
+                        src={project.mobileImage}
+                        alt={project.title}
+                        fill
+                        sizes="100vw"
+                        className="object-cover transition-transform duration-700 ease-out "
+                      />
+                    </div>
+                    <div className="hidden lg:block absolute inset-0">
+                      <Image
+                        src={project.image}
+                        alt={project.title}
+                        fill
+                        sizes="60vw"
+                        className="object-cover transition-transform duration-700 ease-out"
+                      />
+                    </div>
+                  </>
+                ) : (
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 60vw"
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  />
+                )}
               </div>
             </div>
           ))}
