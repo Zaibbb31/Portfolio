@@ -68,7 +68,12 @@ export default function GitHubContributions({
   useEffect(() => {
     async function fetchContributions() {
       try {
-        const res = await fetch("/api/github-contributions");
+        const res = await fetch(`/api/github-contributions?t=${Date.now()}`, {
+          cache: "no-store",
+          headers: {
+            "Cache-Control": "no-cache",
+          },
+        });
         const json = await res.json();
         setData(json);
       } catch (err: any) {
@@ -211,17 +216,9 @@ export default function GitHubContributions({
                     <h3 className="text-sm font-semibold text-zinc-100">
                       {data.name || data.username}
                     </h3>
-                    <a
-                      href={`https://github.com/${data.username}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs text-emerald-400 hover:text-emerald-300 font-mono flex items-center gap-1 transition-colors"
-                    >
+                    <span className="text-xs text-emerald-400 font-mono">
                       @{data.username}
-                      <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                      </svg>
-                    </a>
+                    </span>
                   </div>
                 </div>
 
@@ -236,9 +233,9 @@ export default function GitHubContributions({
               {/* Scrollable Heatmap Grid */}
               <div 
                 ref={scrollContainerRef}
-                className="overflow-x-auto pb-4 pt-1 scrollbar-thin scrollbar-thumb-zinc-800 scrollbar-track-transparent"
+                className="overflow-x-auto pb-4 pt-1 scrollbar-thin scrollbar-thumb-zinc-800 scrollbar-track-transparent flex justify-center"
               >
-                <div className="min-w-[760px] flex flex-col gap-1.5">
+                <div className="min-w-[760px] flex flex-col gap-1.5 mx-auto">
                   
                   {/* Month labels row */}
                   <div className="flex text-[10px] text-zinc-500 font-mono pl-7">
