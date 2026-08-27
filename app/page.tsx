@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
+import GitHubContributions from "./components/GitHubContributions";
 
 // Available font definitions
 const FONTS = [
@@ -443,13 +444,18 @@ export default function Home() {
       <section className="relative z-10 max-w-5xl mx-auto px-6 py-20 -mt-10">
         
         {/* Section Header */}
-        <div className="flex flex-col items-center text-center mb-14 select-none">
+        <div className="flex flex-col items-center text-center mb-12 select-none">
           <span className="text-xs font-regular tracking-[0.2em] text-zinc-500 uppercase">
             Skills &amp; Arsenal
           </span>
           <h2 className="text-2xl md:text-5xl font-medium tracking-tight text-zinc-950 mt-3 uppercase">
             What I Bring <br /> To The Table
           </h2>
+        </div>
+
+        {/* GitHub Contribution Activity Table */}
+        <div className="w-full mb-10">
+          <GitHubContributions />
         </div>
 
         {/* Skills Badges Container */}
