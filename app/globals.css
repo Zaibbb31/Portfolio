@@ -1,47 +1,32 @@
-@import url('https://fonts.googleapis.com/css2?family=Gemunu+Libre:wght@700;800&family=Outfit:wght@400;500;700;800&family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;700;800&family=Plus+Jakarta+Sans:wght@500;700;800&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @import "tailwindcss";
 
 :root {
   --background: #f5f7fa;
   --foreground: #09090b;
-  --accent-color: #ef4444; /* Default Red */
 }
-
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--font-montserrat), sans-serif;
   overflow-x: hidden;
 }
 
-/* Font helper utility classes */
+/* Font helper utility classes using self-hosted next/font variables */
 .font-gemunu {
-  font-family: 'Gemunu Libre', sans-serif;
+  font-family: var(--font-gemunu), sans-serif;
 }
 
 .font-outfit {
-  font-family: 'Outfit', sans-serif;
-}
-
-.font-playfair {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-outfit), sans-serif;
 }
 
 .font-space {
-  font-family: 'Space Grotesk', sans-serif;
-}
-
-.font-inter {
-  font-family: 'Inter', sans-serif;
-}
-
-.font-plus-jakarta {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: var(--font-space), sans-serif;
 }
 
 .font-montserrat {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--font-montserrat), sans-serif;
 }
 
 /* Smooth Scrolling */
