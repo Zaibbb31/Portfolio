@@ -166,7 +166,7 @@ export default function Home() {
         </div>
 
         {/* Carousel Tagline name badge with corner brackets */}
-        <div className="relative inline-block px-10 py-4 mb-8 select-none group">
+        <div className="relative inline-flex items-center justify-center px-6 sm:px-10 py-3 sm:py-4 mb-8 select-none group">
           {/* Top-left corner */}
           <div className={`absolute top-0 left-0 w-3.5 h-3.5 border-t-2 border-l-2 ${selectedColor.border} transition-all duration-300 group-hover:-translate-x-1.5 group-hover:-translate-y-1.5`} />
           {/* Top-right corner */}
@@ -177,7 +177,7 @@ export default function Home() {
           <div className={`absolute bottom-0 right-0 w-3.5 h-3.5 border-b-2 border-r-2 ${selectedColor.border} transition-all duration-300 group-hover:translate-x-1.5 group-hover:translate-y-1.5`} />
           
           {/* Vertical carousel viewport */}
-          <div className="h-8 overflow-hidden relative flex items-center justify-center min-w-[260px] sm:min-w-[320px] md:min-w-[380px]">
+          <div className="h-8 overflow-hidden relative w-[270px] sm:w-[320px] md:w-[380px]">
             <div 
               className="flex flex-col transition-transform duration-700 ease-in-out absolute top-0 left-0 w-full"
               style={{ transform: `translateY(-${activeIndex * 32}px)` }}
@@ -187,7 +187,7 @@ export default function Home() {
                   key={font.name} 
                   className="h-8 flex items-center justify-center w-full flex-shrink-0"
                 >
-                  <span className={`text-lg md:text-xl font-regular uppercase tracking-[0.18em] md:tracking-[0.22em] ${selectedColor.text} ${font.class} transition-colors duration-300 whitespace-nowrap`}>
+                  <span className={`text-[16px] sm:text-base md:text-xl font-normal uppercase tracking-wider sm:tracking-[0.18em] ${selectedColor.text} ${font.class} transition-colors duration-300 whitespace-nowrap text-center`}>
                     {font.text}
                   </span>
                 </div>
