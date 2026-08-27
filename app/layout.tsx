@@ -31,10 +31,15 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   title: "Zaib | Creative Developer & Designer",
   description: "Creative developer portfolio showing interactive designs, precision layout, and clean aesthetics.",
+  icons: {
+    icon: "/avatar.jpeg",
+    shortcut: "/avatar.jpeg",
+    apple: "/avatar.jpeg",
+  },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f5f7fa",
+  themeColor: "#ffffff",
   width: "device-width",
   initialScale: 1,
 };
@@ -49,7 +54,7 @@ export default function RootLayout({
       lang="en"
       className={`${montserrat.variable} ${gemunuLibre.variable} ${outfit.variable} ${spaceGrotesk.variable} h-full antialiased scroll-smooth`}
     >
-      <body className="min-h-full flex flex-col bg-[#f5f7fa] text-[#09090b] relative font-montserrat">
+      <body className="min-h-full flex flex-col bg-[#ffffff] text-[#09090b] relative font-montserrat">
         {/* Custom Rose-500 Pointer Arrow Cursor */}
         <CustomCursor />
 

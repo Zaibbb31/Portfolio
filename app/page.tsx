@@ -138,7 +138,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-[#f5f7fa] transition-colors duration-500">
+    <div className="relative min-h-screen w-full overflow-hidden bg-[#ffffff] transition-colors duration-500">
       
       {/* 1. FLOATING HEADER / NAVBAR */}
       <Navbar />
@@ -434,9 +434,9 @@ export default function Home() {
               className="w-full grid grid-cols-1 lg:grid-cols-12 items-stretch select-none"
             >
               {/* Left Card: Details Panel (Order 2 on mobile, Order 1 on desktop) */}
-              <div className="lg:col-span-5 bg-white dark:bg-rose-500/5 rounded-[28px] p-7 sm:p-9 flex flex-col justify-between order-2 lg:order-1">
+              <div className="lg:col-span-5 bg-white dark:bg-[#f6f6f6] rounded-[28px] p-7 sm:p-9 flex flex-col justify-between order-2 lg:order-1">
                 <div>
-                  {/* Icon Badge */}
+                  {/* Icon Badge */} 
                   <div className={`w-12 h-12 rounded-xl ${project.iconBg} flex items-center justify-center text-white shadow-[0_8px_18px_rgba(255,80,40,0.3)] mb-6`}>
                     <svg className="w-7 h-7 text-white fill-none stroke-current" viewBox="0 0 24 24" strokeWidth="2.8" strokeLinecap="round">
                       <line x1="12" y1="3" x2="12" y2="21" />

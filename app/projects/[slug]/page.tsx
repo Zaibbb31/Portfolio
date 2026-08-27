@@ -26,7 +26,7 @@ export default async function ProjectSlugPage({ params }: Props) {
   }
 
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-[#f5f7fa] text-zinc-950 font-sans transition-colors duration-500 selection:bg-rose-500 selection:text-white">
+    <div className="relative min-h-screen w-full overflow-hidden bg-[#ffffff] text-zinc-950 font-sans transition-colors duration-500 selection:bg-rose-500 selection:text-white">
       
       {/* 1. Navbar from Homepage */}
       <Navbar />
