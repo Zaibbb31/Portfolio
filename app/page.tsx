@@ -21,9 +21,55 @@ const COLORS = [
   { name: "Cyber Orange", text: "text-orange-500", border: "border-orange-500", bg: "bg-orange-500", focusBg: "hover:bg-orange-50 dark:hover:bg-orange-950/20" },
 ];
 
+const PRIMARY_SKILLS = [
+  "UX Design",
+  "UI Design",
+  "Product Design",
+  "Design Systems",
+  "Front-End Development",
+  "Workshops",
+  "Design Sprint",
+  "Interaction Design",
+  "User Testing",
+  "Usability Testing",
+  "UX Research",
+  "Leadership",
+  "Mentoring",
+  "No-Code",
+];
+
+const ADDITIONAL_SKILLS = [
+  "Figma",
+  "Design Tokens",
+  "Framer",
+  "Wireframing",
+  "React.js",
+  "Next.js",
+  "TypeScript",
+  "Tailwind CSS",
+  "Prototyping",
+  "Information Architecture",
+  "A/B Testing",
+  "Micro-interactions",
+];
+
+const EXPERIENCES = [
+  {
+    role: "UX/UI Designer",
+    company: "AMA Legal Solutions",
+    period: "Sept 2025 - Present",
+  },
+  {
+    role: "UX/UI Designer",
+    company: "DroDro",
+    period: "April 2025 - Aug 2025",
+  }
+];
+
 export default function Home() {
   const [scrollPercent, setScrollPercent] = useState(0);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [showMoreSkills, setShowMoreSkills] = useState(false);
 
   const selectedFont = FONTS[activeIndex];
   const selectedColor = COLORS[0]; // Constant Rose Red accent color
@@ -389,6 +435,91 @@ export default function Home() {
 
           </div>
 
+        </div>
+
+      </section>
+
+      {/* 3.8. SKILLS SECTION */}
+      <section className="relative z-10 max-w-5xl mx-auto px-6 py-20 -mt-10">
+        
+        {/* Section Header */}
+        <div className="flex flex-col items-center text-center mb-14 select-none">
+          <span className="text-xs font-regular tracking-[0.2em] text-zinc-500 uppercase">
+            Skills &amp; Arsenal
+          </span>
+          <h2 className="text-2xl md:text-5xl font-medium tracking-tight text-zinc-950 mt-3 uppercase">
+            What I Bring <br /> To The Table
+          </h2>
+        </div>
+
+        {/* Skills Badges Container */}
+        <div className="w-full flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 select-none">
+          {PRIMARY_SKILLS.map((skill) => (
+            <span
+              key={skill}
+              className="bg-[#2d2d30] hover:bg-[#1a1a1c] text-white text-sm sm:text-[15px] font-normal px-4 py-2 rounded-[10px] shadow-sm transition-all duration-200 cursor-default"
+            >
+              {skill}
+            </span>
+          ))}
+
+          {showMoreSkills &&
+            ADDITIONAL_SKILLS.map((skill) => (
+              <span
+                key={skill}
+                className="bg-[#2d2d30] hover:bg-[#1a1a1c] text-white text-sm sm:text-[15px] font-normal px-4 py-2 rounded-[10px] shadow-sm transition-all duration-200 cursor-default hover:-translate-y-0.5 hover:shadow-md animate-in fade-in zoom-in-95 duration-200"
+              >
+                {skill}
+              </span>
+            ))}
+
+          {/* Expand / Collapse Button */}
+          <button
+            type="button"
+            onClick={() => setShowMoreSkills(!showMoreSkills)}
+            className="text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200 text-sm sm:text-[15px] font-medium px-3 py-2 transition-colors duration-200 cursor-pointer flex items-center gap-1 active:scale-95"
+          >
+            {showMoreSkills ? "− Less" : "+ More"}
+          </button>
+        </div>
+      </section>
+
+      {/* 3.9. EXPERIENCE SECTION */}
+      <section className="relative z-10 max-w-5xl mx-auto px-6 py-20 -mt-10">
+        
+        {/* Section Header */}
+        <div className="flex flex-col items-center text-center mb-14 select-none">
+          <span className="text-xs font-regular tracking-[0.2em] text-zinc-500 uppercase">
+            Career Journey
+          </span>
+          <h2 className="text-2xl md:text-5xl font-medium tracking-tight text-zinc-950 mt-3 uppercase">
+            Work Experience
+          </h2>
+        </div>
+
+        {/* Experience List Table */}
+        <div className="w-full flex flex-col border-t border-zinc-200/80 dark:border-zinc-800/80 select-none">
+          {EXPERIENCES.map((exp, idx) => (
+            <div
+              key={idx}
+              className="flex flex-col items-center text-center sm:flex-row sm:items-center sm:justify-between sm:text-left py-6 sm:py-7 border-b border-zinc-200/80 dark:border-zinc-800/80 gap-1 sm:gap-0"
+            >
+              {/* Role */}
+              <span className="text-base sm:text-2xl font-normal text-rose-500 dark:text-rose-500">
+                {exp.role}
+              </span>
+
+              {/* Company & Date */}
+              <div className="flex flex-col items-center sm:items-end mt-1 sm:mt-0">
+                <span className="text-xl sm:text-2xl font-normal text-zinc-700 dark:text-rose-500">
+                  {exp.company}
+                </span>
+                <span className="text-xs sm:text-sm text-zinc-400 dark:text-black font-light mt-0.5">
+                  {exp.period}
+                </span>
+              </div>
+            </div>
+          ))}
         </div>
 
       </section>
