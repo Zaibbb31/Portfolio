@@ -143,7 +143,7 @@ export default function Home() {
           <div className="flex items-center gap-2.5">
             <div className="relative w-8 h-8 rounded-full overflow-hidden border border-white/20">
               <Image
-                src="/IMG_20260712_224714.jpg.jpeg"
+                src="/avatar.jpeg"
                 alt="Developer Avatar"
                 fill
                 sizes="32px"
@@ -186,7 +186,7 @@ export default function Home() {
         {/* Large Central Avatar */}
         <div className="group relative w-32 h-32 md:w-36 md:h-36 rounded-full overflow-hidden border-[6px] border-white dark:border-zinc-900 shadow-2xl mb-8 transform transition-all duration-500 hover:scale-105 hover:rotate-2">
           <Image
-            src="/IMG_20260712_224714.jpg.jpeg"
+            src="/avatar.jpeg"
             alt="Developer portrait"
             fill
             sizes="(max-width: 768px) 128px, 144px"
@@ -286,7 +286,7 @@ export default function Home() {
                 {/* stylized green screen matrix image */}
                 <div className="relative w-40 h-40 rounded-2xl overflow-hidden border border-emerald-950/40 bg-zinc-950 shadow-inner group">
                   <Image
-                    src="/IMG_20260712_224714.jpg.jpeg"
+                    src="/avatar.jpeg"
                     alt="Zaib pixelated portrait"
                     fill
                     sizes="160px"
@@ -310,7 +310,7 @@ export default function Home() {
                     {/* Figma Icon */}
                     <div className="cursor-help transition-all duration-300" title="Figma">
                       <Image
-                        src="/figma (1).png"
+                        src="/figma.png"
                         alt="Figma"
                         width={18}
                         height={18}
@@ -532,7 +532,7 @@ export default function Home() {
           <div className="relative group mb-5 select-none">
             <div className="relative w-28 h-28 md:w-32 md:h-32 rounded-full overflow-hidden border-[5px] border-white dark:border-zinc-900 shadow-xl transition-transform duration-500 hover:scale-105">
               <Image
-                src="/IMG_20260712_224714.jpg.jpeg"
+                src="/avatar.jpeg"
                 alt="Zaib Avatar"
                 fill
                 sizes="(max-width: 768px) 112px, 128px"
@@ -615,7 +615,7 @@ export default function Home() {
               <span className="flex items-center gap-1.5 font-bold text-zinc-950 dark:text-zinc-100">
                 <div className="relative w-5 h-5 rounded-full overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900">
                   <Image
-                    src="/IMG_20260712_224714.jpg.jpeg"
+                    src="/avatar.jpeg"
                     alt="Zaib Avatar"
                     fill
                     sizes="20px"
