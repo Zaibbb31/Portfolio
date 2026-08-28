@@ -29,6 +29,10 @@ body {
   font-family: var(--font-montserrat), sans-serif;
 }
 
+.font-caveat {
+  font-family: var(--font-caveat), cursive;
+}
+
 /* Smooth Scrolling */
 html {
   scroll-behavior: smooth;
@@ -65,20 +69,22 @@ html {
   animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-/* Completely remove OS / default browser cursor everywhere */
-*,
-*::before,
-*::after,
-html,
-body,
-a,
-button,
-input,
-textarea,
-select,
-[role="button"],
-.cursor-pointer,
-.cursor-default,
-.cursor-help {
-  cursor: none !important;
+/* Completely remove OS / default browser cursor everywhere only on desktop hover devices */
+@media (hover: hover) and (pointer: fine) {
+  *,
+  *::before,
+  *::after,
+  html,
+  body,
+  a,
+  button,
+  input,
+  textarea,
+  select,
+  [role="button"],
+  .cursor-pointer,
+  .cursor-default,
+  .cursor-help {
+    cursor: none !important;
+  }
 }

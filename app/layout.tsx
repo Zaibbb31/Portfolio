@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Montserrat, Gemunu_Libre, Outfit, Space_Grotesk } from "next/font/google";
+import { Montserrat, Gemunu_Libre, Outfit, Space_Grotesk, Caveat } from "next/font/google";
 import "./globals.css";
 import CustomCursor from "./components/CustomCursor";
 
@@ -28,6 +28,12 @@ const spaceGrotesk = Space_Grotesk({
   display: "swap",
 });
 
+const caveat = Caveat({
+  variable: "--font-caveat",
+  subsets: ["latin"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Zaib | Creative Developer & Designer",
   description: "Creative developer portfolio showing interactive designs, precision layout, and clean aesthetics.",
@@ -52,7 +58,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${montserrat.variable} ${gemunuLibre.variable} ${outfit.variable} ${spaceGrotesk.variable} h-full antialiased scroll-smooth`}
+      className={`${montserrat.variable} ${gemunuLibre.variable} ${outfit.variable} ${spaceGrotesk.variable} ${caveat.variable} h-full antialiased scroll-smooth`}
     >
       <body className="min-h-full flex flex-col bg-[#ffffff] text-[#09090b] relative font-montserrat">
         {/* Custom Rose-500 Pointer Arrow Cursor */}

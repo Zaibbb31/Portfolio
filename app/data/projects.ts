@@ -4,6 +4,15 @@ export interface KeyImprovement {
   description: string;
 }
 
+export interface ScreenRedesign {
+  title: string;
+  image: string;
+  description: string;
+  highlights: string[];
+  flaws: string[];
+  improvements: string[];
+}
+
 export interface Project {
   id: string;
   title: string;
@@ -45,6 +54,7 @@ export interface Project {
     step: string;
     description: string;
   }[];
+  screens?: ScreenRedesign[];
 }
 
 export const PROJECTS: Project[] = [
@@ -378,5 +388,213 @@ export const PROJECTS: Project[] = [
           "Exported semantic tokens and documentation for seamless engineering integration.",
       },
     ],
+    screens: [
+      {
+        title: "Airtel Thanks App Screen Redesign",
+        image: "/projects/New%20folder/Airtel_Homepage.svg",
+        description: "Redesigning Airtel’s plan dashboard to make essential account information easier to scan, understand, and act on without navigating across multiple sections.",
+        highlights: [
+          "Unified plan status dashboard",
+          "Clear typography & spacing hierarchy",
+          "Contextual action chips",
+          "Reduced visual noise & cognitive load"
+        ],
+        flaws: [
+          "Fragmented plan information",
+          "Weak information hierarchy",
+          "Promotions interrupt key tasks",
+          "Scattered usage details",
+          "Multiple actions across sections"
+        ],
+        improvements: [
+          "Unified plan details into one focused dashboard",
+          "Prioritized validity, usage, calls, and SMS at a glance",
+          "Reduced distractions around core account actions",
+          "Added clear, contextual usage insights",
+          "Grouped frequently used actions for faster access"
+        ]
+      },
+      {
+        title: "From Spam Folder to Smart Review",
+        image: "/projects/New%20folder/Gmail_SPAM.svg",
+        description: "Reimagining Gmail’s spam experience to help users quickly understand what’s risky, what’s worth reviewing, and what can be safely cleared.",
+        highlights: [ 
+          "Bulk action optimization",
+          "Visual indicator for high-risk emails",
+          "One-click 'Unsubscribe' & 'Block'",
+          "Clear empty-state encouragement"
+        ],
+        flaws: [
+          "No spam prioritization",
+          "Limited spam insights",
+          "Poor information hierarchy",
+          "Basic filtering options",
+          "Low email management efficiency"
+        ],
+        improvements: [
+          "Prioritized potentially important and high-risk emails", 
+          "Added useful spam activity and cleanup insights",
+          "Created a clearer information hierarchy",
+          "Introduced smart categories and advanced filters",
+          "Added quick actions for faster spam management"
+        ]
+      },
+      {
+        title: "From Contact Grid to Smarter Sharing",
+        image: "/projects/New%20folder/INSTA_REELS.svg",
+        description: "Reworking Instagram’s Reel sharing flow to make finding people faster, reduce visual clutter, and keep sharing actions clear and organized.",
+        highlights: [
+          "Switched to a cleaner list for faster scanning",
+          "Gave search a more prominent position",
+          "Added selection controls for intentional sharing",
+          "Separated in-app actions from external apps",
+          "Used hierarchy to make key actions easier to find"
+        ],
+        flaws: [
+          "Grid layout makes contacts harder to scan",
+          "Search gets lost among sharing options",
+          "All contacts have the same visual weight",
+          "In-app and external actions feel mixed together",
+          "No clear way to select a specific contact"
+        ],
+        improvements: [
+          "Switched to a cleaner list for faster scanning",
+          "Gave search a more prominent position",
+          "Added selection controls for intentional sharing",
+          "Separated in-app actions from external apps",
+          "Used hierarchy to make key actions easier to find"
+        ]
+      },
+      {
+        title: "From Scrolling to Smarter Train Discovery",
+        image: "/projects/New%20folder/IRCTC_BETAV.svg",
+        description: "Reworking IRCTC’s train search experience to help users find the right train faster, with less scrolling, clearer filters, and a more focused search flow.",
+        highlights: [
+          "Added search by train name or number",
+          "Made train discovery faster and more direct",
+          "Unified search, filters, and sorting into one flow",
+          "Created a clearer visual hierarchy",
+          "Added one-tap quick filter chips"
+        ],
+        flaws: [
+          "No way to search within results",
+          "Excessive scrolling to find specific trains",
+          "Search and filter controls feel fragmented",
+          "Weak information hierarchy",
+          "No quick filter shortcuts"
+        ],
+        improvements: [
+          "Added search by train name or number",
+          "Made train discovery faster and more direct",
+          "Unified search, filters, and sorting into one flow",
+          "Created a clearer visual hierarchy",
+          "Added one-tap quick filter chips"
+        ]
+      },
+      {
+        title: "From Transaction List to Financial Clarity",
+        image: "/projects/New%20folder/Paytm_Balance.svg",
+        description: "Reworking Paytm’s balance and history experience to give users a clearer picture of their money, spending patterns, and recent transactions in one place.",
+        highlights: [
+          "Created an instant overview across linked accounts",
+          "Made individual balances easier to scan",
+          "Put spending and income insights upfront",
+          "Added useful context to recent transactions",
+          "Reduced distractions around core financial tasks"
+        ],
+        flaws: [
+          "Financial information feels fragmented",
+          "Account balances are difficult to compare",
+          "Weak hierarchy between balance and transactions",
+          "Limited context around spending",
+          "Promotions compete with useful information"
+        ],
+        improvements: [
+          "Created an instant overview across linked accounts",
+          "Made individual balances easier to scan",
+          "Put spending and income insights upfront",
+          "Added useful context to recent transactions",
+          "Reduced distractions around core financial tasks"
+        ]
+      },
+      {
+        title: "From Form Filling to Faster Route Discovery",
+        image: "/projects/New%20folder/Railone_Search.svg",
+        description: "Reworking RailOne’s train search flow to reduce repetitive inputs, make route selection more intuitive, and get users to relevant journeys faster.",
+        highlights: [
+          "Simplified the route-first search flow",
+          "Made From and To selection more prominent",
+          "Added one-tap frequent route searches",
+          "Separated route, train number, and station searches",
+          "Reduced friction for repeat journeys"
+        ],
+        flaws: [
+          "Search flow feels form-heavy",
+          "Weak hierarchy between search options",
+          "Frequent routes are buried below the form",
+          "Train and station search options compete for attention",
+          "Re-entering common routes adds unnecessary effort"
+        ],
+        improvements: [
+          "Simplified the route-first search flow",
+          "Made From and To selection more prominent",
+          "Added one-tap frequent route searches",
+          "Separated route, train number, and station searches",
+          "Reduced friction for repeat journeys"
+        ]
+      },
+      {
+        title: "From a Playlist to a Personal Music Hub",
+        image: "/projects/New%20folder/Shopify_Liked.svg",
+        description: "Reimagining Spotify’s Liked Songs to make saved music easier to explore, organize, and rediscover while adding more personalized context to the listening experience.",
+        highlights: [
+          "Added smarter search with genre and mood filters",
+          "Introduced smart collections for easier discovery",
+          "Added personalized listening insights",
+          "Made song details more informative at a glance",
+          "Improved the overall organization of saved music"
+        ],
+        flaws: [
+          "Limited ways to organize saved songs",
+          "Basic search makes specific tracks harder to find",
+          "Saved music lacks discovery cues",
+          "Song information feels minimal",
+          "No personalized context around listening habits"
+        ],
+        improvements: [
+          "Added smarter search with genre and mood filters",
+          "Introduced smart collections for easier discovery",
+          "Added personalized listening insights",
+          "Made song details more informative at a glance",
+          "Improved the overall organization of saved music"
+        ]
+      },
+      {
+        title: "From Media Dump to Organized Memories",
+        image: "/projects/New%20folder/Whatsaap_Media.svg",
+        description: "Reimagining WhatsApp’s media view to help users find shared photos and videos faster, with better organization and a more useful browsing experience.",
+        highlights: [
+          "Added smart collections for faster discovery",
+          "Introduced a chronological media timeline",
+          "Added simple filters for different media types",
+          "Improved visual hierarchy across the screen",
+          "Made frequently needed media easier to navigate"
+        ],
+        flaws: [
+          "No quick way to revisit specific media",
+          "Limited options for content discovery",
+          "Media feels poorly organized",
+          "Weak hierarchy between content types",
+          "Experience relies heavily on endless scrolling"
+        ],
+        improvements: [
+          "Added smart collections for faster discovery",
+          "Introduced a chronological media timeline",
+          "Added simple filters for different media types",
+          "Improved visual hierarchy across the screen",
+          "Made frequently needed media easier to navigate"
+        ]
+      }
+    ]
   },
 ];
