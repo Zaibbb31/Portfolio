@@ -209,7 +209,7 @@ export default function Home() {
         {/* View CV Button */}
         <div className="mt-8 sm:mt-10 select-none">
           <a
-            href="/ZaibUIResume.pdf"
+            href="/Zaib_UI-UX_Designer_Resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-white dark:bg-black dark:text-white text-zinc-950 text-xs sm:text-sm font-medium tracking-wide transition-all duration-200 shadow-md hover:shadow-xl active:scale-95 group cursor-pointer"
