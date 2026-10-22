@@ -59,6 +59,110 @@ export interface Project {
 
 export const PROJECTS: Project[] = [
   {
+    id: "ama-connect",
+    title: "AMA Connect | Pro Bono Legal Aid Mobile App",
+    category: "Mobile App Design",
+    subtitle: "A pro bono legal-aid mobile platform connecting individuals with verified lawyers, resolving critical legal queries within 45 minutes.",
+    description:
+      "Designed end-to-end to streamline pro bono legal assistance, real-time case tracking, verified lawyer discovery, and seamless consultation.",
+    client: "AMA Legal Solutions",
+    date: "2025 – Present",
+    image: "/ama-connect.jpg",
+    logo: "/ama-connect-logo.svg",
+    buttonText: "View Case Study",
+    tags: ["LegalTech", "UI/UX Design", "Mobile App", "Case Tracking"],
+    iconBg: "bg-sky-500",
+    meta: {
+      role: "UX/UI Designer",
+      platform: "Mobile App (iOS & Android)",
+      focus: "UX Research, Wireframing, Case Desk, High-Fidelity UI",
+      timeline: "Sept 2025 – Present",
+      industry: "LegalTech & Pro Bono Legal Aid",
+    },
+    challenge:
+      "Navigating complex legal procedures is often daunting, opaque, and unaffordable. Users needed an intuitive, trustworthy mobile platform to connect with verified lawyers quickly without getting bogged down by complicated legal jargon.",
+    designGoals: [
+      "Streamline lawyer discovery and consultations",
+      "Design real-time Case Desk for tracking progress",
+      "Reduce cognitive load through clear legal step-by-step guidance",
+      "Establish trust and transparency with verified credentials",
+      "Ensure WCAG-compliant accessible mobile UI",
+    ],
+    keyImprovements: [
+      {
+        num: "01",
+        title: "Rapid Lawyer Matching",
+        description: "Enabled users to match with verified attorneys and resolve pressing queries in under 45 minutes.",
+      },
+      {
+        num: "02",
+        title: "Real-Time Case Desk",
+        description: "Introduced end-to-end case timeline tracking with live status updates and document vault.",
+      },
+      {
+        num: "03",
+        title: "Direct In-App Communication",
+        description: "Implemented secure messaging, consultation scheduling, and updates directly inside the app.",
+      },
+      {
+        num: "04",
+        title: "Transparent Legal Categories",
+        description: "Organized complex legal matters into plain-language, digestible service categories.",
+      },
+    ],
+    informationArchitecture: [
+      "Home & Fast Intake",
+      "Lawyer Discovery",
+      "Case Desk Timeline",
+      "In-App Consultation",
+      "Document Vault",
+      "Profile & History",
+    ],
+    visualDesignPoints: [
+      "High-contrast accessible color hierarchy",
+      "Tactile card containers with clear status indicators",
+      "Action-first navigation structure",
+      "Trust-inducing verified badges and lawyer credentials",
+    ],
+    uxPrinciple: "Demystify legal procedures through empathetic, friction-free design.",
+    outcome:
+      "Grew AMA Connect to 2,500+ active users with a 4.9/5 rating across Play Store and App Store, featured on Bar & Bench.",
+    results:
+      "Grew AMA Connect to 2,500+ active users with a 4.9/5 rating across Play Store and App Store, featured on Bar & Bench.",
+    metrics: [
+      {
+        value: "2,500+",
+        label: "Active mobile app users",
+      },
+      {
+        value: "4.9/5",
+        label: "Rating across App Store & Play Store",
+      },
+      {
+        value: "45 min",
+        label: "Average lawyer query response time",
+      },
+    ],
+    gallery: ["/ama-connect.jpg"],
+    process: [
+      {
+        step: "User Research & Legal Journey Mapping",
+        description:
+          "Conducted interviews with pro bono legal seekers and attorneys to uncover communication and paperwork bottlenecks.",
+      },
+      {
+        step: "Information Architecture & Case Desk Flows",
+        description:
+          "Designed the Case Desk architecture to give users real-time visibility into every phase of their legal assistance.",
+      },
+      {
+        step: "Design System & Accessible Mobile UI",
+        description:
+          "Crafted high-contrast tokens, scalable typography hierarchies, and intuitive consultation flows in Figma.",
+      },
+    ],
+  },
+  {
     id: "doconline-mobile-app",
     title: "DocOnline Mobile App | UX/UI Redesign",
     category: "Mobile App Redesign",

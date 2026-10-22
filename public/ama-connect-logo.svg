@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 50" fill="none">
+  <defs>
+    <linearGradient id="ama-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7" />
+      <stop offset="100%" stop-color="#0d9488" />
+    </linearGradient>
+  </defs>
+  <!-- Icon Mark -->
+  <rect x="2" y="5" width="40" height="40" rx="10" fill="url(#ama-grad)" />
+  <path d="M14 33L22 15L30 33" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M17 27H27" stroke="#ffffff" stroke-width="3" stroke-linecap="round" />
+  <circle cx="22" cy="15" r="2.5" fill="#38bdf8" />
+  
+  <!-- Text Brand -->
+  <text x="52" y="27" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="700" letter-spacing="-0.02em" fill="#09090b">AMA CONNECT</text>
+  <text x="52" y="40" font-family="system-ui, -apple-system, sans-serif" font-size="9.5" font-weight="600" letter-spacing="0.16em" fill="#0284c7">LEGAL AID PLATFORM</text>
+</svg>
