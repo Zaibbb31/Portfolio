@@ -1,0 +1,84 @@
+<svg width="800" height="460" viewBox="0 0 800 460" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Background dithered/dot matrix -->
+    <pattern id="paper-dot-grid" width="16" height="16" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.5" fill="#3b82f6" fill-opacity="0.3"/>
+      <circle cx="10" cy="10" r="1" fill="#93c5fd" fill-opacity="0.2"/>
+    </pattern>
+    <linearGradient id="paper-bg-grad" x1="0" y1="0" x2="800" y2="460" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="50%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#030712"/>
+    </linearGradient>
+    <filter id="paper-shadow" x="80" y="30" width="640" height="380" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="460" fill="url(#paper-bg-grad)"/>
+  <rect width="800" height="460" fill="url(#paper-dot-grid)"/>
+
+  <!-- Paperlab Browser Window -->
+  <g filter="url(#paper-shadow)">
+    <!-- Browser window card -->
+    <rect x="100" y="45" width="600" height="340" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+
+    <!-- Navbar inside app -->
+    <rect x="100" y="45" width="600" height="36" rx="14" fill="#fafafa"/>
+    <rect x="100" y="80" width="600" height="1" fill="#f1f5f9"/>
+    <circle cx="125" cy="63" r="3.5" fill="#ef4444"/>
+    <circle cx="137" cy="63" r="3.5" fill="#f59e0b"/>
+    <circle cx="149" cy="63" r="3.5" fill="#10b981"/>
+    
+    <!-- Paperlab Logo in header -->
+    <text x="375" y="66" fill="#0f172a" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700">paperlab</text>
+
+    <!-- Content Hero inside app -->
+    <text x="145" y="145" fill="#0f172a" font-family="Georgia, serif" font-size="28" font-weight="600">Everything your PDFs need,</text>
+    <text x="145" y="180" fill="#0f172a" font-family="Georgia, serif" font-size="28" font-weight="600">in one click.</text>
+
+    <!-- CTAs inside app -->
+    <rect x="145" y="205" width="95" height="26" rx="6" fill="#3b82f6"/>
+    <text x="162" y="222" fill="#ffffff" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Get Started</text>
+    <rect x="250" y="205" width="85" height="26" rx="6" fill="#f1f5f9" stroke="#e2e8f0"/>
+    <text x="264" y="222" fill="#475569" font-family="system-ui, sans-serif" font-size="10" font-weight="500">Star on GitHub</text>
+
+    <!-- Floating Paper / PDF Illustration -->
+    <g transform="translate(480, 110)">
+      <!-- Back sheet -->
+      <rect x="30" y="10" width="110" height="150" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" transform="rotate(12 85 85)"/>
+      <!-- Mid sheet -->
+      <rect x="10" y="5" width="110" height="150" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" transform="rotate(-6 65 80)"/>
+      <!-- Front sheet -->
+      <rect x="0" y="0" width="110" height="150" rx="6" fill="#ffffff" stroke="#3b82f6" stroke-width="1.5"/>
+      <line x1="20" y1="30" x2="90" y2="30" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+      <line x1="20" y1="45" x2="80" y2="45" stroke="#cbd5e1" stroke-width="2" stroke-linecap="round"/>
+      <line x1="20" y1="60" x2="85" y2="60" stroke="#cbd5e1" stroke-width="2" stroke-linecap="round"/>
+      <line x1="20" y1="75" x2="65" y2="75" stroke="#cbd5e1" stroke-width="2" stroke-linecap="round"/>
+      
+      <!-- Blue badge -->
+      <circle cx="95" cy="135" r="14" fill="#3b82f6"/>
+      <path d="M91 135L94 138L100 132" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+
+    <!-- Bottom Feature Cards inside app -->
+    <rect x="145" y="270" width="140" height="75" rx="8" fill="#f8fafc" stroke="#e2e8f0"/>
+    <rect x="157" y="282" width="22" height="22" rx="4" fill="#eff6ff"/>
+    <text x="187" y="296" fill="#0f172a" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Merge PDF</text>
+    <rect x="157" y="315" width="110" height="5" rx="2.5" fill="#cbd5e1"/>
+    <rect x="157" y="325" width="80" height="5" rx="2.5" fill="#e2e8f0"/>
+
+    <rect x="300" y="270" width="140" height="75" rx="8" fill="#f8fafc" stroke="#e2e8f0"/>
+    <rect x="312" y="282" width="22" height="22" rx="4" fill="#fef2f2"/>
+    <text x="342" y="296" fill="#0f172a" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Compress</text>
+    <rect x="312" y="315" width="110" height="5" rx="2.5" fill="#cbd5e1"/>
+    <rect x="312" y="325" width="70" height="5" rx="2.5" fill="#e2e8f0"/>
+
+    <rect x="455" y="270" width="140" height="75" rx="8" fill="#f8fafc" stroke="#e2e8f0"/>
+    <rect x="467" y="282" width="22" height="22" rx="4" fill="#f0fdf4"/>
+    <text x="497" y="296" fill="#0f172a" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Convert</text>
+    <rect x="467" y="315" width="110" height="5" rx="2.5" fill="#cbd5e1"/>
+    <rect x="467" y="325" width="90" height="5" rx="2.5" fill="#e2e8f0"/>
+  </g>
+</svg>

@@ -1,35 +1,17 @@
 import type { Metadata, Viewport } from "next";
-import { Montserrat, Gemunu_Libre, Outfit, Space_Grotesk, Caveat } from "next/font/google";
+import { Inter, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import CustomCursor from "./components/CustomCursor";
 
-const montserrat = Montserrat({
-  variable: "--font-montserrat",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
 });
 
-const gemunuLibre = Gemunu_Libre({
-  variable: "--font-gemunu",
-  subsets: ["latin"],
-  weight: ["700", "800"],
-  display: "swap",
-});
-
-const outfit = Outfit({
-  variable: "--font-outfit",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const caveat = Caveat({
-  variable: "--font-caveat",
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument-serif",
+  weight: "400",
   subsets: ["latin"],
   display: "swap",
 });
@@ -45,7 +27,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#ffffff",
+  themeColor: "#000000",
   width: "device-width",
   initialScale: 1,
 };
@@ -58,19 +40,21 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${montserrat.variable} ${gemunuLibre.variable} ${outfit.variable} ${spaceGrotesk.variable} ${caveat.variable} h-full antialiased scroll-smooth`}
+      className={`${inter.variable} ${instrumentSerif.variable} h-full antialiased scroll-smooth dark`}
     >
-      <body className="min-h-full flex flex-col bg-[#ffffff] text-[#09090b] relative font-montserrat">
-        {/* Custom Rose-500 Pointer Arrow Cursor */}
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Geist:ital,wght@0,100..900;1,100..900&family=Gochi+Hand&family=Instrument+Serif:ital@0;1&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Manrope:wght@200..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&family=Parisienne&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&family=Square+Peg&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="min-h-full flex flex-col bg-black text-[#ededed] relative font-sans selection:bg-neutral-800 selection:text-white">
+        {/* Custom Pointer Arrow Cursor */}
         <CustomCursor />
 
         {children}
-        
-        {/* Pure Progressive Blur at bottom of viewport */}
-        <div
-          aria-hidden="true"
-          className="fixed bottom-0 left-0 right-0 h-24 sm:h-32 pointer-events-none z-40 backdrop-blur-md [mask-image:linear-gradient(to_bottom,transparent_0%,black_100%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,black_100%)]"
-        />
       </body>
     </html>
   );

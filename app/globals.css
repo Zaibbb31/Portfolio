@@ -1,36 +1,27 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #09090b;
+  --background: #000000;
+  --foreground: #ededed;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-montserrat), sans-serif;
+  font-family: var(--font-inter), Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   overflow-x: hidden;
 }
 
-/* Font helper utility classes using self-hosted next/font variables */
-.font-gemunu {
-  font-family: var(--font-gemunu), sans-serif;
+/* Font helper utility classes */
+.font-sans, .font-inter {
+  font-family: var(--font-inter), Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
-.font-outfit {
-  font-family: var(--font-outfit), sans-serif;
-}
-
-.font-space {
-  font-family: var(--font-space), sans-serif;
-}
-
-.font-montserrat {
-  font-family: var(--font-montserrat), sans-serif;
-}
-
-.font-caveat {
-  font-family: var(--font-caveat), cursive;
+/* All Headings use Instrument Serif */
+h1, h2, h3, h4, h5, h6, .font-serif, .font-instrument {
+  font-family: var(--font-instrument-serif), "Instrument Serif", Georgia, serif !important;
+  font-weight: 400;
+  letter-spacing: -0.015em;
 }
 
 /* Smooth Scrolling */

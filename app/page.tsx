@@ -3,28 +3,25 @@
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { HugeiconsIcon } from "@hugeicons/react";
+import {
+  Search01Icon,
+  Sun01Icon,
+  Moon01Icon,
+  Video01Icon,
+  Mail01Icon,
+  File01Icon,
+  SentIcon,
+  GithubIcon,
+  Linkedin01Icon,
+  NewTwitterIcon,
+  ArrowRight01Icon,
+} from "@hugeicons/core-free-icons";
 import GitHubContributions from "./components/GitHubContributions";
-import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import SkillsSection from "./components/SkillsSection";
+import VennSection from "./components/VennSection";
 import { PROJECTS } from "./data/projects";
-
-// Available font definitions
-const FONTS = [
-  { name: "Montserrat", class: "font-montserrat", text: "Hello, I'm zaib" },
-  { name: "Gemunu Libre", class: "font-gemunu", text: "Making Things Better." },
-  { name: "Outfit", class: "font-outfit", text: "Building, Still Available" },
-  { name: "Space Grotesk", class: "font-space", text: "Waiting For Plot Twist" },
-];
-
-// Available color definitions
-const COLORS = [
-  { name: "Rose Red", text: "text-rose-500", border: "border-rose-500", bg: "bg-rose-500", focusBg: "hover:bg-rose-50 dark:hover:bg-rose-950/20" },
-  { name: "Electric Blue", text: "text-blue-500", border: "border-blue-500", bg: "bg-blue-500", focusBg: "hover:bg-blue-50 dark:hover:bg-blue-950/20" },
-  { name: "Royal Purple", text: "text-violet-500", border: "border-violet-500", bg: "bg-violet-500", focusBg: "hover:bg-violet-50 dark:hover:bg-violet-950/20" },
-  { name: "Emerald Green", text: "text-emerald-500", border: "border-emerald-500", bg: "bg-emerald-500", focusBg: "hover:bg-emerald-50 dark:hover:bg-emerald-950/20" },
-  { name: "Amber Gold", text: "text-amber-500", border: "border-amber-500", bg: "bg-amber-500", focusBg: "hover:bg-amber-50 dark:hover:bg-amber-950/20" },
-  { name: "Cyber Orange", text: "text-orange-500", border: "border-orange-500", bg: "bg-orange-500", focusBg: "hover:bg-orange-50 dark:hover:bg-orange-950/20" },
-];
 
 const PRIMARY_SKILLS = [
   "UX Design",
@@ -58,557 +55,864 @@ const ADDITIONAL_SKILLS = [
   "Micro-interactions",
 ];
 
-const EXPERIENCES = [
+interface ExperienceItem {
+  company: string;
+  role: string;
+  type?: string;
+  period: string;
+  logo?: string;
+  logoSvg?: React.ReactNode;
+}
+
+const EXPERIENCES: ExperienceItem[] = [
+  
   {
-    role: "UX/UI Designer",
     company: "AMA Legal Solutions",
+    role: "UX/UI Designer",
     period: "Sept 2025 - Present",
+    logo: "/ama-connect-logo.svg",
   },
   {
-    role: "UX/UI Designer",
     company: "DroDro",
+    role: "UX/UI Designer",
     period: "April 2025 - Aug 2025",
+    logo: "/drodro-primary-logo.png",
   },
 ];
 
 export default function Home() {
-  const [scrollPercent, setScrollPercent] = useState(0);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [showAllProjects, setShowAllProjects] = useState(false);
   const [showMoreSkills, setShowMoreSkills] = useState(false);
+  const [soundEnabled, setSoundEnabled] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
+  const [isAvailable, setIsAvailable] = useState(true);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [hiToast, setHiToast] = useState(false);
+  const searchInputRef = useRef<HTMLInputElement | null>(null);
 
-  const selectedFont = FONTS[activeIndex];
-  const selectedColor = COLORS[0]; // Constant Rose Red accent color
-
-  // Auto-cycle the carousel index every 3 seconds
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % FONTS.length);
-    }, 3000);
-    return () => clearInterval(timer);
-  }, []);
-
-  const composeEmail = () => {
-    window.location.href = "mailto:zaib7@example.com?subject=Hello%20from%20Portfolio";
+  // Synthesized mechanical click sound with Web Audio API
+  const playClickSound = () => {
+    if (!soundEnabled) return;
+    try {
+      const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      const ctx = new AudioCtx();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(800, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(350, ctx.currentTime + 0.035);
+      gain.gain.setValueAtTime(0.08, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.035);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.035);
+    } catch {
+      // Audio not supported or blocked
+    }
   };
 
-  // Keystroke listener for 'C' to compose email
+  const handleSoundToggle = () => {
+    const nextState = !soundEnabled;
+    setSoundEnabled(nextState);
+    if (nextState) {
+      setTimeout(() => {
+        try {
+          const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+          const ctx = new AudioCtx();
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = "triangle";
+          osc.frequency.setValueAtTime(600, ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(900, ctx.currentTime + 0.05);
+          gain.gain.setValueAtTime(0.1, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.05);
+        } catch {}
+      }, 50);
+    }
+  };
+
+  const composeEmail = () => {
+    playClickSound();
+    window.location.href = "mailto:zaib7@example.com?subject=Hello%20Zaib%20-%20Project%20Inquiry";
+  };
+
+  // Sync isDarkMode with document.documentElement
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [isDarkMode]);
+
+  // Keyboard shortcut listener for Cmd+K and 'C' to compose email
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (
         document.activeElement?.tagName === "INPUT" ||
         document.activeElement?.tagName === "TEXTAREA"
       ) {
+        if (event.key === "Escape") {
+          setSearchOpen(false);
+        }
         return;
       }
+
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault();
+        setSearchOpen((prev) => !prev);
+        return;
+      }
+
       if (event.key === "c" || event.key === "C") {
         event.preventDefault();
         composeEmail();
       }
     };
+
     window.addEventListener("keydown", handleKeyDown);
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, []);
+  }, [soundEnabled]);
 
-  // Scroll handler to calculate scroll percentage
+  // Focus input when search modal opens
   useEffect(() => {
-    const handleScroll = () => {
-      const docHeight = document.documentElement.scrollHeight;
-      const winHeight = window.innerHeight;
-      const totalScrollable = docHeight - winHeight;
-      
-      if (totalScrollable <= 0) {
-        setScrollPercent(0);
-        return;
-      }
-      
-      const currentScroll = window.scrollY;
-      const percent = Math.min(100, Math.max(0, Math.round((currentScroll / totalScrollable) * 100)));
-      setScrollPercent(percent);
-    };
+    if (searchOpen) {
+      setTimeout(() => {
+        searchInputRef.current?.focus();
+      }, 50);
+    }
+  }, [searchOpen]);
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    // Initial call
-    handleScroll();
-    
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  interface SearchResultItem {
+    title: string;
+    category: string;
+    href: string;
+    isExternal?: boolean;
+  }
+
+  // Search filter options
+  const searchResults: SearchResultItem[] = [
+    { title: "About Section", category: "Section", href: "#about" },
+    { title: "Connect & Socials", category: "Section", href: "#connect" },
+    { title: "Experience", category: "Section", href: "#experience" },
+    { title: "Activity", category: "Section", href: "#activity" },
+    { title: "Featured Projects", category: "Section", href: "#projects" },
+    { title: "View Resume (PDF)", category: "Document", href: "/Zaib_UI-UX_Designer_Resume.pdf", isExternal: true },
+    { title: "Send Email (zaib7@example.com)", category: "Contact", href: "mailto:zaib7@example.com" },
+    ...PROJECTS.map((p) => ({
+      title: p.title,
+      category: `Project (${p.category})`,
+      href: `/projects/${p.id}`,
+    })),
+  ].filter((item) =>
+    item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    item.category.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-[#ffffff] transition-colors duration-500">
-      
-      {/* 1. FLOATING HEADER / NAVBAR */}
-      <Navbar />
-
-      {/* 2. SUBTLE GRID BACKGROUND */}
-      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-        {/* Subtle grid mesh overlay */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:32px_32px]"></div>
-      </div>
-
-      {/* 3. HERO SECTION CONTAINER */}
-      <section className="relative z-10 flex min-h-screen flex-col items-center justify-center px-3 sm:px-6 pt-28 pb-16 text-center max-w-6xl mx-auto">
-        
-        {/* Large Central Avatar */}
-        <div className="group relative w-32 h-32 md:w-36 md:h-36 rounded-full overflow-hidden border-[6px] border-white dark:border-zinc-900 shadow-2xl mb-8 transform transition-all duration-500 hover:scale-105 hover:rotate-2">
-          <Image
-            src="/avatar.jpeg"
-            alt="Developer portrait"
-            fill
-            sizes="(max-width: 768px) 128px, 144px"
-            className="object-cover grayscale transition-all duration-500 group-hover:grayscale-0 group-hover:scale-110"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        </div>
-
-        {/* Carousel Tagline name badge with corner brackets */}
-        <div className="relative inline-flex items-center justify-center px-6 sm:px-10 py-3 sm:py-4 mb-8 select-none group">
-          {/* Top-left corner */}
-          <div className={`absolute top-0 left-0 w-3.5 h-3.5 border-t-2 border-l-2 ${selectedColor.border} transition-all duration-300 group-hover:-translate-x-1.5 group-hover:-translate-y-1.5`} />
-          {/* Top-right corner */}
-          <div className={`absolute top-0 right-0 w-3.5 h-3.5 border-t-2 border-r-2 ${selectedColor.border} transition-all duration-300 group-hover:translate-x-1.5 group-hover:-translate-y-1.5`} />
-          {/* Bottom-left corner */}
-          <div className={`absolute bottom-0 left-0 w-3.5 h-3.5 border-b-2 border-l-2 ${selectedColor.border} transition-all duration-300 group-hover:-translate-x-1.5 group-hover:translate-y-1.5`} />
-          {/* Bottom-right corner */}
-          <div className={`absolute bottom-0 right-0 w-3.5 h-3.5 border-b-2 border-r-2 ${selectedColor.border} transition-all duration-300 group-hover:translate-x-1.5 group-hover:translate-y-1.5`} />
-          
-          {/* Vertical carousel viewport */}
-          <div className="h-8 overflow-hidden relative w-[270px] sm:w-[320px] md:w-[380px]">
-            <div 
-              className="flex flex-col transition-transform duration-700 ease-in-out absolute top-0 left-0 w-full"
-              style={{ transform: `translateY(-${activeIndex * 32}px)` }}
-            >
-              {FONTS.map((font) => (
-                <div 
-                  key={font.name} 
-                  className="h-8 flex items-center justify-center w-full flex-shrink-0"
-                >
-                  <span className={`text-[16px] sm:text-base md:text-xl font-normal uppercase tracking-wider sm:tracking-[0.18em] ${selectedColor.text} ${font.class} transition-colors duration-300 whitespace-nowrap text-center`}>
-                    {font.text}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Main Heading Text */}
-        <div className={`max-w-4xl tracking-tighter ${selectedFont.class} select-none`}>
-          <h1 className="text-[8vw] sm:text-[6vw] md:text-[4.5vw] font-medium leading-[0.9] text-zinc-950 tracking-tighter">
-            MOVES THINGS 2PX.
-          </h1>
-          <h1 className="text-[8vw] sm:text-[6vw] md:text-[4.5vw] font-medium leading-[0.9] text-zinc-950 tracking-tighter mt-2">
-            CALLS IT A CAREER.
-          </h1>
-        </div>
-
-        {/* View CV Button */}
-        <div className="mt-8 sm:mt-10 select-none">
-          <a
-            href="/Zaib_UI-UX_Designer_Resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-white dark:bg-black dark:text-white text-zinc-950 text-xs sm:text-sm font-medium tracking-wide transition-all duration-200 shadow-md hover:shadow-xl active:scale-95 group cursor-pointer"
+    <div
+      className={`relative min-h-screen w-full transition-colors duration-300 selection:bg-neutral-800 selection:text-white ${
+        isDarkMode ? "bg-[#000000] text-[#ededed]" : "bg-[#ffffff] text-[#09090b]"
+      }`}
+    >
+      {/* MAIN CONTAINER: exact max-w-4xl with borders matching screenshot */}
+      <main
+        className={`w-full max-w-4xl mx-auto border-x transition-colors duration-300 relative min-h-screen ${
+          isDarkMode ? "border-neutral-800/80 bg-[#000000]" : "border-neutral-200 bg-[#ffffff]"
+        }`}
+      >
+        {/* 1. TOP HEADER / NAVBAR (Flush within container borders) */}
+        <header
+          className={`sticky top-0 z-40 w-full px-5 sm:px-8 py-3 flex items-center justify-between border-b backdrop-blur-md select-none transition-colors duration-300 ${
+            isDarkMode
+              ? "border-neutral-800/80 bg-[#000000]/90"
+              : "border-neutral-200 bg-[#ffffff]/90"
+          }`}
+        >
+          {/* Logo brand on left */}
+          <Link
+            href="/"
+            onClick={playClickSound}
+            className="flex items-center select-none group"
+            aria-label="Home"
           >
-            <span>View Resume</span>
-          </a>
-        </div>
-
-      </section>
-
-      {/* 3.5. WHO AM I / THE PERSON BEHIND THIS MESS SECTION */}
-      <section className="relative z-10 max-w-6xl mx-auto px-3 sm:px-6 py-24">
-        
-        {/* Section Header */}
-        <div className="flex flex-col items-center text-center mb-16 select-none">
-          <span className="text-xs font-regular tracking-[0.2em] text-zinc-500 uppercase">
-            Who Am I
-          </span>
-          <h2 className="text-2xl md:text-5xl font-medium tracking-tight text-zinc-950 mt-3 uppercase">
-            The Person <br /> Behind This Mess
-          </h2>
-        </div>
-
-        {/* Terminal Window Wrapper */}
-        <div className="w-full bg-[#0c0c0e] border border-zinc-800/80 rounded-3xl overflow-hidden  transition-all duration-300 hover:border-zinc-700/80 select-none">
-          
-          {/* Terminal Title Bar */}
-          <div className="flex items-center justify-between bg-[#16161a] px-5 py-3 border-b border-zinc-900 select-none">
-            {/* Window control buttons */}
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full bg-rose-500 border border-rose-600/40" />
-              <div className="w-3 h-3 rounded-full bg-amber-500 border border-amber-600/40" />
-              <div className="w-3 h-3 rounded-full bg-emerald-500 border border-emerald-600/40" />
+            <div className="relative h-7 sm:h-8 w-14 sm:w-16 flex items-center">
+              <Image
+                src={isDarkMode ? "/logoblack.svg" : "/Logowhite.svg"}
+                alt="Zaib Logo"
+                width={64}
+                height={33}
+                className="object-contain h-6 sm:h-7 w-auto transition-transform duration-200 group-hover:scale-105"
+                priority
+              />
             </div>
-            
-            {/* Terminal Title */}
-            <span className="text-xs text-zinc-500 font-mono font-medium tracking-tight">
-              zaib@portfolio - zsh - 120x30
-            </span>
-            
-            {/* Version */}
-            <span className="text-[10px] text-zinc-600 font-mono font-bold uppercase tracking-wider">
-              v1.0
-            </span>
-          </div>
+          </Link>
 
-          {/* Terminal Content Body */}
-          <div className="p-6 md:p-8 font-mono text-zinc-300 text-sm leading-relaxed">
-            
-            <div className="flex flex-col gap-6">
-              
-              {/* Top Row: zsh Prompt & Stack */}
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-zinc-900 pb-4">
-                
-                {/* zsh Prompt */}
-                <div className="flex items-center gap-2 select-none">
-                  <span className="text-emerald-500">zaib@portfolio:~ %</span>
-                  <span className="text-zinc-100 font-semibold">whoami --verbose</span>
-                </div>
-
-                {/* Tech Stack List */}
-                <div className="flex items-center gap-3">
-                  <span className="text-[10px] font-extrabold tracking-widest text-zinc-600 uppercase mr-1">
-                    Stack:
-                  </span>
-                  
-                  {/* Figma Icon */}
-                  <div className="cursor-help transition-all duration-300" title="Figma">
-                    <Image
-                      src="/figma.png"
-                      alt="Figma"
-                      width={18}
-                      height={18}
-                      className="object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 transform hover:scale-110"
-                    />
-                  </div>
-
-                  {/* Framer Icon */}
-                  <div className="cursor-help transition-all duration-300" title="Framer">
-                    <Image
-                      src="/Framer.svg"
-                      alt="Framer"
-                      width={18}
-                      height={18}
-                      className="object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 transform hover:scale-110"
-                    />
-                  </div>
-
-                  {/* React Icon */}
-                  <div className="cursor-help transition-all duration-300" title="React / React Native">
-                    <Image
-                      src="/atom.png"
-                      alt="React"
-                      width={18}
-                      height={18}
-                      className="object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 transform hover:scale-110 animate-spin"
-                      style={{ animationDuration: '8s' }}
-                    />
-                  </div>
-
-                  {/* Next.js Icon */}
-                  <div className="cursor-help transition-all duration-300" title="Next.js">
-                    <Image
-                      src="/Next.js.svg"
-                      alt="Next.js"
-                      width={18}
-                      height={18}
-                      className="object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 transform hover:scale-110"
-                    />
-                  </div>
-
-                  {/* Shopify Icon */}
-                  <div className="cursor-help transition-all duration-300" title="Shopify">
-                    <Image
-                      src="/Shopify.svg"
-                      alt="Shopify"
-                      width={18}
-                      height={18}
-                      className="object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 transform hover:scale-110"
-                    />
-                  </div>
-                </div>
-
-              </div>
-
-              {/* Console output and about detail */}
-              <div className="flex flex-col gap-4 text-xs sm:text-sm">
-                
-                {/* brewed speed */}
-                <span className="text-[10px] text-zinc-600 select-none">
-                  * brewed in 5.5s
-                </span>
-
-                {/* About detail paragraph 1 */}
-                <p className="text-zinc-400 font-medium leading-relaxed mt-2">
-                  I'm <span className="text-zinc-100 font-bold">Zaib</span>, a <span className="text-zinc-100 font-bold">UI/UX Designer</span> who also speaks <span className="text-zinc-100 font-bold">React</span>.
-                </p>
-
-                {/* Paragraph 2 */}
-                <p className="text-zinc-400 font-medium leading-relaxed">
-                  I design products that don't just look good—they <span className="text-amber-500 font-semibold">solve real problems</span>. From wireframes to production, I enjoy turning messy ideas into intuitive experiences and bringing them to life with <span className="text-zinc-100 font-semibold">React, Next.js, TypeScript, and Framer Motion</span>.
-                </p>
-
-                {/* Paragraph 3 */}
-                <p className="text-zinc-400 font-medium leading-relaxed">
-                  Whether it's launching a startup MVP, redesigning an existing product, or crafting tiny interactions that make people smile, I'm all about building products that people actually <span className="text-emerald-400 font-semibold">enjoy using</span>.
-                </p>
-
-                {/* Metadata badges horizontal */}
-                <div className="flex flex-col sm:flex-row flex-wrap items-center justify-start gap-10 sm:gap-12 mt-6 border-t border-zinc-900 pt-6 w-full">
-                  
-                  {/* Metadata Item 1 */}
-                  <div className="flex items-center gap-2 text-xs text-emerald-500/90 font-mono whitespace-nowrap">
-                    <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                    Gurugram, Haryana
-                  </div>
-
-                  {/* Metadata Item 2 */}
-                  <div className="flex items-center gap-2 text-xs text-emerald-500/90 font-mono whitespace-nowrap">
-                    <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    1+ Years Crafting Cool Stuff                
-                  </div>
-
-                  {/* Metadata Item 3 */}
-                  <div className="flex items-center gap-2 text-xs text-emerald-500/90 font-mono whitespace-nowrap">
-                    <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                    10+ products
-                  </div>
-
-                </div>
-
-               
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-      {/* 3.6. FEATURED PROJECTS CARDS SECTION */}
-      <section id="projects" className="relative z-10 max-w-6xl mx-auto px-3 sm:px-6 py-20 -mt-10">
-        
-        {/* Section Header */}
-        <div className="flex flex-col items-center text-center mb-14 select-none">
-          <span className="text-xs font-regular tracking-[0.2em] text-zinc-500 uppercase">
-            Featured Work
-          </span>
-          <h2 className="text-2xl md:text-5xl font-medium tracking-tight text-zinc-950 mt-3 uppercase">
-            Selected <br /> Projects
-          </h2>
-        </div>
-
-        {/* Projects Cards Stack */}
-        <div className="flex flex-col gap-10 sm:gap-10 select-none">
-          {PROJECTS.map((project) => (
-            <div
-              key={project.id}
-              className="w-full grid grid-cols-1 lg:grid-cols-12 items-stretch select-none"
+          {/* Right action & navigation items */}
+          <div className="flex items-center gap-3 sm:gap-5 text-xs">
+            <Link
+              href="#projects"
+              onClick={playClickSound}
+              className="text-neutral-400 hover:text-white transition-colors text-xs"
             >
-              {/* Left Card: Details Panel (Order 2 on mobile, Order 1 on desktop) */}
-              <div className="lg:col-span-5 bg-white dark:bg-[#f6f6f6] rounded-[28px] p-7 sm:p-9 flex flex-col justify-between order-2 lg:order-1">
-                <div>
-                  {/* Brand Logo or Icon Badge */} 
-                  {project.logo ? (
-                    <div className="relative w-40 h-11 mb-6 flex items-center">
-                      <Image
-                        src={project.logo}
-                        alt={`${project.title} logo`}
-                        fill
-                        className="object-contain object-left"
-                      />
-                    </div>
-                  ) : (
-                    <div className={`w-12 h-12 rounded-xl ${project.iconBg} flex items-center justify-center text-white shadow-[0_8px_18px_rgba(255,80,40,0.3)] mb-6`}>
-                      <svg className="w-7 h-7 text-white fill-none stroke-current" viewBox="0 0 24 24" strokeWidth="2.8" strokeLinecap="round">
-                        <line x1="12" y1="3" x2="12" y2="21" />
-                        <line x1="3" y1="12" x2="21" y2="12" />
-                        <line x1="5.64" y1="5.64" x2="18.36" y2="18.36" />
-                        <line x1="5.64" y1="18.36" x2="18.36" y2="5.64" />
-                      </svg>
-                    </div>
-                  )}
+              Projects
+            </Link>
+            <Link
+              href="#connect"
+              onClick={playClickSound}
+              className="text-neutral-400 hover:text-white transition-colors text-xs"
+            >
+              Contact
+            </Link>
 
-                  {/* Title */}
-                  <h3 className="text-2xl sm:text-[26px] font-medium text-zinc-900 dark:text-black tracking-tight mb-2.5 font-outfit">
-                    {project.title}
-                  </h3>
+            {/* Search ⌘K Pill Button */}
+            <button
+              type="button"
+              onClick={() => {
+                playClickSound();
+                setSearchOpen(true);
+              }}
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-neutral-900/90 border border-neutral-800 hover:border-neutral-700 text-neutral-400 hover:text-white transition-all duration-200 cursor-pointer text-xs"
+            >
+              <HugeiconsIcon icon={Search01Icon} size={14} className="text-neutral-400" />
+              <span>Search</span>
+              <kbd className="hidden sm:inline-block text-[10px] font-mono bg-neutral-800 border border-neutral-700/60 px-1 py-0.2 rounded text-neutral-300">
+                ⌘K
+              </kbd>
+            </button>
 
-                  {/* Description */}
-                  <p className="text-sm sm:text-[15px] text-[#71717a] font-normal leading-relaxed mb-9">
-                    {project.description}
-                  </p>
+            {/* Theme Toggle Button */}
+            <button
+              type="button"
+              onClick={() => {
+                playClickSound();
+                setIsDarkMode((prev) => !prev);
+              }}
+              title="Theme settings"
+              className="p-1.5 rounded-md border border-neutral-800 hover:border-neutral-700 bg-neutral-900/80 text-neutral-400 hover:text-white transition-all duration-200 cursor-pointer flex items-center justify-center"
+            >
+              <HugeiconsIcon icon={isDarkMode ? Sun01Icon : Moon01Icon} size={15} />
+            </button>
+          </div>
+        </header>
 
-                  {/* Metadata Rows */}
-                  <div className="flex flex-col pt-2 mb-8">
-                    <div className="flex items-center justify-between py-2.5 text-sm">
-                      <span className="text-[#a1a1aa] font-normal">Client</span>
-                      <span className="text-[#27272a] dark:text-black font-medium">{project.client}</span>
-                    </div>
-                    <div className="flex items-center justify-between py-2.5 text-sm border-t border-zinc-200/80">
-                      <span className="text-[#a1a1aa] font-normal">Date</span>
-                      <span className="text-[#27272a] dark:text-black font-medium">{project.date}</span>
-                    </div>
+        {/* 2. DOTTED GRID MATRIX BANNER - Exact height and pattern from screenshot */}
+        <section
+          aria-label="Hero background banner"
+          className="w-full h-36 sm:h-44 border-b border-neutral-800/80 relative overflow-hidden bg-neutral-950/40"
+        >
+          {/* Dot grid texture */}
+          <div
+            className="absolute inset-0 bg-[radial-gradient(#3a3a3e_1.2px,transparent_1.2px)] [background-size:16px_16px] opacity-75"
+            aria-hidden="true"
+          />
+        </section>
+
+        {/* 3. HERO PROFILE SECTION - Avatar + Info + CTA buttons */}
+        <section className="p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center gap-6 border-b border-neutral-800/80">
+          
+          {/* Left Column: Avatar + status toggle underneath */}
+          <div className="flex flex-col items-center sm:items-start flex-shrink-0">
+            {/* Square avatar with rounded corners */}
+            <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden border border-neutral-700/60 bg-[#121215] shadow-lg group">
+              <Image
+                src="/avatar.jpeg"
+                alt="Zaib portrait"
+                fill
+                sizes="(max-width: 640px) 96px, 112px"
+                className="object-cover grayscale contrast-110 group-hover:grayscale-0 transition-all duration-300"
+                priority
+              />
+            </div>
+
+          
+          </div>
+
+          {/* Right Column: Name, Titles & CTA Actions */}
+          <div className="flex flex-col items-start justify-center flex-1">
+            <h1 className="text-2xl sm:text-[28px] font-semibold text-white tracking-tight leading-tight">
+              Zaib
+            </h1>
+            
+            <p className="text-sm sm:text-[15px] text-neutral-400 font-normal mt-1 leading-snug">
+              Product &amp; UI/UX Designer
+            </p>
+            <p className="text-xs sm:text-sm text-neutral-500 font-normal mt-0.5 leading-snug">
+              Creative Developer &amp; Growth
+            </p>
+
+            {/* Action Buttons Row */}
+            <div className="flex flex-wrap items-center gap-2.5 mt-4 sm:mt-5">
+              
+              {/* Book a call */}
+              <a
+                href="mailto:zaib7@example.com?subject=Book%20a%20Call%20-%20Project%20Discussion"
+                onClick={playClickSound}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white text-black text-xs font-semibold transition-all duration-150 shadow-sm active:scale-95 cursor-pointer"
+              >
+                <HugeiconsIcon icon={Video01Icon} size={15} className="text-black" />
+                <span>Book a call</span>
+              </a>
+
+              {/* Send an email */}
+              <button
+                type="button"
+                onClick={composeEmail}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-neutral-900 border border-neutral-800 text-white text-xs font-semibold transition-all duration-150 shadow-sm active:scale-95 cursor-pointer"
+              >
+                <HugeiconsIcon icon={Mail01Icon} size={15} className="text-white" />
+                <span>Send an email</span>
+              </button>
+
+            </div>
+          </div>
+
+        </section>
+
+        {/* 4. ABOUT SECTION - Exact bullet points & typography */}
+        <section id="about" className="p-6 sm:p-8 border-b border-neutral-800/80">
+          <h2 className="text-base sm:text-lg font-medium text-white mb-4">
+            About
+          </h2>
+
+          <ul className="space-y-3.5 text-sm sm:text-[15px] leading-relaxed text-neutral-300 font-normal">
+            <li className="flex items-start gap-2.5">
+              <span className="text-neutral-500 select-none mt-0.5">•</span>
+              <span>
+                I&apos;m Zaib, a UI/UX &amp; Product Designer with 2+ years of experience, crafting intuitive digital experiences with a strong focus on visual precision and usability.
+              </span>
+            </li>
+
+            <li className="flex items-start gap-2.5">
+              <span className="text-neutral-500 select-none mt-0.5">•</span>
+              <span>
+                I transform complex user needs into intuitive experiences through user research, information architecture, wireframing, prototyping, and thoughtful interaction design.
+              </span>
+            </li>
+
+            <li className="flex items-start gap-2.5">
+              <span className="text-neutral-500 select-none mt-0.5">•</span>
+              <span>
+                I design and build end-to-end products using{" "}
+                <span className="underline underline-offset-4 decoration-neutral-500 font-medium text-white">
+                  Figma, React, Next.js, and TypeScript
+                </span>
+                , turning complex ideas into clean, responsive interfaces.
+              </span>
+            </li>
+          </ul>
+        </section>
+
+        {/* 5. CONNECT SECTION - Exact horizontal pill buttons */}
+        <section id="connect" className="p-6 sm:p-8 border-b border-neutral-800/80">
+          <h2 className="text-base sm:text-lg font-medium text-white mb-4">
+            Connect
+          </h2>
+
+          <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
+            
+            {/* Resume button */}
+            <a
+              href="/Zaib_UI-UX_Designer_Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={playClickSound}
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-neutral-900 border border-neutral-800 hover:border-neutral-700 hover:bg-neutral-800 text-white text-xs font-medium transition-all duration-150 active:scale-95"
+            >
+              <HugeiconsIcon icon={File01Icon} size={14} className="text-neutral-400" />
+              <span>Resume</span>
+            </a>
+
+            {/* Contact button */}
+            <button
+              type="button"
+              onClick={composeEmail}
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-neutral-900 border border-neutral-800 hover:border-neutral-700 hover:bg-neutral-800 text-white text-xs font-medium transition-all duration-150 active:scale-95 cursor-pointer"
+            >
+              <HugeiconsIcon icon={SentIcon} size={14} className="text-neutral-400" />
+              <span>Contact</span>
+            </button>
+
+            {/* GitHub */}
+            <a
+              href="https://github.com/Zaibbb31"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={playClickSound}
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-neutral-900 border border-neutral-800 hover:border-neutral-700 hover:bg-neutral-800 text-white text-xs font-medium transition-all duration-150 active:scale-95"
+            >
+              <HugeiconsIcon icon={GithubIcon} size={14} className="text-neutral-400" />
+              <span>GitHub</span>
+            </a>
+
+            {/* LinkedIn */}
+            <a
+              href="https://www.linkedin.com/in/zaib-ba7086379"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={playClickSound}
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-neutral-900 border border-neutral-800 hover:border-neutral-700 hover:bg-neutral-800 text-white text-xs font-medium transition-all duration-150 active:scale-95"
+            >
+              <HugeiconsIcon icon={Linkedin01Icon} size={14} className="text-neutral-400" />
+              <span>LinkedIn</span>
+            </a>
+
+            {/* X (Twitter) */}
+            <a
+              href="https://x.com/Mzaib181"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={playClickSound}
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-neutral-900 border border-neutral-800 hover:border-neutral-700 hover:bg-neutral-800 text-white text-xs font-medium transition-all duration-150 active:scale-95"
+            >
+              <HugeiconsIcon icon={NewTwitterIcon} size={14} className="text-neutral-400" />
+              <span>X (Twitter)</span>
+            </a>
+
+            {/* Email */}
+            <button
+              type="button"
+              onClick={composeEmail}
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-neutral-900 border border-neutral-800 hover:border-neutral-700 hover:bg-neutral-800 text-white text-xs font-medium transition-all duration-150 active:scale-95 cursor-pointer"
+            >
+              <HugeiconsIcon icon={Mail01Icon} size={14} className="text-neutral-400" />
+              <span>Email</span>
+            </button>
+
+          </div>
+        </section>
+
+        {/* 6. EXPERIENCE SECTION - Directly below Connect, matching screenshot */}
+        <section id="experience" className="p-6 sm:p-8 border-b border-neutral-800/80">
+          <h2 className="text-base sm:text-lg font-medium text-white mb-5">
+            Experience
+          </h2>
+
+          <div className="flex flex-col gap-4">
+            {EXPERIENCES.map((exp, idx) => (
+              <div
+                key={idx}
+                className="flex items-center justify-between gap-4 py-1"
+              >
+                {/* Left: Company Logo Box + Company Name & Role */}
+                <div className="flex items-center gap-3.5">
+                  <div className="w-10 h-10 rounded-xl bg-white border border-neutral-200/20 overflow-hidden flex items-center justify-center flex-shrink-0 p-1.5 shadow-sm">
+                    {exp.logo ? (
+                      <div className="relative w-full h-full">
+                        <Image
+                          src={exp.logo}
+                          alt={exp.company}
+                          fill
+                          className="object-contain"
+                        />
+                      </div>
+                    ) : (
+                      exp.logoSvg || (
+                        <span className="text-black font-bold text-sm">
+                          {exp.company.charAt(0)}
+                        </span>
+                      )
+                    )}
+                  </div>
+
+                  <div>
+                    <h3 className="text-sm sm:text-[15px] font-semibold text-white tracking-tight">
+                      {exp.company}
+                    </h3>
+                    <p className="text-xs sm:text-[13px] text-neutral-400 font-normal mt-0.5">
+                      {exp.role} {exp.type && `• ${exp.type}`}
+                    </p>
                   </div>
                 </div>
 
-                {/* CTA Action Button redirecting to Project Case Study */}
-                <div>
-                  <Link
-                    href={`/projects/${project.id}`}
-                    className="block w-full py-3.5 px-6 rounded-2xl bg-[#09090b] hover:bg-zinc-800 text-white font-medium text-sm transition-all duration-200 text-center shadow-md active:scale-98 cursor-pointer"
-                  >
-                    {project.buttonText || "View Details"}
-                  </Link>
-                </div>
+                {/* Right: Date */}
+                <span className="text-xs sm:text-[13px] text-neutral-500 font-normal whitespace-nowrap text-right">
+                  {exp.period}
+                </span>
               </div>
+            ))}
+          </div>
+        </section>
 
-              {/* Right Card: Media Preview (Order 1 on mobile, Order 2 on desktop) */}
-              <div className="lg:col-span-7 w-full min-h-[340px] sm:min-h-[420px] lg:min-h-[480px] bg-zinc-950 rounded-[28px] overflow-hidden relative group order-1 lg:order-2 flex items-center justify-center">
-                {project.mobileImage ? (
-                  <>
-                    <div className="block lg:hidden absolute inset-0">
-                      <Image
-                        src={project.mobileImage}
-                        alt={project.title}
-                        fill
-                        sizes="100vw"
-                        className="object-cover transition-transform duration-700 ease-out "
-                      />
-                    </div>
-                    <div className="hidden lg:block absolute inset-0">
-                      <Image
-                        src={project.image}
-                        alt={project.title}
-                        fill
-                        sizes="60vw"
-                        className="object-cover transition-transform duration-700 ease-out"
-                      />
-                    </div>
-                  </>
-                ) : (
+        {/* 7. ACTIVITY SECTION - Directly below Experience, matching screenshot */}
+        <section id="activity" className="p-6 sm:p-8 border-b border-neutral-800/80">
+          <h2 className="text-base sm:text-lg font-medium text-white mb-6">
+            Activity
+          </h2>
+
+          <div className="w-full flex justify-center">
+            <GitHubContributions variant="minimal" />
+          </div>
+        </section>
+
+        {/* 8. PROJECTS SECTION - Matching Screenshot Image 1 */}
+        <section id="projects" className="p-6 sm:p-8 border-b border-neutral-800/80 bg-black">
+          <h2 className="text-base sm:text-lg font-medium text-white mb-6">
+            Projects
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+            {[
+              {
+                id: "icodraw",
+                title: "Icodraw",
+                description: "A lightweight screen-capture and annotation tool for m...",
+                image: "/projects/icodraw.svg",
+                liveUrl: "https://icodraw.vercel.app",
+                codeUrl: "https://github.com/Zaibbb31",
+                tags: [
+                  {
+                    name: "TypeScript",
+                    icon: (
+                      <span className="w-3 h-3 rounded-[2px] bg-[#3178c6] text-white font-bold text-[8px] flex items-center justify-center leading-none">
+                        TS
+                      </span>
+                    ),
+                  },
+                  {
+                    name: "React",
+                    icon: (
+                      <svg className="w-3 h-3 text-[#61dafb]" viewBox="0 0 24 24" fill="currentColor">
+                        <circle cx="12" cy="12" r="2.2" />
+                        <ellipse cx="12" cy="12" rx="10" ry="4.2" fill="none" stroke="currentColor" strokeWidth="1.4" />
+                        <ellipse cx="12" cy="12" rx="10" ry="4.2" fill="none" stroke="currentColor" strokeWidth="1.4" transform="rotate(60 12 12)" />
+                        <ellipse cx="12" cy="12" rx="10" ry="4.2" fill="none" stroke="currentColor" strokeWidth="1.4" transform="rotate(120 12 12)" />
+                      </svg>
+                    ),
+                  },
+                  {
+                    name: "Vite",
+                    icon: (
+                      <svg className="w-3 h-3 text-[#bd34fe]" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19.5 3L11 21.5 4.5 3l7 3.5 8-3.5z" />
+                      </svg>
+                    ),
+                  },
+                  {
+                    name: "TailwindCSS",
+                    icon: (
+                      <svg className="w-3 h-3 text-[#38bdf8]" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 6c-3 0-5 1.5-6 4.5 1.2-1.5 2.5-2 4-1.7 1 .2 1.7 1 2.5 1.8C13.8 11.8 15.2 13 18 13c3 0 5-1.5 6-4.5-1.2 1.5-2.5 2-4 1.7-1-.2-1.7-1-2.5-1.8C16.2 7.2 14.8 6 12 6z"/>
+                      </svg>
+                    ),
+                  },
+                ],
+              },
+              {
+                id: "paperlab",
+                title: "Paperlab",
+                description: "46 PDF tools that run entirely in the browser - merge, s...",
+                image: "/projects/paperlab.svg",
+                liveUrl: "https://paperlab.vercel.app",
+                codeUrl: "https://github.com/Zaibbb31",
+                tags: [
+                  {
+                    name: "TypeScript",
+                    icon: (
+                      <span className="w-3 h-3 rounded-[2px] bg-[#3178c6] text-white font-bold text-[8px] flex items-center justify-center leading-none">
+                        TS
+                      </span>
+                    ),
+                  },
+                  {
+                    name: "Next.js",
+                    icon: (
+                      <svg className="w-3 h-3 text-white" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.477 2 2 6.477 2 12c0 5.523 4.477 10 10 10 5.523 0 10-4.477 10-10 0-5.523-4.477-10-10-10zm3.5 13.5l-4.5-6.5v6.5H9.5V8.5h1.5l4.5 6.5V8.5h1.5v7z"/>
+                      </svg>
+                    ),
+                  },
+                  {
+                    name: "TailwindCSS",
+                    icon: (
+                      <svg className="w-3 h-3 text-[#38bdf8]" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 6c-3 0-5 1.5-6 4.5 1.2-1.5 2.5-2 4-1.7 1 .2 1.7 1 2.5 1.8C13.8 11.8 15.2 13 18 13c3 0 5-1.5 6-4.5-1.2 1.5-2.5 2-4 1.7-1-.2-1.7-1-2.5-1.8C16.2 7.2 14.8 6 12 6z"/>
+                      </svg>
+                    ),
+                  },
+                  {
+                    name: "pdf-lib",
+                    icon: (
+                      <svg className="w-3 h-3 text-neutral-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                      </svg>
+                    ),
+                  },
+                ],
+              },
+              {
+                id: "ama-connect",
+                title: "AMA Connect",
+                description: "Pro bono legal-aid mobile platform connecting individuals with verified lawyers.",
+                image: "/ama-connect.jpg",
+                liveUrl: "/projects/ama-connect",
+                codeUrl: "https://github.com/Zaibbb31",
+                tags: [
+                  {
+                    name: "Mobile App",
+                    icon: (
+                      <span className="w-3 h-3 rounded-[2px] bg-[#0ea5e9] text-white font-bold text-[8px] flex items-center justify-center leading-none">
+                        MA
+                      </span>
+                    ),
+                  },
+                  {
+                    name: "UI/UX",
+                    icon: (
+                      <svg className="w-3 h-3 text-[#ff7262]" viewBox="0 0 24 24" fill="currentColor">
+                        <circle cx="12" cy="12" r="8" />
+                      </svg>
+                    ),
+                  },
+                  {
+                    name: "React Native",
+                    icon: (
+                      <svg className="w-3 h-3 text-[#61dafb]" viewBox="0 0 24 24" fill="currentColor">
+                        <circle cx="12" cy="12" r="2.2" />
+                        <ellipse cx="12" cy="12" rx="10" ry="4.2" fill="none" stroke="currentColor" strokeWidth="1.4" />
+                      </svg>
+                    ),
+                  },
+                  {
+                    name: "LegalTech",
+                    icon: (
+                      <span className="text-[9px] font-mono font-bold text-neutral-400">
+                        §
+                      </span>
+                    ),
+                  },
+                ],
+              },
+              {
+                id: "drodro",
+                title: "DroDro",
+                description: "Creative marketplace connecting users with trusted photographers and videographers.",
+                image: "/P2.svg",
+                liveUrl: "/projects/drodro",
+                codeUrl: "https://github.com/Zaibbb31",
+                tags: [
+                  {
+                    name: "TypeScript",
+                    icon: (
+                      <span className="w-3 h-3 rounded-[2px] bg-[#3178c6] text-white font-bold text-[8px] flex items-center justify-center leading-none">
+                        TS
+                      </span>
+                    ),
+                  },
+                  {
+                    name: "Next.js",
+                    icon: (
+                      <svg className="w-3 h-3 text-white" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.477 2 2 6.477 2 12c0 5.523 4.477 10 10 10 5.523 0 10-4.477 10-10 0-5.523-4.477-10-10-10zm3.5 13.5l-4.5-6.5v6.5H9.5V8.5h1.5l4.5 6.5V8.5h1.5v7z"/>
+                      </svg>
+                    ),
+                  },
+                  {
+                    name: "Marketplace",
+                    icon: (
+                      <span className="w-3 h-3 rounded-[2px] bg-[#10b981] text-white font-bold text-[8px] flex items-center justify-center leading-none">
+                        MP
+                      </span>
+                    ),
+                  },
+                  {
+                    name: "TailwindCSS",
+                    icon: (
+                      <svg className="w-3 h-3 text-[#38bdf8]" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 6c-3 0-5 1.5-6 4.5 1.2-1.5 2.5-2 4-1.7 1 .2 1.7 1 2.5 1.8C13.8 11.8 15.2 13 18 13c3 0 5-1.5 6-4.5-1.2 1.5-2.5 2-4 1.7-1-.2-1.7-1-2.5-1.8C16.2 7.2 14.8 6 12 6z"/>
+                      </svg>
+                    ),
+                  },
+                ],
+              },
+            ].map((project) => (
+              <div
+                key={project.id}
+                className="flex flex-col rounded-xl bg-transparent transition-all duration-200 group"
+              >
+                {/* Preview Image Box - Clickable link to slug page */}
+                <Link
+                  href={`/projects/${project.id}`}
+                  onClick={playClickSound}
+                  className="relative w-full aspect-[16/10] rounded-xl overflow-hidden border border-neutral-800 bg-[#09090b] mb-3.5 flex items-center justify-center group-hover:border-neutral-600 transition-colors cursor-pointer"
+                  aria-label={`View ${project.title} case study`}
+                >
                   <Image
                     src={project.image}
                     alt={project.title}
                     fill
-                    sizes="(max-width: 1024px) 100vw, 60vw"
-                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, 450px"
+                    className="object-cover group-hover:scale-[1.03] transition-transform duration-500 ease-out"
                   />
-                )}
+                </Link>
+
+                {/* Title & Action Buttons */}
+                <div className="flex items-center justify-between gap-2">
+                  <Link
+                    href={`/projects/${project.id}`}
+                    onClick={playClickSound}
+                    className="hover:text-neutral-300 transition-colors group/title"
+                  >
+                    <h3 className="text-base sm:text-lg font-normal font-instrument text-white tracking-tight group-hover/title:underline underline-offset-4">
+                      {project.title}
+                    </h3>
+                  </Link>
+
+                  <div className="flex items-center gap-1.5">
+                    <Link
+                      href={`/projects/${project.id}`}
+                      onClick={playClickSound}
+                      className="inline-flex items-center justify-center px-2.5 py-1 rounded-full bg-neutral-900 border border-neutral-800 hover:border-neutral-600 hover:bg-neutral-800 text-neutral-300 hover:text-white text-[11px] font-medium transition-all active:scale-95"
+                    >
+                      Case Study
+                    </Link>
+                    {project.liveUrl && project.liveUrl.startsWith("http") && (
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={playClickSound}
+                        className="inline-flex items-center justify-center px-2 py-1 rounded-full bg-neutral-900 border border-neutral-800 hover:border-neutral-700 hover:bg-neutral-800 text-neutral-400 hover:text-white text-[11px] font-medium transition-all active:scale-95"
+                      >
+                        Live
+                      </a>
+                    )}
+                    {project.codeUrl && (
+                      <a
+                        href={project.codeUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={playClickSound}
+                        className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-neutral-900 border border-neutral-800 hover:border-neutral-700 hover:bg-neutral-800 text-neutral-400 hover:text-white text-[11px] font-medium transition-all active:scale-95"
+                      >
+                        <HugeiconsIcon icon={GithubIcon} size={11} className="text-neutral-400 group-hover:text-white" />
+                        <span>Code</span>
+                      </a>
+                    )}
+                  </div>
+                </div>
+
+                {/* Short description */}
+                <Link
+                  href={`/projects/${project.id}`}
+                  onClick={playClickSound}
+                  className="text-xs text-neutral-400 hover:text-neutral-300 font-normal line-clamp-1 mt-1.5 transition-colors"
+                >
+                  {project.description}
+                </Link>
+
+                {/* Tech stack badge pills */}
+                <div className="flex items-center gap-1.5 flex-wrap mt-2.5">
+                  {project.tags.map((tag, tagIdx) => (
+                    <span
+                      key={tagIdx}
+                      className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-neutral-900/90 border border-neutral-800 text-[11px] text-neutral-300 select-none"
+                    >
+                      {tag.icon}
+                      <span>{tag.name}</span>
+                    </span>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-
-      </section>
-
-      {/* 3.8. MY EXPERTISE SECTION */}
-      <section className="relative z-10 max-w-6xl mx-auto px-3 sm:px-6 py-20 -mt-10">
-        
-        {/* Section Header */}
-        <div className="flex flex-col items-center text-center mb-12 select-none">
-          <span className="text-xs font-regular tracking-[0.2em] text-zinc-500 uppercase">
-            MY EXPERTISE
-          </span>
-          <h2 className="text-2xl md:text-5xl font-medium tracking-tight text-zinc-950 mt-3 uppercase">
-            DESIGNING WITH PURPOSE, <br /> BUILDING WITH PRECISION
-          </h2>
-        </div>
-
-        {/* GitHub Contribution Activity Table */}
-        <div className="w-full mb-10">
-          <GitHubContributions />
-        </div>
-
-        {/* Skills Badges Container */}
-        <div className="w-full flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 select-none">
-          {PRIMARY_SKILLS.map((skill) => (
-            <span
-              key={skill}
-              className="bg-[#2d2d30] hover:bg-[#1a1a1c] text-white text-sm sm:text-[15px] font-normal px-4 py-2 rounded-[10px] shadow-sm transition-all duration-200 cursor-default"
-            >
-              {skill}
-            </span>
-          ))}
-
-          {showMoreSkills &&
-            ADDITIONAL_SKILLS.map((skill) => (
-              <span
-                key={skill}
-                className="bg-[#2d2d30] hover:bg-[#1a1a1c] text-white text-sm sm:text-[15px] font-normal px-4 py-2 rounded-[10px] shadow-sm transition-all duration-200 cursor-default animate-in fade-in zoom-in-95 duration-200"
-              >
-                {skill}
-              </span>
             ))}
+          </div>
 
-          {/* Expand / Collapse Button */}
-          <button
-            type="button"
-            onClick={() => setShowMoreSkills(!showMoreSkills)}
-            className="text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200 text-sm sm:text-[15px] font-medium px-3 py-2 transition-colors duration-200 cursor-pointer flex items-center gap-1 active:scale-95"
-          >
-            {showMoreSkills ? "− Less" : "+ More"}
-          </button>
-        </div>
-      </section>
-
-      {/* 3.9. CAREER JOURNEY SECTION */}
-      <section className="relative z-10 max-w-6xl mx-auto px-3 sm:px-6 py-20 -mt-10">
-        
-        {/* Section Header */}
-        <div className="flex flex-col items-center text-center mb-14 select-none">
-          <span className="text-xs font-regular tracking-[0.2em] text-zinc-500 uppercase">
-            Career Journey
-          </span>
-          <h2 className="text-2xl md:text-5xl font-medium tracking-tight text-zinc-950 mt-3 uppercase">
-            Work Experience
-          </h2>
-        </div>
-
-        {/* Experience List Table */}
-        <div className="w-full flex flex-col border-t border-zinc-200/80 dark:border-zinc-800/80 select-none">
-          {EXPERIENCES.map((exp, idx) => (
-            <div
-              key={idx}
-              className="flex flex-col items-center text-center sm:flex-row sm:items-center sm:justify-between sm:text-left py-6 sm:py-7 border-b border-zinc-200/80 dark:border-zinc-800/80 gap-1 sm:gap-0"
+          {/* Centered See all projects button */}
+          <div className="flex justify-center mt-8">
+            <a
+              href="#projects"
+              onClick={playClickSound}
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-lg bg-neutral-100 hover:bg-white text-neutral-900 text-xs font-medium transition-all shadow-sm active:scale-95 cursor-pointer"
             >
-              {/* Role */}
-              <span className="text-base sm:text-2xl font-normal text-rose-500 dark:text-rose-500">
-                {exp.role}
-              </span>
+              <span>See all projects</span>
+              <HugeiconsIcon
+                icon={ArrowRight01Icon}
+                size={14}
+              />
+            </a>
+          </div>
+        </section>
 
-              {/* Company & Date */}
-              <div className="flex flex-col items-center sm:items-end mt-1 sm:mt-0">
-                <span className="text-xl sm:text-2xl font-normal text-zinc-700 dark:text-rose-500">
-                  {exp.company}
-                </span>
-                <span className="text-xs sm:text-sm text-zinc-400 dark:text-black font-light mt-0.5">
-                  {exp.period}
-                </span>
-              </div>
+        {/* 9. SKILLS SECTION - Matching Screenshot Image 2 */}
+        <SkillsSection />
+
+        {/* 10. VENN DIAGRAM SECTION - Matching Screenshot Image 3 */}
+        <VennSection onBookCall={composeEmail} />
+
+        {/* 11. FOOTER SECTION - Matching Screenshot Image 4 */}
+        <Footer />
+
+      </main>
+
+      {/* COMMAND PALETTE MODAL (CMD+K SEARCH) */}
+      {searchOpen && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-150"
+          onClick={() => setSearchOpen(false)}
+        >
+          <div
+            className="w-full max-w-lg bg-[#0e0e12] border border-neutral-800 rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-150"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Search Input bar */}
+            <div className="flex items-center px-4 py-3 border-b border-neutral-800 gap-3">
+              <HugeiconsIcon icon={Search01Icon} size={16} className="text-neutral-400 flex-shrink-0" />
+              <input
+                ref={searchInputRef}
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Type a command or search..."
+                className="w-full bg-transparent text-sm text-white placeholder-neutral-500 focus:outline-none"
+              />
+              <kbd className="text-[10px] font-mono bg-neutral-800 px-1.5 py-0.5 rounded text-neutral-400 border border-neutral-700/60">
+                ESC
+              </kbd>
             </div>
-          ))}
+
+            {/* Results list */}
+            <div className="max-h-80 overflow-y-auto p-2 divide-y divide-neutral-900">
+              {searchResults.length > 0 ? (
+                searchResults.map((item, idx) => (
+                  <Link
+                    key={idx}
+                    href={item.href}
+                    target={item.isExternal ? "_blank" : undefined}
+                    onClick={() => {
+                      playClickSound();
+                      setSearchOpen(false);
+                      setSearchQuery("");
+                    }}
+                    className="flex items-center justify-between px-3 py-2.5 rounded-lg hover:bg-neutral-800/70 transition-colors text-xs group cursor-pointer"
+                  >
+                    <span className="text-neutral-200 group-hover:text-white font-medium">
+                      {item.title}
+                    </span>
+                    <span className="text-[11px] font-mono text-neutral-500 group-hover:text-neutral-400">
+                      {item.category}
+                    </span>
+                  </Link>
+                ))
+              ) : (
+                <div className="py-8 text-center text-xs text-neutral-500">
+                  No matching results found for &ldquo;{searchQuery}&rdquo;
+                </div>
+              )}
+            </div>
+          </div>
         </div>
-
-      </section>
-
-      {/* 4. PREMIUM DESIGNED FOOTER */}
-      <Footer />
+      )}
 
     </div>
   );

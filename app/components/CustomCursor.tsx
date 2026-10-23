@@ -111,18 +111,18 @@ export default function CustomCursor() {
         }`}
       >
         <svg
-          width="32"
-          height="32"
+          width="26"
+          height="26"
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="drop-shadow-[0_4px_10px_rgba(244,63,94,0.6)]"
+          className="drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
         >
           <path
-            d="M4.5 3L19.5 12L12 13.5L8.5 20.5L4.5 3Z"
-            fill="#f43f5e"
-            stroke="#ffffff"
-            strokeWidth="2.2"
+            d="M4 3L18.5 12.5L11.5 14L8 20.5L4 3Z"
+            fill="#ffffff"
+            stroke="#111111"
+            strokeWidth="1.8"
             strokeLinecap="round"
             strokeLinejoin="round"
           />

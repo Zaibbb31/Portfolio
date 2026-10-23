@@ -13,21 +13,58 @@ export interface ScreenRedesign {
   improvements: string[];
 }
 
+export interface ProjectSpecs {
+  productType: string;
+  dimensions?: string;
+  platform?: string;
+  weight?: string;
+  deliverables?: string;
+  finish?: string;
+  role?: string;
+  leadTime?: string;
+  timeline?: string;
+  designer?: string;
+  client?: string;
+  year?: string;
+}
+
+export interface ProjectObjectNotes {
+  heading: string;
+  description: string[];
+  specs: ProjectSpecs;
+}
+
+export interface ProjectMaterialMethod {
+  heading: string;
+  materialsFinish: string[];
+  productionMethod: string[];
+}
+
 export interface Project {
   id: string;
   title: string;
   category: string;
+  breadcrumb?: string;
+  tagline?: string;
   subtitle: string;
   description: string;
   client: string;
   date: string;
+  availability?: string;
   image: string;
+  heroImage?: string;
   mobileImage?: string;
   imageFit?: "cover" | "contain";
   logo?: string;
   buttonText?: string;
+  liveUrl?: string;
+  codeUrl?: string;
   tags: string[];
   iconBg: string;
+  gridImages?: string[];
+  fullWidthImage?: string;
+  objectNotes?: ProjectObjectNotes;
+  materialMethod?: ProjectMaterialMethod;
   meta: {
     headquarters?: string;
     founded?: string;
@@ -58,6 +95,168 @@ export interface Project {
 }
 
 export const PROJECTS: Project[] = [
+  {
+    id: "icodraw",
+    title: "Icodraw",
+    category: "Developer Tool & Screen Annotation",
+    breadcrumb: "Projects / Developer Tool",
+    tagline: "A lightweight screen-capture and visual annotation tool for macOS and Web.",
+    subtitle: "Streamlined screenshot capture, vector annotations, and instant clipboard sharing designed for engineers and designers.",
+    description:
+      "Engineered from scratch to solve friction in screenshot workflows. Allows creators to capture windows, draw arrows, blur sensitive data, and export clean graphics in seconds.",
+    client: "Open Source Tool",
+    date: "2026",
+    availability: "Public Beta (v1.2)",
+    image: "/projects/icodraw.svg",
+    heroImage: "/projects/icodraw.svg",
+    liveUrl: "https://icodraw.vercel.app",
+    codeUrl: "https://github.com/Zaibbb31",
+    tags: ["TypeScript", "React", "Vite", "TailwindCSS", "Canvas API"],
+    iconBg: "bg-indigo-500",
+    gridImages: [
+      "/projects/icodraw.svg",
+      "/projects/noto-device.jpg",
+      "/projects/quantum-ui.jpg",
+      "/projects/noto-cafe.jpg",
+    ],
+    fullWidthImage: "/projects/icodraw.svg",
+    objectNotes: {
+      heading: "Precision Screen Annotation, Zero Friction",
+      description: [
+        "Traditional screenshot tools are either bloated with unnecessary cloud synchronization features or lack fine typographic controls.",
+        "Icodraw was built with a canvas-first philosophy: instant startup, localized GPU acceleration, and tactile controls that allow annotating bug reports and UI mockups in under 5 seconds.",
+      ],
+      specs: {
+        productType: "Web & Desktop Application",
+        dimensions: "1920x1080 (Responsive UI)",
+        platform: "macOS, Web (Chromium & Gecko)",
+        weight: "Under 120KB gzipped",
+        deliverables: "Architecture, UI Design, Canvas Engine",
+        finish: "Dark Mode with Glassmorphism",
+        role: "Creator & Lead Design Engineer",
+        leadTime: "Active Production",
+        timeline: "2026",
+        designer: "Zaib",
+        client: "Independent Open Source",
+        year: "2026",
+      },
+    },
+    materialMethod: {
+      heading: "Vector Canvas Architecture & Native Performance",
+      materialsFinish: [
+        "Engineered a lightweight 2D canvas renderer supporting non-destructive annotation layers.",
+        "Custom bezier spline smoothing for natural stylus and trackpad drawing curves.",
+        "Instant clipboard integration using navigator.clipboard.write with zero lag.",
+      ],
+      productionMethod: [
+        "Component-driven design system built with Vite and Tailwind CSS for instant HMR.",
+        "Automated web-worker pipeline for client-side WebP, PNG, and SVG vector exports.",
+        "Zero telemetry, 100% offline-capable architecture with zero cloud dependency.",
+      ],
+    },
+    meta: {
+      role: "Lead Design Engineer",
+      platform: "Web & macOS",
+      focus: "Canvas Rendering, UI/UX Design, Interaction Polish",
+      timeline: "2026",
+      industry: "Developer Utilities & Creative Tools",
+    },
+    challenge:
+      "Engineers and designers needed a distraction-free screen annotation tool that respects user privacy without heavy sign-in friction.",
+    results:
+      "Delivered a zero-friction, client-side annotation utility used across developer communities with sub-10ms render latency.",
+    metrics: [
+      { value: "0ms", label: "Server latency (100% Client-side)" },
+      { value: "<120KB", label: "Total bundle footprint" },
+      { value: "5 sec", label: "Avg capture-to-clipboard time" },
+    ],
+    gallery: ["/projects/icodraw.svg"],
+    process: [
+      { step: "Canvas Engine Prototyping", description: "Built customized vector path math and smoothing algorithms." },
+      { step: "Tactile Control Design", description: "Designed high-contrast toolbars and color swatch palette selectors." },
+    ],
+  },
+  {
+    id: "paperlab",
+    title: "Paperlab",
+    category: "Document Utilities & Client Compute",
+    breadcrumb: "Projects / Web Application",
+    tagline: "46 PDF tools that run entirely in the browser — merge, split, compress, and convert with total privacy.",
+    subtitle: "A private, zero-server document suite where sensitive PDFs never leave the client device.",
+    description:
+      "Designed and engineered to eliminate security risks in document management. Every file operation runs locally via WebAssembly and Web Workers.",
+    client: "Open Source Suite",
+    date: "2026",
+    availability: "Live on Web",
+    image: "/projects/paperlab.svg",
+    heroImage: "/projects/paperlab.svg",
+    liveUrl: "https://paperlab.vercel.app",
+    codeUrl: "https://github.com/Zaibbb31",
+    tags: ["TypeScript", "Next.js", "TailwindCSS", "pdf-lib", "WebAssembly"],
+    iconBg: "bg-blue-500",
+    gridImages: [
+      "/projects/paperlab.svg",
+      "/projects/quantum-ui.jpg",
+      "/projects/noto-device.jpg",
+      "/projects/noto-cafe.jpg",
+    ],
+    fullWidthImage: "/projects/paperlab.svg",
+    objectNotes: {
+      heading: "Total Privacy, 46 Tools, One Click",
+      description: [
+        "Most commercial PDF tools require uploading confidential files to remote servers, introducing security vulnerabilities and recurring subscription fees.",
+        "Paperlab executes all 46 document operations entirely on the client side using WebAssembly and Web Workers, providing enterprise-grade utility with unconditional privacy.",
+      ],
+      specs: {
+        productType: "Next.js Web Application",
+        dimensions: "Full-width Responsive Grid",
+        platform: "Web (Mobile & Desktop)",
+        weight: "Client-side WASM Memory Sandbox",
+        deliverables: "UX Architecture, Interface Design, Client-Side Engine",
+        finish: "Minimal Dark/Light Responsive UI",
+        role: "Full-Stack Design Engineer",
+        leadTime: "Immediate Client Compute",
+        timeline: "2026",
+        designer: "Zaib",
+        client: "Paperlab Labs",
+        year: "2026",
+      },
+    },
+    materialMethod: {
+      heading: "Client-Side Compute & Micro-interaction Design",
+      materialsFinish: [
+        "Custom drag-and-drop document arranger with real-time page reordering and split previews.",
+        "WebAssembly compilation of low-level PDF manipulation libraries for native-speed processing.",
+        "Subtle micro-interactions and tactile feedback on batch conversions and compression operations.",
+      ],
+      productionMethod: [
+        "Next.js App Router with server-side rendering for instant SEO and client-side processing.",
+        "Strict zero-network architecture: file uploads are sandboxed in IndexedDB and memory buffers.",
+        "Responsive accessibility compliance matching WCAG AAA standards.",
+      ],
+    },
+    meta: {
+      role: "Design Engineer",
+      platform: "Web Application",
+      focus: "UX Design, WASM Integration, Privacy Architecture",
+      timeline: "2026",
+      industry: "Productivity & Document Processing",
+    },
+    challenge:
+      "Handling sensitive financial and legal PDFs securely without compromising on feature breadth or processing speeds.",
+    results:
+      "Enabled instant, local PDF conversions with zero server bandwidth costs and 100% data confidentiality.",
+    metrics: [
+      { value: "46", label: "Client-side PDF utilities" },
+      { value: "0 bytes", label: "Files transmitted to cloud" },
+      { value: "100%", label: "Private & offline capable" },
+    ],
+    gallery: ["/projects/paperlab.svg"],
+    process: [
+      { step: "Tool Taxonomy & Flow Design", description: "Structured 46 operations into 4 intuitive categories." },
+      { step: "Engine & Worker Pipeline", description: "Configured multi-threaded Web Workers for background document processing." },
+    ],
+  },
   {
     id: "ama-connect",
     title: "AMA Connect | Pro Bono Legal Aid Mobile App",

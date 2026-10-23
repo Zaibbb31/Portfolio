@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { PROJECTS } from "../../data/projects";
-import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 
 interface Props {
@@ -19,487 +18,466 @@ export async function generateStaticParams() {
 
 export default async function ProjectSlugPage({ params }: Props) {
   const { slug } = await params;
-  const project = PROJECTS.find((p) => p.id === slug);
+  const projectIndex = PROJECTS.findIndex((p) => p.id === slug);
+  const project = PROJECTS[projectIndex];
 
   if (!project) {
     notFound();
   }
 
+  // Next project for pagination
+  const nextProject = PROJECTS[(projectIndex + 1) % PROJECTS.length];
+
+  // Grid images fallback
+  const gridImages = project.gridImages && project.gridImages.length >= 4
+    ? project.gridImages
+    : [
+        project.image,
+        project.heroImage || project.image,
+        "/projects/quantum-ui.jpg",
+        "/projects/noto-device.jpg",
+      ];
+
+  // Full-width banner image fallback
+  const fullWidthImg = project.fullWidthImage || project.heroImage || project.image;
+
+  // Object notes fallback
+  const objectNotes = project.objectNotes || {
+    heading: project.tagline || project.subtitle || "Architected with precision & focus",
+    description: [
+      project.description,
+      project.challenge || "Designed from the ground up to solve complex workflows into minimal, tactile, and intuitive interactions.",
+    ],
+    specs: {
+      productType: project.category,
+      dimensions: "Responsive Web / Native",
+      platform: project.meta.platform || "Web & Mobile",
+      weight: "Sub-100ms Interaction Latency",
+      deliverables: "Design System, UI/UX, Front-End Architecture",
+      finish: "Dark-mode Precision Aesthetic",
+      role: project.meta.role || "Product Designer & Developer",
+      leadTime: "Immediate Availability",
+      timeline: project.meta.timeline || project.date || "2025 – 2026",
+      designer: "Zaib",
+      client: project.client || "Independent Project",
+      year: project.date || "2026",
+    },
+  };
+
+  // Material & Method fallback
+  const materialMethod = project.materialMethod || {
+    heading: "Design Architecture & Engineering Method",
+    materialsFinish: [
+      "Custom tokenized typography system using Instrument Serif and Inter.",
+      "High-contrast dark color palette engineered for readability and long sessions.",
+      "Custom vector iconography and tactile card micro-interactions.",
+      "Tested and verified against WCAG AAA contrast standards.",
+    ],
+    productionMethod: [
+      "Next.js App Router architecture with optimized server-side asset delivery.",
+      "Strict zero-latency UI interactions with hardware-accelerated animations.",
+      "Responsive fluid layout spanning mobile through ultrawide displays.",
+      "Iterative user feedback loops integrated through rapid prototyping.",
+    ],
+  };
+
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-[#ffffff] text-zinc-950 font-sans transition-colors duration-500 selection:bg-rose-500 selection:text-white">
-      
-      {/* 1. Navbar from Homepage */}
-      <Navbar />
-
-      {/* 2. Subtle Grid Background Overlay */}
-      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:32px_32px]" />
-      </div>
-
-      {/* 3. Main Case Study Content */}
-      <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 pt-32 pb-28">
+    <div className="relative min-h-screen w-full bg-[#000000] text-[#ededed] font-sans selection:bg-neutral-800 selection:text-white">
+      {/* MAIN CONTAINER: exact max-w-4xl with vertical borders matching portfolio */}
+      <main className="w-full max-w-4xl mx-auto border-x border-neutral-800/80 bg-[#000000] min-h-screen flex flex-col relative">
         
-        {/* Top Breadcrumb Navigation */}
-        <div className="flex items-center justify-between mb-8 select-none">
+        {/* 1. TOP HEADER / NAVBAR (Flush within container borders) */}
+        <header className="sticky top-0 z-40 w-full px-5 sm:px-8 py-3.5 flex items-center justify-between border-b border-neutral-800/80 bg-[#000000]/90 backdrop-blur-md select-none">
+          {/* Back to all projects */}
           <Link
             href="/#projects"
-            className="inline-flex items-center gap-2 text-xs font-mono font-medium text-zinc-500 hover:text-rose-500 transition-colors uppercase tracking-wider group"
+            className="inline-flex items-center gap-2 text-xs font-mono font-medium text-neutral-400 hover:text-white transition-colors uppercase tracking-wider group"
           >
-            <span className="w-6 h-6 rounded-full bg-zinc-100 flex items-center justify-center group-hover:bg-rose-50 transition-colors">
-              <svg className="w-3.5 h-3.5 text-zinc-600 group-hover:text-rose-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <span className="w-5 h-5 rounded-full bg-neutral-900 border border-neutral-700/80 flex items-center justify-center group-hover:border-neutral-500 transition-colors">
+              <svg
+                className="w-3 h-3 text-neutral-300 group-hover:text-white transition-transform group-hover:-translate-x-0.5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
               </svg>
             </span>
-            <span>Back to All Projects</span>
+            <span>Back to Projects</span>
           </Link>
 
-          <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-rose-500 font-semibold px-3 py-1 bg-rose-50/80 rounded-full border border-rose-100">
-            {project.category}
-          </span>
-        </div>
-
-        {/* Project Header Title & Overview */}
-        <div className="flex flex-col gap-5 mb-12">
-          {project.logo && (
-            <div className="relative w-44 h-12">
-              <Image
-                src={project.logo}
-                alt={`${project.title} logo`}
-                fill
-                className="object-contain object-left"
-                priority
-              />
-            </div>
-          )}
-
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-medium tracking-tight text-zinc-950 font-outfit uppercase leading-[1.05]">
-            {project.title}
-          </h1>
-          
-          <p className="text-base sm:text-xl text-zinc-600 leading-relaxed max-w-3xl font-normal">
-            {project.subtitle || project.description}
-          </p>
-        </div>
-
-        {/* Project Metadata Strip (Editorial Table) */}
-        {(!project.screens || project.screens.length === 0) && (
-          <div className="w-full bg-[#fbfbfb] border border-zinc-200/80 rounded-2xl p-5 sm:p-7 grid grid-cols-2 sm:grid-cols-4 gap-6 mb-14 select-none">
-            {project.client && (
-              <div>
-                <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-400 font-semibold block mb-1.5">
-                  Client
-                </span>
-                <span className="text-sm font-semibold text-zinc-900">{project.client}</span>
-              </div>
-            )}
-
-            {project.meta?.role && (
-              <div>
-                <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-400 font-semibold block mb-1.5">
-                  Role
-                </span>
-                <span className="text-sm font-semibold text-zinc-900">{project.meta.role}</span>
-              </div>
-            )}
-
-            {project.meta?.focus && (
-              <div>
-                <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-400 font-semibold block mb-1.5">
-                  Focus
-                </span>
-                <span className="text-sm font-semibold text-zinc-900">{project.meta.focus}</span>
-              </div>
-            )}
-
-            {project.date && (
-              <div>
-                <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-400 font-semibold block mb-1.5">
-                  Timeline
-                </span>
-                <span className="text-sm font-semibold text-zinc-900">{project.date}</span>
-              </div>
-            )}
-          </div>
-        )}
-
-        {!project.screens || project.screens.length === 0 ? (
-          <>
-            {/* Hero Showcase Preview Frame */}
-            <div className="relative w-full h-[340px] sm:h-[480px] md:h-[580px] bg-zinc-950 rounded-[32px] overflow-hidden border border-zinc-200/80 mb-20 shadow-xl flex items-center justify-center">
-              {project.mobileImage ? (
-                <>
-                  <div className="block md:hidden absolute inset-0">
-                    <Image
-                      src={project.mobileImage}
-                      alt={project.title}
-                      fill
-                      sizes="100vw"
-                      className="object-cover"
-                      priority
-                    />
-                  </div>
-                  <div className="hidden md:block absolute inset-0">
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      sizes="1024px"
-                      className="object-cover"
-                      priority
-                    />
-                  </div>
-                </>
-              ) : (
+          {/* Center/Right Brand & Category Pill */}
+          <div className="flex items-center gap-3">
+            <span className="text-[11px] font-mono uppercase tracking-wider text-neutral-400 px-2.5 py-1 rounded-full bg-neutral-900/80 border border-neutral-800 hidden sm:inline-block">
+              {project.category}
+            </span>
+            <Link
+              href="/"
+              className="flex items-center select-none group"
+              aria-label="Home"
+            >
+              <div className="relative h-6 w-12 flex items-center">
                 <Image
-                  src={project.image}
-                  alt={project.title}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 1024px"
-                  className="object-cover"
+                  src="/logoblack.svg"
+                  alt="Zaib Logo"
+                  width={48}
+                  height={24}
+                  className="object-contain h-5 w-auto transition-transform duration-200 group-hover:scale-105"
                   priority
                 />
+              </div>
+            </Link>
+          </div>
+        </header>
+
+        {/* 2. TOP HERO SECTION (Split Studio Image & Details) */}
+        <section className="relative w-full flex flex-col md:flex-row items-stretch border-b border-neutral-800/80 overflow-hidden bg-black">
+          {/* Left Studio Image */}
+          <div className="w-full md:w-[50%] relative min-h-[360px] sm:min-h-[460px] md:min-h-[500px] bg-neutral-950 md:border-r border-neutral-800/80 overflow-hidden group">
+            <Image
+              src={project.heroImage || project.image}
+              alt={project.title}
+              fill
+              priority
+              className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+              sizes="(max-width: 768px) 100vw, 480px"
+            />
+            {/* Subtle Gradient Vignette */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+          </div>
+
+          {/* Right Hero Details */}
+          <div className="w-full md:w-[50%] p-6 sm:p-8 lg:p-10 flex flex-col justify-between bg-black">
+            <div className="flex flex-col gap-4">
+              {/* Breadcrumb & Production Status */}
+              <div className="flex items-center justify-between gap-2 text-xs font-mono text-neutral-500 uppercase tracking-widest">
+                <span>{project.breadcrumb || `Projects / ${project.id}`}</span>
+                <span className="flex items-center gap-1.5 text-neutral-400">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  {project.availability || "Production"}
+                </span>
+              </div>
+
+              {/* Heading in Instrument Serif */}
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-normal font-instrument text-white leading-[1.08] tracking-tight mt-1">
+                {project.title}
+              </h1>
+
+              {/* Tagline / Subtitle */}
+              <p className="text-sm sm:text-base text-neutral-400 leading-relaxed font-normal">
+                {project.tagline || project.subtitle || project.description}
+              </p>
+
+              {/* Tags */}
+              {project.tags && project.tags.length > 0 && (
+                <div className="flex flex-wrap gap-1.5 pt-1">
+                  {project.tags.map((tag, idx) => (
+                    <span
+                      key={idx}
+                      className="px-2.5 py-1 text-[11px] font-mono text-neutral-400 rounded-md bg-neutral-900 border border-neutral-800/80"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               )}
             </div>
 
-            {/* ======================================================== */}
-            {/* SECTION 01: THE CHALLENGE (SPLIT EDITORIAL LAYOUT) */}
-            {/* ======================================================== */}
-            <section className="w-full border-t border-zinc-200/80 pt-12 pb-16 grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-12">
-              <div className="md:col-span-4 select-none">
-                <span className="text-xs font-mono font-bold text-rose-500 uppercase tracking-widest block mb-2">
-                  01 / The Challenge
-                </span>
-                <h2 className="text-2xl sm:text-3xl font-medium text-zinc-950 font-outfit uppercase tracking-tight">
-                  Context &amp; Obstacles
-                </h2>
-              </div>
+            {/* Action Buttons */}
+            <div className="flex flex-wrap items-center gap-3 pt-6 mt-6 border-t border-neutral-800/80">
+              {project.liveUrl && (
+                <a
+                  href={project.liveUrl}
+                  target={project.liveUrl.startsWith("http") ? "_blank" : undefined}
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white text-black hover:bg-neutral-200 text-xs sm:text-sm font-medium transition-all shadow-sm active:scale-95 cursor-pointer"
+                >
+                  <span>Launch Live</span>
+                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </a>
+              )}
 
-              <div className="md:col-span-8 flex flex-col gap-4">
-                <p className="text-base sm:text-lg text-zinc-600 leading-relaxed font-normal">
-                  {project.challenge}
-                </p>
-              </div>
-            </section>
+              {project.codeUrl && (
+                <a
+                  href={project.codeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-neutral-900 border border-neutral-700 hover:border-neutral-500 text-neutral-200 text-xs sm:text-sm font-medium transition-all shadow-sm active:scale-95 cursor-pointer"
+                >
+                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                    <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                  </svg>
+                  <span>Source Code</span>
+                </a>
+              )}
 
-            {/* ======================================================== */}
-            {/* SECTION 02: DESIGN GOALS */}
-            {/* ======================================================== */}
-            {project.designGoals && project.designGoals.length > 0 && (
-              <section className="w-full border-t border-zinc-200/80 pt-12 pb-16 grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-12">
-                <div className="md:col-span-4 select-none">
-                  <span className="text-xs font-mono font-bold text-rose-500 uppercase tracking-widest block mb-2">
-                    02 / Objectives
-                  </span>
-                  <h2 className="text-2xl sm:text-3xl font-medium text-zinc-950 font-outfit uppercase tracking-tight">
-                    Design Goals
-                  </h2>
-                </div>
+              <a
+                href="mailto:zaib7@example.com?subject=Inquiry about "
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-neutral-800 hover:border-neutral-600 text-neutral-400 hover:text-white text-xs sm:text-sm font-medium transition-colors"
+              >
+                <span>Enquire</span>
+              </a>
+            </div>
+          </div>
+        </section>
 
-                <div className="md:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                  {project.designGoals.map((goal, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-center gap-3 p-4 rounded-2xl bg-[#fafafa] border border-zinc-200/60 hover:border-zinc-300 transition-colors select-none"
-                    >
-                      <div className="w-6 h-6 rounded-full bg-rose-500/10 flex items-center justify-center flex-shrink-0">
-                        <svg className="w-3.5 h-3.5 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                        </svg>
-                      </div>
-                      <span className="text-sm font-medium text-zinc-800">{goal}</span>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            )}
-
-            {/* ======================================================== */}
-            {/* SECTION 03: KEY UX IMPROVEMENTS */}
-            {/* ======================================================== */}
-            {project.keyImprovements && project.keyImprovements.length > 0 && (
-              <section className="w-full border-t border-zinc-200/80 pt-12 pb-16 grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-12">
-                <div className="md:col-span-4 select-none">
-                  <span className="text-xs font-mono font-bold text-rose-500 uppercase tracking-widest block mb-2">
-                    03 / Enhancements
-                  </span>
-                  <h2 className="text-2xl sm:text-3xl font-medium text-zinc-950 font-outfit uppercase tracking-tight">
-                    Key UX Improvements
-                  </h2>
-                </div>
-
-                <div className="md:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {project.keyImprovements.map((item, idx) => (
-                    <div
-                      key={idx}
-                      className="p-6 rounded-2xl bg-white border border-zinc-200/80 shadow-xs flex flex-col justify-between hover:border-zinc-400 transition-all hover:shadow-sm"
-                    >
-                      <div>
-                        <div className="flex items-center justify-between mb-3 select-none">
-                          <span className="text-xs font-mono font-extrabold text-rose-500 tracking-wider">
-                            {item.num}
-                          </span>
-                          <div className="w-1.5 h-1.5 rounded-full bg-rose-500" />
-                        </div>
-                        <h3 className="text-base font-semibold text-zinc-950 mb-2 font-outfit">
-                          {item.title}
-                        </h3>
-                        <p className="text-xs sm:text-sm text-zinc-600 leading-relaxed font-normal">
-                          {item.description}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            )}
-
-            {/* ======================================================== */}
-            {/* SECTION 04: INFORMATION ARCHITECTURE */}
-            {/* ======================================================== */}
-            {project.informationArchitecture && project.informationArchitecture.length > 0 && (
-              <section className="w-full border-t border-zinc-200/80 pt-12 pb-16 grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-12">
-                <div className="md:col-span-4 select-none">
-                  <span className="text-xs font-mono font-bold text-rose-500 uppercase tracking-widest block mb-2">
-                    04 / User Journey
-                  </span>
-                  <h2 className="text-2xl sm:text-3xl font-medium text-zinc-950 font-outfit uppercase tracking-tight">
-                    Information Architecture
-                  </h2>
-                </div>
-
-                <div className="md:col-span-8 flex flex-wrap items-center gap-2 sm:gap-3">
-                  {project.informationArchitecture.map((step, idx) => (
-                    <div key={idx} className="flex items-center gap-2 sm:gap-3 select-none">
-                      <div className="px-4 py-2.5 rounded-xl bg-zinc-950 text-white text-xs sm:text-sm font-medium font-mono shadow-sm">
-                        {step}
-                      </div>
-                      {idx < (project.informationArchitecture?.length ?? 0) - 1 && (
-                        <span className="text-rose-500 font-bold text-base">→</span>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </section>
-            )}
-
-            {/* ======================================================== */}
-            {/* SECTION 05: VISUAL & INTERACTION DESIGN */}
-            {/* ======================================================== */}
-            {project.visualDesignPoints && project.visualDesignPoints.length > 0 && (
-              <section className="w-full border-t border-zinc-200/80 pt-12 pb-16 grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-12">
-                <div className="md:col-span-4 select-none">
-                  <span className="text-xs font-mono font-bold text-rose-500 uppercase tracking-widest block mb-2">
-                    05 / Visual System
-                  </span>
-                  <h2 className="text-2xl sm:text-3xl font-medium text-zinc-950 font-outfit uppercase tracking-tight">
-                    Visual &amp; Interaction Design
-                  </h2>
-                </div>
-
-                <div className="md:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                  {project.visualDesignPoints.map((point, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-center gap-3 p-4 rounded-2xl bg-[#fafafa] border border-zinc-200/60 select-none"
-                    >
-                      <div className="w-2 h-2 rounded-full bg-rose-500 flex-shrink-0" />
-                      <span className="text-sm font-medium text-zinc-800">{point}</span>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            )}
-
-            {/* ======================================================== */}
-            {/* UX PRINCIPLE STATEMENT BANNER */}
-            {/* ======================================================== */}
-            {project.uxPrinciple && (
-              <div className="w-full bg-gradient-to-br from-zinc-950 via-[#121215] to-zinc-950 border border-zinc-800 rounded-[28px] p-8 sm:p-14 text-center text-white my-8 shadow-2xl select-none">
-                <span className="text-xs font-mono font-bold tracking-[0.25em] text-rose-500 uppercase block mb-4">
-                  Core UX Principle
-                </span>
-                <blockquote className="text-2xl sm:text-4xl md:text-5xl font-medium tracking-tight font-outfit text-white leading-tight">
-                  “{project.uxPrinciple}”
-                </blockquote>
-              </div>
-            )}
-
-            {/* ======================================================== */}
-            {/* SECTION 06: OUTCOME & RESULTS */}
-            {/* ======================================================== */}
-            <section className="w-full border-t border-zinc-200/80 pt-12 pb-16 grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-12">
-              <div className="md:col-span-4 select-none">
-                <span className="text-xs font-mono font-bold text-rose-500 uppercase tracking-widest block mb-2">
-                  06 / The Impact
-                </span>
-                <h2 className="text-2xl sm:text-3xl font-medium text-zinc-950 font-outfit uppercase tracking-tight">
-                  Outcome &amp; Results
-                </h2>
-              </div>
-
-              <div className="md:col-span-8 flex flex-col gap-8">
-                <p className="text-base sm:text-lg text-zinc-700 leading-relaxed font-normal">
-                  {project.outcome || project.results}
-                </p>
-
-                {/* Impact Metric Cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 select-none">
-                  {project.metrics.map((metric, i) => (
-                    <div
-                      key={i}
-                      className="flex flex-col p-6 rounded-2xl bg-white border border-zinc-200/80 shadow-xs hover:border-zinc-300 transition-colors"
-                    >
-                      <span className="text-3xl sm:text-4xl font-semibold text-rose-500 tracking-tight font-outfit mb-1.5">
-                        {metric.value}
-                      </span>
-                      <span className="text-xs text-zinc-600 leading-normal font-medium">
-                        {metric.label}
-                      </span>
-                    </div>
-                  ))}
+        {/* 3. 2x2 IMAGE GRID SECTION */}
+        <section className="w-full border-b border-neutral-800/80 bg-black">
+          <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-neutral-800/80">
+            {gridImages.slice(0, 4).map((img, idx) => (
+              <div
+                key={idx}
+                className={`relative w-full aspect-[4/3] overflow-hidden bg-neutral-950 group ${
+                  idx >= 2 ? "sm:border-t sm:border-neutral-800/80" : ""
+                }`}
+              >
+                <Image
+                  src={img}
+                  alt={`${project.title} detail ${idx + 1}`}
+                  fill
+                  className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                  sizes="(max-width: 640px) 100vw, 480px"
+                />
+                {/* Index tag */}
+                <div className="absolute top-3.5 left-3.5 px-2 py-0.5 rounded bg-black/70 backdrop-blur-md border border-white/10 text-[10px] font-mono text-neutral-300">
+                  0{idx + 1}
                 </div>
               </div>
-            </section>
+            ))}
+          </div>
+        </section>
 
-            {/* PROCESS & EXECUTION METHODOLOGY */}
-            {project.process && project.process.length > 0 && (
-              <section className="w-full border-t border-zinc-200/80 pt-12 pb-16 grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-12">
-                <div className="md:col-span-4 select-none">
-                  <span className="text-xs font-mono font-bold text-rose-500 uppercase tracking-widest block mb-2">
-                    Methodology
-                  </span>
-                  <h2 className="text-2xl sm:text-3xl font-medium text-zinc-950 font-outfit uppercase tracking-tight">
-                    Process &amp; Execution
-                  </h2>
-                </div>
+        {/* 4. FULL-WIDTH SHOWCASE IMAGE */}
+        <section className="relative w-full aspect-[16/9] sm:h-[420px] md:h-[480px] border-b border-neutral-800/80 overflow-hidden bg-neutral-950 group">
+          <Image
+            src={fullWidthImg}
+            alt={`${project.title} full showcase`}
+            fill
+            className="object-cover object-center group-hover:scale-102 transition-transform duration-700 ease-out"
+            sizes="(max-width: 1024px) 100vw, 896px"
+          />
+          <div className="absolute bottom-4 left-5 sm:left-8 px-3 py-1 rounded-full bg-black/80 backdrop-blur-md border border-neutral-700/80 text-xs font-mono text-neutral-300">
+            Full-width Architectural Preview
+          </div>
+        </section>
 
-                <div className="md:col-span-8 flex flex-col gap-6">
-                  {project.process.map((item, idx) => (
-                    <div key={idx} className="flex flex-col gap-1.5 border-b border-zinc-100 pb-5 last:border-0 last:pb-0">
-                      <span className="font-semibold text-zinc-950 flex items-center gap-2.5 font-outfit text-base">
-                        <span className="w-2 h-2 rounded-full bg-rose-500" />
-                        {item.step}
-                      </span>
-                      <p className="text-sm sm:text-base text-zinc-600 pl-4 leading-relaxed font-normal">
-                        {item.description}
-                      </p>
-                    </div>
-                  ))}
+        {/* 5. OBJECT NOTES / SPECIFICATIONS SECTION */}
+        <section className="p-6 sm:p-10 border-b border-neutral-800/80 bg-black">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
+            {/* Left Column: Heading & Narrative */}
+            <div className="lg:col-span-6 flex flex-col justify-start">
+              <span className="text-xs font-mono uppercase tracking-widest text-neutral-500 mb-2 block">
+                Object Notes
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-normal font-instrument text-white leading-tight mb-5">
+                {objectNotes.heading}
+              </h2>
+              <div className="space-y-4 text-sm sm:text-base text-neutral-400 leading-relaxed font-normal">
+                {objectNotes.description.map((paragraph, pIdx) => (
+                  <p key={pIdx}>{paragraph}</p>
+                ))}
+              </div>
+            </div>
+
+            {/* Right Column: Specifications Table */}
+            <div className="lg:col-span-6">
+              <div className="border border-neutral-800/80 rounded-xl overflow-hidden divide-y divide-neutral-800/80 bg-neutral-950/40 text-xs sm:text-sm">
+                <div className="p-3.5 sm:p-4 flex items-center justify-between">
+                  <span className="text-neutral-500 font-mono">Product Type</span>
+                  <span className="text-white font-medium text-right">{objectNotes.specs.productType}</span>
                 </div>
-              </section>
-            )}
-          </>
-        ) : (
-          <div className="mt-16 flex flex-col gap-24">
-            {project.screens.map((screen, idx) => (
-              <section key={idx} className="w-full flex flex-col gap-6">
-                {/* Upper Heading */}
-                <h3 className="text-2xl sm:text-3xl font-medium text-zinc-950 font-outfit uppercase tracking-tight">
-                  {screen.title}
+                <div className="p-3.5 sm:p-4 flex items-center justify-between">
+                  <span className="text-neutral-500 font-mono">Platform</span>
+                  <span className="text-white font-medium text-right">{objectNotes.specs.platform}</span>
+                </div>
+                {objectNotes.specs.deliverables && (
+                  <div className="p-3.5 sm:p-4 flex items-center justify-between">
+                    <span className="text-neutral-500 font-mono">Deliverables</span>
+                    <span className="text-white font-medium text-right max-w-[60%] truncate">
+                      {objectNotes.specs.deliverables}
+                    </span>
+                  </div>
+                )}
+                <div className="p-3.5 sm:p-4 flex items-center justify-between">
+                  <span className="text-neutral-500 font-mono">Role</span>
+                  <span className="text-white font-medium text-right">{objectNotes.specs.role}</span>
+                </div>
+                <div className="p-3.5 sm:p-4 flex items-center justify-between">
+                  <span className="text-neutral-500 font-mono">Timeline</span>
+                  <span className="text-white font-medium text-right">{objectNotes.specs.timeline}</span>
+                </div>
+                <div className="p-3.5 sm:p-4 flex items-center justify-between">
+                  <span className="text-neutral-500 font-mono">Client</span>
+                  <span className="text-white font-medium text-right">{objectNotes.specs.client}</span>
+                </div>
+                <div className="p-3.5 sm:p-4 flex items-center justify-between">
+                  <span className="text-neutral-500 font-mono">Year</span>
+                  <span className="text-white font-medium text-right">{objectNotes.specs.year}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 6. MATERIAL / METHOD SECTION */}
+        <section className="p-6 sm:p-10 border-b border-neutral-800/80 bg-black">
+          <div className="flex flex-col gap-6">
+            <div className="border-b border-neutral-800/80 pb-4">
+              <span className="text-xs font-mono uppercase tracking-widest text-neutral-500 mb-1 block">
+                Design &amp; Execution
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-normal font-instrument text-white leading-tight">
+                {materialMethod.heading}
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 pt-2">
+              {/* Materials & Finish */}
+              <div className="flex flex-col gap-4">
+                <h3 className="text-sm font-mono uppercase tracking-wider text-neutral-300 flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-neutral-400" />
+                  Materials &amp; Finish
                 </h3>
-                
-                {/* Image on Top, Details Below Layout */}
-                <div className="flex flex-col gap-6 w-full">
-                  {/* Top Image Card */}
-                  <div className="w-full h-[350px] sm:h-[550px] md:h-[700px] flex items-center justify-center rounded-[32px] overflow-hidden border border-rose-500 bg-[#fbfbfb]/5 relative">
+                <ul className="space-y-3 text-xs sm:text-sm text-neutral-400 leading-relaxed">
+                  {materialMethod.materialsFinish.map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-2.5">
+                      <span className="text-neutral-600 font-mono mt-0.5">•</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Production Method */}
+              <div className="flex flex-col gap-4">
+                <h3 className="text-sm font-mono uppercase tracking-wider text-neutral-300 flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-neutral-400" />
+                  Production Method
+                </h3>
+                <ul className="space-y-3 text-xs sm:text-sm text-neutral-400 leading-relaxed">
+                  {materialMethod.productionMethod.map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-2.5">
+                      <span className="text-neutral-600 font-mono mt-0.5">•</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 7. DETAILED SCREENS SECTION (IF SCREEN REDESIGNS EXIST, E.G. AMA CONNECT / DRODRO) */}
+        {project.screens && project.screens.length > 0 && (
+          <section className="p-6 sm:p-10 border-b border-neutral-800/80 bg-black flex flex-col gap-12">
+            <div className="border-b border-neutral-800/80 pb-4">
+              <span className="text-xs font-mono uppercase tracking-widest text-neutral-500 mb-1 block">
+                Screen Analysis &amp; Redesigns
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-normal font-instrument text-white leading-tight">
+                Iterative Screen Breakdown
+              </h2>
+            </div>
+
+            <div className="flex flex-col gap-12">
+              {project.screens.map((screen, idx) => (
+                <div key={idx} className="flex flex-col gap-5 border border-neutral-800/80 rounded-2xl overflow-hidden bg-neutral-950/60 p-5 sm:p-7">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-lg sm:text-xl font-normal font-instrument text-white">
+                      {screen.title}
+                    </h3>
+                    <span className="text-xs font-mono text-neutral-500 uppercase tracking-widest">
+                      Screen 0{idx + 1}
+                    </span>
+                  </div>
+
+                  {/* Screen Frame */}
+                  <div className="relative w-full aspect-[16/10] sm:h-[440px] rounded-xl overflow-hidden bg-black border border-neutral-800 flex items-center justify-center">
                     <Image
                       src={screen.image}
                       alt={screen.title}
                       fill
-                      className="object-contain p-6 md:p-8"
-                      sizes="(max-width: 1280px) 100vw, 1280px"
-                      priority={idx < 2}
+                      className="object-contain p-4"
+                      sizes="(max-width: 768px) 100vw, 800px"
                     />
                   </div>
 
-                  {/* Bottom Content Card */}
-                  <div className="w-full bg-[#faf5f6] border border-rose-100/40 rounded-[32px] p-8 sm:p-10 flex flex-col justify-center">
-                    <div className="flex flex-col gap-6">
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-mono font-bold text-rose-500 uppercase tracking-widest py-1 rounded-full">
-                          Screen {idx + 1 < 10 ? `0${idx + 1}` : idx + 1}
-                        </span>
-                      </div>
-                      
-                      <p className="text-base sm:text-lg text-zinc-700 leading-relaxed font-normal">
-                        {screen.description}
-                      </p>
+                  <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed">
+                    {screen.description}
+                  </p>
 
-                      <div className="border-t border-rose-200/30 pt-6">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                          {/* Left Column: UX Flaws I Saw */}
-                          <div className="flex flex-col gap-4">
-                            <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-rose-500">
-                              UX Flaws I Saw
-                            </h4>
-                            <ul className="flex flex-col gap-3">
-                              {screen.flaws && screen.flaws.map((flaw, fIdx) => (
-                                <li
-                                  key={fIdx}
-                                  className="flex items-start gap-2.5 text-sm text-zinc-600 font-medium select-none animate-fade-in"
-                                >
-                                  <svg className="w-4 h-4 text-rose-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                                  </svg>
-                                  <span>{flaw}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-
-                          {/* Right Column: What I Did Better */}
-                          <div className="flex flex-col gap-4 border-t md:border-t-0 md:border-l border-rose-200/20 pt-6 md:pt-0 md:pl-8">
-                            <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-600">
-                              What I Did Better
-                            </h4>
-                            <ul className="flex flex-col gap-3">
-                              {screen.improvements && screen.improvements.map((imp, iIdx) => (
-                                <li
-                                  key={iIdx}
-                                  className="flex items-start gap-2.5 text-sm text-zinc-700 font-medium select-none animate-fade-in"
-                                >
-                                  <svg className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                                  </svg>
-                                  <span>{imp}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-3 border-t border-neutral-800/80">
+                    <div className="flex flex-col gap-2">
+                      <span className="text-xs font-mono uppercase tracking-wider text-rose-400">
+                        UX Friction Identified
+                      </span>
+                      <ul className="space-y-1.5 text-xs text-neutral-400">
+                        {screen.flaws?.map((f, fIdx) => (
+                          <li key={fIdx} className="flex items-start gap-2">
+                            <span className="text-rose-500 mt-0.5">•</span>
+                            <span>{f}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <span className="text-xs font-mono uppercase tracking-wider text-emerald-400">
+                        Solution Implemented
+                      </span>
+                      <ul className="space-y-1.5 text-xs text-neutral-400">
+                        {screen.improvements?.map((imp, iIdx) => (
+                          <li key={iIdx} className="flex items-start gap-2">
+                            <span className="text-emerald-500 mt-0.5">•</span>
+                            <span>{imp}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   </div>
                 </div>
-              </section>
-            ))}
-          </div>
+              ))}
+            </div>
+          </section>
         )}
 
-      </main>
-
-      {/* 4. Footer from Homepage */}
-      <Footer />
-
-      {/* 5. Floating Bottom Center "Back to Base" Button */}
-      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 select-none">
-        <Link
-          href="/#projects"
-          className="inline-flex items-center gap-2.5 bg-zinc-950/90 dark:bg-black/85 backdrop-blur-md border border-white/20 hover:border-white/40 px-5 py-2.5 sm:px-6 sm:py-3 rounded-full text-xs sm:text-sm font-medium text-white shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95 tracking-wide group"
-        >
-          <div className="relative w-5 h-5 flex-shrink-0 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110">
-            <Image
-              src="/2785693.png"
-              alt="Base Beacon"
-              fill
-              sizes="20px"
-              className="object-contain"
-            />
+        {/* 8. NEXT PROJECT & ENQUIRE CTA SECTION */}
+        <section className="p-6 sm:p-10 border-b border-neutral-800/80 bg-black flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div className="flex flex-col gap-1 text-center sm:text-left">
+            <span className="text-xs font-mono uppercase tracking-widest text-neutral-500">
+              Next Up
+            </span>
+            <Link
+              href={`/projects/${nextProject.id}`}
+              className="text-2xl sm:text-3xl font-normal font-instrument text-white hover:text-neutral-300 transition-colors inline-flex items-center gap-2 group"
+            >
+              <span>{nextProject.title}</span>
+              <span className="text-neutral-500 group-hover:text-white transition-transform group-hover:translate-x-1 font-sans text-xl">
+                →
+              </span>
+            </Link>
           </div>
-          <span>Back to Base</span>
-        </Link>
-      </div>
 
+          <div className="flex items-center gap-3">
+            <Link
+              href="/#projects"
+              className="px-4 py-2 rounded-full border border-neutral-800 hover:border-neutral-600 text-neutral-300 hover:text-white text-xs sm:text-sm font-medium transition-colors"
+            >
+              All Projects
+            </Link>
+            <a
+              href="mailto:zaib7@example.com?subject=Project Inquiry"
+              className="px-4 py-2 rounded-full bg-white text-black hover:bg-neutral-200 text-xs sm:text-sm font-medium transition-all shadow-sm active:scale-95"
+            >
+              Book Consultation
+            </a>
+          </div>
+        </section>
+
+        {/* 9. EXACT FOOTER MATCHING HOMEPAGE */}
+        <Footer />
+      </main>
     </div>
   );
 }
