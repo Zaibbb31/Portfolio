@@ -70,7 +70,7 @@ const EXPERIENCES: ExperienceItem[] = [
     company: "AMA Legal Solutions",
     role: "UX/UI Designer",
     period: "Sept 2025 - Present",
-    logo: "/ama-connect-logo.svg",
+    logo: "/AMA.svg",
   },
   {
     company: "DroDro",
@@ -284,23 +284,10 @@ export default function Home() {
             >
               <HugeiconsIcon icon={Search01Icon} size={14} className="text-neutral-400" />
               <span>Search</span>
-              <kbd className="hidden sm:inline-block text-[10px] font-mono bg-neutral-800 border border-neutral-700/60 px-1 py-0.2 rounded text-neutral-300">
-                ⌘K
-              </kbd>
+             
             </button>
 
-            {/* Theme Toggle Button */}
-            <button
-              type="button"
-              onClick={() => {
-                playClickSound();
-                setIsDarkMode((prev) => !prev);
-              }}
-              title="Theme settings"
-              className="p-1.5 rounded-md border border-neutral-800 hover:border-neutral-700 bg-neutral-900/80 text-neutral-400 hover:text-white transition-all duration-200 cursor-pointer flex items-center justify-center"
-            >
-              <HugeiconsIcon icon={isDarkMode ? Sun01Icon : Moon01Icon} size={15} />
-            </button>
+           
           </div>
         </header>
 
@@ -387,7 +374,7 @@ export default function Home() {
             <li className="flex items-start gap-2.5">
               <span className="text-neutral-500 select-none mt-0.5">•</span>
               <span>
-                I&apos;m Zaib, a UI/UX &amp; Product Designer with 2+ years of experience, crafting intuitive digital experiences with a strong focus on visual precision and usability.
+                I&apos;m Zaib, a UI/UX &amp; Product Designer with <span className="text-white font-bold">1.5+ years of experience</span>, crafting intuitive digital experiences with a strong focus on visual precision and usability.
               </span>
             </li>
 
@@ -504,7 +491,7 @@ export default function Home() {
               >
                 {/* Left: Company Logo Box + Company Name & Role */}
                 <div className="flex items-center gap-3.5">
-                  <div className="w-10 h-10 rounded-xl bg-white border border-neutral-200/20 overflow-hidden flex items-center justify-center flex-shrink-0 p-1.5 shadow-sm">
+                  <div className="w-10 h-10 rounded-lg bg-white border border-neutral-200/20 overflow-hidden flex items-center justify-center flex-shrink-0 p-1.5 shadow-sm">
                     {exp.logo ? (
                       <div className="relative w-full h-full">
                         <Image
@@ -562,66 +549,13 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
             {[
               {
-                id: "icodraw",
-                title: "Icodraw",
-                description: "A lightweight screen-capture and annotation tool for m...",
-                image: "/projects/icodraw.svg",
-                liveUrl: "https://icodraw.vercel.app",
+                id: "settlr",
+                title: "Settlr",
+                description: "Smart expense splitting and automated payment settlement platform designed for groups and teams.",
+                image: "/projects/settlr.svg",
+                liveUrl: "https://settlr.app",
                 codeUrl: "https://github.com/Zaibbb31",
                 tags: [
-                  {
-                    name: "TypeScript",
-                    icon: (
-                      <span className="w-3 h-3 rounded-[2px] bg-[#3178c6] text-white font-bold text-[8px] flex items-center justify-center leading-none">
-                        TS
-                      </span>
-                    ),
-                  },
-                  {
-                    name: "React",
-                    icon: (
-                      <svg className="w-3 h-3 text-[#61dafb]" viewBox="0 0 24 24" fill="currentColor">
-                        <circle cx="12" cy="12" r="2.2" />
-                        <ellipse cx="12" cy="12" rx="10" ry="4.2" fill="none" stroke="currentColor" strokeWidth="1.4" />
-                        <ellipse cx="12" cy="12" rx="10" ry="4.2" fill="none" stroke="currentColor" strokeWidth="1.4" transform="rotate(60 12 12)" />
-                        <ellipse cx="12" cy="12" rx="10" ry="4.2" fill="none" stroke="currentColor" strokeWidth="1.4" transform="rotate(120 12 12)" />
-                      </svg>
-                    ),
-                  },
-                  {
-                    name: "Vite",
-                    icon: (
-                      <svg className="w-3 h-3 text-[#bd34fe]" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M19.5 3L11 21.5 4.5 3l7 3.5 8-3.5z" />
-                      </svg>
-                    ),
-                  },
-                  {
-                    name: "TailwindCSS",
-                    icon: (
-                      <svg className="w-3 h-3 text-[#38bdf8]" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 6c-3 0-5 1.5-6 4.5 1.2-1.5 2.5-2 4-1.7 1 .2 1.7 1 2.5 1.8C13.8 11.8 15.2 13 18 13c3 0 5-1.5 6-4.5-1.2 1.5-2.5 2-4 1.7-1-.2-1.7-1-2.5-1.8C16.2 7.2 14.8 6 12 6z"/>
-                      </svg>
-                    ),
-                  },
-                ],
-              },
-              {
-                id: "paperlab",
-                title: "Paperlab",
-                description: "46 PDF tools that run entirely in the browser - merge, s...",
-                image: "/projects/paperlab.svg",
-                liveUrl: "https://paperlab.vercel.app",
-                codeUrl: "https://github.com/Zaibbb31",
-                tags: [
-                  {
-                    name: "TypeScript",
-                    icon: (
-                      <span className="w-3 h-3 rounded-[2px] bg-[#3178c6] text-white font-bold text-[8px] flex items-center justify-center leading-none">
-                        TS
-                      </span>
-                    ),
-                  },
                   {
                     name: "Next.js",
                     icon: (
@@ -631,76 +565,6 @@ export default function Home() {
                     ),
                   },
                   {
-                    name: "TailwindCSS",
-                    icon: (
-                      <svg className="w-3 h-3 text-[#38bdf8]" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 6c-3 0-5 1.5-6 4.5 1.2-1.5 2.5-2 4-1.7 1 .2 1.7 1 2.5 1.8C13.8 11.8 15.2 13 18 13c3 0 5-1.5 6-4.5-1.2 1.5-2.5 2-4 1.7-1-.2-1.7-1-2.5-1.8C16.2 7.2 14.8 6 12 6z"/>
-                      </svg>
-                    ),
-                  },
-                  {
-                    name: "pdf-lib",
-                    icon: (
-                      <svg className="w-3 h-3 text-neutral-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                        <polyline points="14 2 14 8 20 8"/>
-                      </svg>
-                    ),
-                  },
-                ],
-              },
-              {
-                id: "ama-connect",
-                title: "AMA Connect",
-                description: "Pro bono legal-aid mobile platform connecting individuals with verified lawyers.",
-                image: "/ama-connect.jpg",
-                liveUrl: "/projects/ama-connect",
-                codeUrl: "https://github.com/Zaibbb31",
-                tags: [
-                  {
-                    name: "Mobile App",
-                    icon: (
-                      <span className="w-3 h-3 rounded-[2px] bg-[#0ea5e9] text-white font-bold text-[8px] flex items-center justify-center leading-none">
-                        MA
-                      </span>
-                    ),
-                  },
-                  {
-                    name: "UI/UX",
-                    icon: (
-                      <svg className="w-3 h-3 text-[#ff7262]" viewBox="0 0 24 24" fill="currentColor">
-                        <circle cx="12" cy="12" r="8" />
-                      </svg>
-                    ),
-                  },
-                  {
-                    name: "React Native",
-                    icon: (
-                      <svg className="w-3 h-3 text-[#61dafb]" viewBox="0 0 24 24" fill="currentColor">
-                        <circle cx="12" cy="12" r="2.2" />
-                        <ellipse cx="12" cy="12" rx="10" ry="4.2" fill="none" stroke="currentColor" strokeWidth="1.4" />
-                      </svg>
-                    ),
-                  },
-                  {
-                    name: "LegalTech",
-                    icon: (
-                      <span className="text-[9px] font-mono font-bold text-neutral-400">
-                        §
-                      </span>
-                    ),
-                  },
-                ],
-              },
-              {
-                id: "drodro",
-                title: "DroDro",
-                description: "Creative marketplace connecting users with trusted photographers and videographers.",
-                image: "/P2.svg",
-                liveUrl: "/projects/drodro",
-                codeUrl: "https://github.com/Zaibbb31",
-                tags: [
-                  {
                     name: "TypeScript",
                     icon: (
                       <span className="w-3 h-3 rounded-[2px] bg-[#3178c6] text-white font-bold text-[8px] flex items-center justify-center leading-none">
@@ -709,18 +573,10 @@ export default function Home() {
                     ),
                   },
                   {
-                    name: "Next.js",
-                    icon: (
-                      <svg className="w-3 h-3 text-white" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 2C6.477 2 2 6.477 2 12c0 5.523 4.477 10 10 10 5.523 0 10-4.477 10-10 0-5.523-4.477-10-10-10zm3.5 13.5l-4.5-6.5v6.5H9.5V8.5h1.5l4.5 6.5V8.5h1.5v7z"/>
-                      </svg>
-                    ),
-                  },
-                  {
-                    name: "Marketplace",
+                    name: "FinTech",
                     icon: (
                       <span className="w-3 h-3 rounded-[2px] bg-[#10b981] text-white font-bold text-[8px] flex items-center justify-center leading-none">
-                        MP
+                        $
                       </span>
                     ),
                   },
