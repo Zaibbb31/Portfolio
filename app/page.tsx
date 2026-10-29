@@ -571,7 +571,7 @@ export default function Home() {
               {
                 id: "settlr",
                 title: "Settlr",
-                description: "Smart expense splitting and automated payment settlement platform designed for groups and teams.",
+                description: "Helping people take control of their debt through clear loan insights, financial education, and accessible legal support.",
                 image: "/Settlr.png",
                 liveUrl: "https://settlr.app",
                 codeUrl: "https://github.com/Zaibbb31",
@@ -593,6 +593,14 @@ export default function Home() {
                     icon: (
                       <span className="w-3 h-3 rounded-[2px] bg-[#10b981] text-white font-bold text-[8px] flex items-center justify-center leading-none">
                         $
+                      </span>
+                    ),
+                  },
+                  {
+                    name: "UX Research",
+                    icon: (
+                      <span className="w-3 h-3 rounded-[2px] bg-[#8b5cf6] text-white font-bold text-[8px] flex items-center justify-center leading-none">
+                        UX
                       </span>
                     ),
                   },

@@ -25,6 +25,7 @@ export interface ProjectSpecs {
   timeline?: string;
   designer?: string;
   client?: string;
+  projectType?: string;
   year?: string;
 }
 
@@ -36,7 +37,9 @@ export interface ProjectObjectNotes {
 
 export interface ProjectMaterialMethod {
   heading: string;
+  materialsFinishTitle?: string;
   materialsFinish: string[];
+  productionMethodTitle?: string;
   productionMethod: string[];
 }
 
@@ -97,27 +100,64 @@ export interface Project {
 export const PROJECTS: Project[] = [
   {
     id: "settlr",
-    title: "Settlr | Group Expense & Settlement Platform",
-    category: "Fintech Web & Mobile App",
-    breadcrumb: "Fintech Application",
-    tagline: "Automated expense splitting and instant payment settlement platform designed for groups and teams.",
-    subtitle: "A modern financial settlement application designed to eliminate friction in shared expenses, calculations, and payouts.",
+    title: "Settlr | Smarter Loan Management & Debt Settlement",
+    category: "Fintech Application · UI/UX Case Study",
+    breadcrumb: "FINTECH APPLICATION  ·  UI/UX CASE STUDY",
+    tagline: "Helping people take control of their debt through clear loan insights, financial education, and accessible legal support.",
+    subtitle: "Helping people take control of their debt through clear loan insights, financial education, and accessible legal support.",
     description:
-      "Engineered to streamline group finances, bill splitting, multi-currency settlements, and instant payment reconciliation with real-time balance tracking.",
+      "Helping people take control of their debt through clear loan insights, financial education, and accessible legal support.",
     client: "Settlr Labs",
     date: "2026",
     image: "/Settlr.png",
     heroImage: "/settlr/hero.png",
+    fullWidthImage: "/settlr/landscape.jpg",
     gridImages: [
       "/settlr/1.png",
-      "/Settlr.png",
-      "/projects/quantum-ui.jpg",
-      "/projects/noto-device.jpg",
+      "/settlr/Warm Credit Score Smartphone Display.png",
+      "/settlr/Settlr Finance App UX Flowchart.png",
+      "/settlr/12.png",
     ],
     liveUrl: "https://settlr.app",
     codeUrl: "https://github.com/Zaibbb31",
-    tags: ["Figma", "Fintech"],
+    tags: ["Figma", "Fintech", "UX Research"],
     iconBg: "bg-emerald-500",
+    objectNotes: {
+      heading: "Settlr | Bringing Clarity to Debt Management",
+      description: [
+        "Managing multiple loans, tracking outstanding balances, understanding repayment options, and finding trustworthy guidance can quickly become overwhelming.",
+        "Settlr is designed to simplify that journey by bringing loan tracking, financial education, and access to legal assistance into one intuitive experience.",
+        "THE PROBLEM I SOLVE",
+        "When people struggle with debt, the challenge isn't just repayment. It's the uncertainty around what they owe, what their options are, and what steps to take next. Scattered financial information, confusing terminology, and limited access to guidance can make an already stressful situation harder to navigate.",
+        "I designed Settlr around a simple idea: make complex financial information easier to understand, help users make more informed decisions, and give them a clearer path toward managing their debt.",
+      ],
+      specs: {
+        productType: "Fintech · Loan Management App",
+        platform: "Mobile App · Responsive Web",
+        deliverables: "UX Research, UI/UX Design, Prototyping, Design System",
+        role: "UI/UX Designer",
+        timeline: "2026",
+        projectType: "Independent Concept Project",
+        year: "2026",
+      },
+    },
+    materialMethod: {
+      heading: "Design Strategy & Product Engineering",
+      materialsFinishTitle: "Design System & UX",
+      materialsFinish: [
+        "Structured information hierarchy to make loan balances, repayments, and financial insights easier to understand.",
+        "Consistent typography, spacing, and reusable components for a clean, trustworthy fintech experience.",
+        "Intuitive dashboard layouts that help users navigate loan statistics and track their financial progress.",
+        "Clear visual cues and simplified language to make complex financial information more accessible.",
+      ],
+      productionMethodTitle: "Product Experience & Implementation",
+      productionMethod: [
+        "Designed user flows for onboarding, authentication, loan tracking, and profile management.",
+        "Organized financial education into digestible cards covering loan types, credit scores, FAQs, and repayment guidance.",
+        "Integrated a query-support flow to help users seek guidance from an assigned legal professional.",
+        "Designed a responsive, scalable interface focused on usability, accessibility, and reducing cognitive overload.",
+      ],
+    },
     meta: {
       role: "Lead Product Designer & Frontend Engineer",
       platform: "Web & Mobile (Responsive)",

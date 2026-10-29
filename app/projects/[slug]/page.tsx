@@ -133,10 +133,7 @@ export default async function ProjectSlugPage({ params }: Props) {
               {/* Breadcrumb & Production Status */}
               <div className="flex items-center justify-between gap-2 text-xs font-mono text-neutral-500 uppercase tracking-widest">
                 <span>{project.breadcrumb || `Projects / ${project.id}`}</span>
-                <span className="flex items-center gap-1.5 text-neutral-400">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                  {project.availability || "Production"}
-                </span>
+                
               </div>
 
               {/* Heading in Instrument Serif */}
@@ -172,7 +169,7 @@ export default async function ProjectSlugPage({ params }: Props) {
 
               <a
                 href="mailto:zaib7@example.com?subject=Inquiry about "
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-neutral-800 hover:border-neutral-600 text-neutral-400 hover:text-white text-xs sm:text-sm font-medium transition-colors"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-neutral-800 hover:border-neutral-600 text-neutral-400 hover:text-white text-xs sm:text-sm font-medium transition-colors"
               >
                 <span>Enquire</span>
               </a>
@@ -180,15 +177,13 @@ export default async function ProjectSlugPage({ params }: Props) {
           </div>
         </section>
 
-        {/* 3. 2x2 IMAGE GRID SECTION */}
+        {/* 3. BENTO GRID - ROW 1 (2 Columns: Images 01 & 02) */}
         <section className="w-full border-b border-neutral-800/80 bg-black">
           <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-neutral-800/80">
-            {gridImages.slice(0, 4).map((img, idx) => (
+            {gridImages.slice(0, 2).map((img, idx) => (
               <div
                 key={idx}
-                className={`relative w-full aspect-[4/3] overflow-hidden bg-neutral-950 group ${
-                  idx >= 2 ? "sm:border-t sm:border-neutral-800/80" : ""
-                }`}
+                className="relative w-full aspect-[4/3] overflow-hidden bg-neutral-950 group"
               >
                 <Image
                   src={img}
@@ -206,17 +201,47 @@ export default async function ProjectSlugPage({ params }: Props) {
           </div>
         </section>
 
-        {/* 4. FULL-WIDTH SHOWCASE IMAGE */}
+        {/* 4. FULL-WIDTH LANDSCAPE SHOWCASE (Positioned between both grid rows) */}
         <section className="relative w-full aspect-[16/9] sm:h-[420px] md:h-[480px] border-b border-neutral-800/80 overflow-hidden bg-neutral-950 group">
           <Image
             src={fullWidthImg}
             alt={`${project.title} full showcase`}
             fill
-            className="object-cover object-center group-hover:scale-102 transition-transform duration-700 ease-out"
+            className="object-cover object-center transition-transform duration-700 ease-out"
             sizes="(max-width: 1024px) 100vw, 896px"
-          />
-          <div className="absolute bottom-4 left-5 sm:left-8 px-3 py-1 rounded-full bg-black/80 backdrop-blur-md border border-neutral-700/80 text-xs font-mono text-neutral-300">
-            Full-width Architectural Preview
+          />  
+        </section>
+
+        {/* 5. BENTO GRID - ROW 2 (2 Columns: Images 03 & 04) */}
+        <section className="w-full border-b border-neutral-800/80 bg-black">
+          <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-neutral-800/80">
+            {gridImages.slice(2, 4).map((img, idx) => {
+              const isReduced =
+                idx === 0 ||
+                img.toLowerCase().includes("diagram") ||
+                img.toLowerCase().includes("flow");
+
+              return (
+                <div
+                  key={idx + 2}
+                  className="relative w-full aspect-[4/3] overflow-hidden bg-neutral-950 group flex items-center justify-center"
+                >
+                  <Image
+                    src={img}
+                    alt={`${project.title} detail ${idx + 3}`}
+                    fill
+                    className={`object-center transition-transform duration-700 ease-out ${
+                      isReduced ? "object-contain scale-[1.05]" : "object-cover"
+                    }`}
+                    sizes="(max-width: 640px) 100vw, 480px"
+                  />
+                  {/* Index tag */}
+                  <div className="absolute top-3.5 left-3.5 px-2 py-0.5 rounded bg-black/70 backdrop-blur-md border border-white/10 text-[10px] font-mono text-neutral-300 z-10">
+                    0{idx + 3}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </section>
 
@@ -232,9 +257,19 @@ export default async function ProjectSlugPage({ params }: Props) {
                 {objectNotes.heading}
               </h2>
               <div className="space-y-4 text-sm sm:text-base text-neutral-400 leading-relaxed font-normal">
-                {objectNotes.description.map((paragraph, pIdx) => (
-                  <p key={pIdx}>{paragraph}</p>
-                ))}
+                {objectNotes.description.map((paragraph, pIdx) => {
+                  if (paragraph === "THE PROBLEM I SOLVE" || paragraph.startsWith("THE PROBLEM")) {
+                    return (
+                      <h3
+                        key={pIdx}
+                        className="text-xs font-mono uppercase tracking-widest text-neutral-300 pt-3 block"
+                      >
+                        {paragraph}
+                      </h3>
+                    );
+                  }
+                  return <p key={pIdx}>{paragraph}</p>;
+                })}
               </div>
             </div>
 
@@ -252,7 +287,7 @@ export default async function ProjectSlugPage({ params }: Props) {
                 {objectNotes.specs.deliverables && (
                   <div className="p-3.5 sm:p-4 flex items-center justify-between">
                     <span className="text-neutral-500 font-mono">Deliverables</span>
-                    <span className="text-white font-medium text-right max-w-[60%] truncate">
+                    <span className="text-white font-medium text-right ml-4 max-w-[65%]">
                       {objectNotes.specs.deliverables}
                     </span>
                   </div>
@@ -265,10 +300,18 @@ export default async function ProjectSlugPage({ params }: Props) {
                   <span className="text-neutral-500 font-mono">Timeline</span>
                   <span className="text-white font-medium text-right">{objectNotes.specs.timeline}</span>
                 </div>
-                <div className="p-3.5 sm:p-4 flex items-center justify-between">
-                  <span className="text-neutral-500 font-mono">Client</span>
-                  <span className="text-white font-medium text-right">{objectNotes.specs.client}</span>
-                </div>
+                {objectNotes.specs.projectType && (
+                  <div className="p-3.5 sm:p-4 flex items-center justify-between">
+                    <span className="text-neutral-500 font-mono">Project Type</span>
+                    <span className="text-white font-medium text-right">{objectNotes.specs.projectType}</span>
+                  </div>
+                )}
+                {objectNotes.specs.client && !objectNotes.specs.projectType && (
+                  <div className="p-3.5 sm:p-4 flex items-center justify-between">
+                    <span className="text-neutral-500 font-mono">Client</span>
+                    <span className="text-white font-medium text-right">{objectNotes.specs.client}</span>
+                  </div>
+                )}
                 <div className="p-3.5 sm:p-4 flex items-center justify-between">
                   <span className="text-neutral-500 font-mono">Year</span>
                   <span className="text-white font-medium text-right">{objectNotes.specs.year}</span>
