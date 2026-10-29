@@ -21,6 +21,7 @@ import GitHubContributions from "./components/GitHubContributions";
 import Footer from "./components/Footer";
 import SkillsSection from "./components/SkillsSection";
 import VennSection from "./components/VennSection";
+import Lightfall from "./components/Lightfall";
 import { PROJECTS } from "./data/projects";
 
 const PRIMARY_SKILLS = [
@@ -291,15 +292,34 @@ export default function Home() {
           </div>
         </header>
 
-        {/* 2. DOTTED GRID MATRIX BANNER - Exact height and pattern from screenshot */}
+        {/* 2. LIGHTFALL HERO BANNER */}
         <section
           aria-label="Hero background banner"
           className="w-full h-36 sm:h-44 border-b border-neutral-800/80 relative overflow-hidden bg-neutral-950/40"
         >
-          {/* Dot grid texture */}
-          <div
-            className="absolute inset-0 bg-[radial-gradient(#3a3a3e_1.2px,transparent_1.2px)] [background-size:16px_16px] opacity-75"
-            aria-hidden="true"
+          <Lightfall
+            colors={["#0002ff"]}
+            backgroundColor="#000000"
+            speed={0.3}
+            streakCount={14}
+            streakWidth={0.8}
+            twinkle={0.3}
+            backgroundGlow={0.1}
+            headGlow={0.6}
+            bloom={0.35}
+            mouseInteraction
+            holdToWarp
+            intro
+            streakLength={1.2}
+            density={0.6}
+            glow={1}
+            depth={0.5}
+            zoom={3}
+            mouseStrength={0.4}
+            mouseRadius={0.45}
+            lens={0.5}
+            fade={0}
+            lightMode={false}
           />
         </section>
 

@@ -10,15 +10,11 @@ export default function Footer() {
           </span>
         </p>
         <p className="text-xs text-neutral-500 font-mono">
-          &copy; {new Date().getFullYear()}. Built in the open.
+          &copy; {new Date().getFullYear()}. From Brainwaves to Build Files.
         </p>
       </div>
 
-      {/* Bottom Dotted Matrix Banner - exact match to screenshot */}
-      <div
-        aria-hidden="true"
-        className="w-full h-24 sm:h-28 border-t border-neutral-800/80 bg-[radial-gradient(#3a3a3e_1.2px,transparent_1.2px)] [background-size:16px_16px] bg-neutral-950/40 relative overflow-hidden"
-      />
+      
     </footer>
   );
 }
