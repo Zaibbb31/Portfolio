@@ -567,50 +567,46 @@ export default function Home() {
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
-            {[
+            {([
               {
                 id: "settlr",
                 title: "Settlr",
                 description: "Smart expense splitting and automated payment settlement platform designed for groups and teams.",
-                image: "/projects/settlr.svg",
+                image: "/Settlr.png",
                 liveUrl: "https://settlr.app",
                 codeUrl: "https://github.com/Zaibbb31",
                 tags: [
                   {
-                    name: "Next.js",
+                    name: "Figma",
                     icon: (
-                      <svg className="w-3 h-3 text-white" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 2C6.477 2 2 6.477 2 12c0 5.523 4.477 10 10 10 5.523 0 10-4.477 10-10 0-5.523-4.477-10-10-10zm3.5 13.5l-4.5-6.5v6.5H9.5V8.5h1.5l4.5 6.5V8.5h1.5v7z"/>
+                      <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none">
+                        <path d="M8 24C10.2091 24 12 22.2091 12 20V16H8C5.79086 16 4 17.7909 4 20C4 22.2091 5.79086 24 8 24Z" fill="#0ACF83"/>
+                        <path d="M4 12C4 9.79086 5.79086 8 8 8H12V16H8C5.79086 16 4 14.2091 4 12Z" fill="#A259FF"/>
+                        <path d="M4 4C4 1.79086 5.79086 0 8 0H12V8H8C5.79086 8 4 6.20914 4 4Z" fill="#F24E1E"/>
+                        <path d="M12 0H16C18.2091 0 20 1.79086 20 4C20 6.20914 18.2091 8 16 8H12V0Z" fill="#FF7262"/>
+                        <path d="M20 12C20 14.2091 18.2091 16 16 16C13.7909 16 12 14.2091 12 12C12 9.79086 13.7909 8 16 8C18.2091 8 20 9.79086 20 12Z" fill="#1ABCFE"/>
                       </svg>
                     ),
                   },
                   {
-                    name: "TypeScript",
-                    icon: (
-                      <span className="w-3 h-3 rounded-[2px] bg-[#3178c6] text-white font-bold text-[8px] flex items-center justify-center leading-none">
-                        TS
-                      </span>
-                    ),
-                  },
-                  {
-                    name: "FinTech",
+                    name: "Fintech",
                     icon: (
                       <span className="w-3 h-3 rounded-[2px] bg-[#10b981] text-white font-bold text-[8px] flex items-center justify-center leading-none">
                         $
                       </span>
                     ),
                   },
-                  {
-                    name: "TailwindCSS",
-                    icon: (
-                      <svg className="w-3 h-3 text-[#38bdf8]" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 6c-3 0-5 1.5-6 4.5 1.2-1.5 2.5-2 4-1.7 1 .2 1.7 1 2.5 1.8C13.8 11.8 15.2 13 18 13c3 0 5-1.5 6-4.5-1.2 1.5-2.5 2-4 1.7-1-.2-1.7-1-2.5-1.8C16.2 7.2 14.8 6 12 6z"/>
-                      </svg>
-                    ),
-                  },
                 ],
               },
-            ].map((project) => (
+            ] as Array<{
+              id: string;
+              title: string;
+              description: string;
+              image: string;
+              liveUrl?: string;
+              codeUrl?: string;
+              tags: { name: string; icon: React.ReactNode }[];
+            }>).map((project) => (
               <div
                 key={project.id}
                 className="flex flex-col rounded-xl bg-transparent transition-all duration-200 group"

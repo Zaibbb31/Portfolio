@@ -29,14 +29,13 @@ export default async function ProjectSlugPage({ params }: Props) {
   const nextProject = PROJECTS[(projectIndex + 1) % PROJECTS.length];
 
   // Grid images fallback
-  const gridImages = project.gridImages && project.gridImages.length >= 4
-    ? project.gridImages
-    : [
-        project.image,
-        project.heroImage || project.image,
-        "/projects/quantum-ui.jpg",
-        "/projects/noto-device.jpg",
-      ];
+  const gridImages = [
+    ...(project.gridImages || []),
+    project.image,
+    project.heroImage || project.image,
+    "/projects/quantum-ui.jpg",
+    "/projects/noto-device.jpg",
+  ].slice(0, 4);
 
   // Full-width banner image fallback
   const fullWidthImg = project.fullWidthImage || project.heroImage || project.image;
@@ -88,29 +87,11 @@ export default async function ProjectSlugPage({ params }: Props) {
         
         {/* 1. TOP HEADER / NAVBAR (Flush within container borders) */}
         <header className="sticky top-0 z-40 w-full px-5 sm:px-8 py-3.5 flex items-center justify-between border-b border-neutral-800/80 bg-[#000000]/90 backdrop-blur-md select-none">
-          {/* Back to all projects */}
-          <Link
-            href="/#projects"
-            className="inline-flex items-center gap-2 text-xs font-mono font-medium text-neutral-400 hover:text-white transition-colors uppercase tracking-wider group"
-          >
-            <span className="w-5 h-5 rounded-full bg-neutral-900 border border-neutral-700/80 flex items-center justify-center group-hover:border-neutral-500 transition-colors">
-              <svg
-                className="w-3 h-3 text-neutral-300 group-hover:text-white transition-transform group-hover:-translate-x-0.5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
-              </svg>
-            </span>
-            <span>Back to Projects</span>
-          </Link>
+          
 
           {/* Center/Right Brand & Category Pill */}
           <div className="flex items-center gap-3">
-            <span className="text-[11px] font-mono uppercase tracking-wider text-neutral-400 px-2.5 py-1 rounded-full bg-neutral-900/80 border border-neutral-800 hidden sm:inline-block">
-              {project.category}
-            </span>
+            
             <Link
               href="/"
               className="flex items-center select-none group"
@@ -139,7 +120,7 @@ export default async function ProjectSlugPage({ params }: Props) {
               alt={project.title}
               fill
               priority
-              className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+              className="object-cover object-center transition-transform duration-700 ease-out"
               sizes="(max-width: 768px) 100vw, 480px"
             />
             {/* Subtle Gradient Vignette */}
@@ -185,33 +166,9 @@ export default async function ProjectSlugPage({ params }: Props) {
 
             {/* Action Buttons */}
             <div className="flex flex-wrap items-center gap-3 pt-6 mt-6 border-t border-neutral-800/80">
-              {project.liveUrl && (
-                <a
-                  href={project.liveUrl}
-                  target={project.liveUrl.startsWith("http") ? "_blank" : undefined}
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white text-black hover:bg-neutral-200 text-xs sm:text-sm font-medium transition-all shadow-sm active:scale-95 cursor-pointer"
-                >
-                  <span>Launch Live</span>
-                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
-                </a>
-              )}
+             
 
-              {project.codeUrl && (
-                <a
-                  href={project.codeUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-neutral-900 border border-neutral-700 hover:border-neutral-500 text-neutral-200 text-xs sm:text-sm font-medium transition-all shadow-sm active:scale-95 cursor-pointer"
-                >
-                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                    <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
-                  </svg>
-                  <span>Source Code</span>
-                </a>
-              )}
+             
 
               <a
                 href="mailto:zaib7@example.com?subject=Inquiry about "
@@ -237,7 +194,7 @@ export default async function ProjectSlugPage({ params }: Props) {
                   src={img}
                   alt={`${project.title} detail ${idx + 1}`}
                   fill
-                  className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                  className="object-cover object-center transition-transform duration-700 ease-out"
                   sizes="(max-width: 640px) 100vw, 480px"
                 />
                 {/* Index tag */}
