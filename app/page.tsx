@@ -573,7 +573,7 @@ export default function Home() {
                 title: "Settlr",
                 description: "Helping people take control of their debt through clear loan insights, financial education, and accessible legal support.",
                 image: "/Settlr.png",
-                liveUrl: "https://settlr.app",
+                behanceUrl: "https://www.behance.net/gallery/257455215/Settlr",
                 codeUrl: "https://github.com/Zaibbb31",
                 tags: [
                   {
@@ -613,6 +613,7 @@ export default function Home() {
               image: string;
               liveUrl?: string;
               codeUrl?: string;
+              behanceUrl?: string;
               tags: { name: string; icon: React.ReactNode }[];
             }>).map((project) => (
               <div
@@ -655,6 +656,18 @@ export default function Home() {
                     >
                       Case Study
                     </Link>
+                    {project.behanceUrl && (
+                      <a
+                        href={project.behanceUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={playClickSound}
+                        className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-neutral-900 border border-neutral-800 hover:border-neutral-700 hover:bg-neutral-800 text-neutral-400 hover:text-white text-[11px] font-medium transition-all active:scale-95"
+                      >
+                        <span>Behance</span>
+                        <span className="text-[10px]">↗</span>
+                      </a>
+                    )}
                     {project.liveUrl && project.liveUrl.startsWith("http") && (
                       <a
                         href={project.liveUrl}

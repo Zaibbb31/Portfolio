@@ -62,6 +62,7 @@ export interface Project {
   buttonText?: string;
   liveUrl?: string;
   codeUrl?: string;
+  behanceUrl?: string;
   tags: string[];
   iconBg: string;
   gridImages?: string[];
@@ -118,7 +119,7 @@ export const PROJECTS: Project[] = [
       "/settlr/Settlr Finance App UX Flowchart.png",
       "/settlr/12.png",
     ],
-    liveUrl: "https://settlr.app",
+    behanceUrl: "https://www.behance.net/gallery/257455215/Settlr",
     codeUrl: "https://github.com/Zaibbb31",
     tags: ["Figma", "Fintech", "UX Research"],
     iconBg: "bg-emerald-500",
