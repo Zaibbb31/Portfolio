@@ -184,15 +184,39 @@ export default async function ProjectSlugPage({ params }: Props) {
                 </a>
               )}
 
-              {project.liveUrl && project.liveUrl !== project.behanceUrl && (
+              {project.liveUrl && (
                 <a
                   href={project.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-neutral-800 hover:border-neutral-600 text-neutral-300 hover:text-white text-xs sm:text-sm font-medium transition-colors"
+                  className={
+                    !project.behanceUrl
+                      ? "inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white text-black hover:bg-neutral-200 text-xs sm:text-sm font-medium transition-all shadow-sm active:scale-95 group"
+                      : "inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-neutral-800 hover:border-neutral-600 text-neutral-300 hover:text-white text-xs sm:text-sm font-medium transition-colors"
+                  }
                 >
-                  <span>Live Preview</span>
-                  <span className="text-neutral-500 text-xs">↗</span>
+                  <svg
+                    className="w-3.5 h-3.5 fill-none stroke-current"
+                    viewBox="0 0 24 24"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                    <polyline points="15 3 21 3 21 9" />
+                    <line x1="10" y1="14" x2="21" y2="3" />
+                  </svg>
+                  <span>{project.buttonText || "Live Demo"}</span>
+                  <span
+                    className={
+                      !project.behanceUrl
+                        ? "text-neutral-500 group-hover:text-black transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 text-xs"
+                        : "text-neutral-500 text-xs"
+                    }
+                  >
+                    ↗
+                  </span>
                 </a>
               )}
 
@@ -206,73 +230,117 @@ export default async function ProjectSlugPage({ params }: Props) {
           </div>
         </section>
 
-        {/* 3. BENTO GRID - ROW 1 (2 Columns: Images 01 & 02) */}
-        <section className="w-full border-b border-neutral-800/80 bg-black">
-          <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-neutral-800/80">
-            {gridImages.slice(0, 2).map((img, idx) => (
-              <div
-                key={idx}
-                className="relative w-full aspect-[4/3] overflow-hidden bg-neutral-950 group"
-              >
-                <Image
-                  src={img}
-                  alt={`${project.title} detail ${idx + 1}`}
-                  fill
-                  className="object-cover object-center transition-transform duration-700 ease-out"
-                  sizes="(max-width: 640px) 100vw, 480px"
-                />
-                {/* Index tag */}
-                <div className="absolute top-3.5 left-3.5 px-2 py-0.5 rounded bg-black/70 backdrop-blur-md border border-white/10 text-[10px] font-mono text-neutral-300">
-                  0{idx + 1}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* 4. FULL-WIDTH LANDSCAPE SHOWCASE (Positioned between both grid rows) */}
-        <section className="relative w-full aspect-[16/9] sm:h-[420px] md:h-[480px] border-b border-neutral-800/80 overflow-hidden bg-neutral-950 group">
-          <Image
-            src={fullWidthImg}
-            alt={`${project.title} full showcase`}
-            fill
-            className="object-cover object-center transition-transform duration-700 ease-out"
-            sizes="(max-width: 1024px) 100vw, 896px"
-          />  
-        </section>
-
-        {/* 5. BENTO GRID - ROW 2 (2 Columns: Images 03 & 04) */}
-        <section className="w-full border-b border-neutral-800/80 bg-black">
-          <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-neutral-800/80">
-            {gridImages.slice(2, 4).map((img, idx) => {
-              const isReduced =
-                idx === 0 ||
-                img.toLowerCase().includes("diagram") ||
-                img.toLowerCase().includes("flow");
+        {/* 3. IMAGE GALLERY: 16:9 SCHEMATICS (FOR SCHOOLDASH) OR BENTO GRID (FOR SETTLR & OTHERS) */}
+        {project.galleryLayout === "16:9" || project.id === "schooldash" ? (
+          <section className="w-full border-b border-neutral-800/80 bg-black flex flex-col">
+            {(
+              (project.gallery && project.gallery.length > 0)
+                ? project.gallery
+                : [
+                    "/schooldash/SchoolDash_Admin_Flow_Reference_Style_BW_1920x1080.png",
+                    "/schooldash/SchoolDash_Teacher_Flow_Reference_Style_BW_1920x1080.png",
+                    "/schooldash/SchoolDash_Student_Flow_Reference_Style_BW_1920x1080.png",
+                  ]
+            ).map((img, idx) => {
+              const getBadge = (path: string) => {
+                if (path.toLowerCase().includes("admin")) return "01 · Administrator Portal Workflow";
+                if (path.toLowerCase().includes("teacher")) return "02 · Teacher Portal Workflow";
+                if (path.toLowerCase().includes("student")) return "03 · Student & Guardian Portal Workflow";
+                return `Flow 0${idx + 1}`;
+              };
 
               return (
                 <div
-                  key={idx + 2}
-                  className="relative w-full aspect-[4/3] overflow-hidden bg-neutral-950 group flex items-center justify-center"
+                  key={idx}
+                  className="relative w-full aspect-[16/9] border-b last:border-b-0 border-neutral-800/80 overflow-hidden bg-neutral-950 group flex items-center justify-center"
                 >
                   <Image
                     src={img}
-                    alt={`${project.title} detail ${idx + 3}`}
+                    alt={`${project.title} schematic 0${idx + 1}`}
                     fill
-                    className={`object-center transition-transform duration-700 ease-out ${
-                      isReduced ? "object-contain scale-[1.05]" : "object-cover"
-                    }`}
-                    sizes="(max-width: 640px) 100vw, 480px"
+                    priority={idx === 0}
+                    className="object-contain transition-transform duration-700 ease-out"
+                    sizes="(max-width: 1024px) 100vw, 896px"
                   />
                   {/* Index tag */}
-                  <div className="absolute top-3.5 left-3.5 px-2 py-0.5 rounded bg-black/70 backdrop-blur-md border border-white/10 text-[10px] font-mono text-neutral-300 z-10">
-                    0{idx + 3}
+                  <div className="absolute top-3.5 left-3.5 px-2.5 py-1 rounded bg-black/70 backdrop-blur-md border border-white/10 text-[10px] font-mono text-neutral-300 z-10">
+                    {getBadge(img)}
                   </div>
                 </div>
               );
             })}
-          </div>
-        </section>
+          </section>
+        ) : (
+          <>
+            {/* 3. BENTO GRID - ROW 1 (2 Columns: Images 01 & 02) */}
+            <section className="w-full border-b border-neutral-800/80 bg-black">
+              <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-neutral-800/80">
+                {gridImages.slice(0, 2).map((img, idx) => (
+                  <div
+                    key={idx}
+                    className="relative w-full aspect-[4/3] overflow-hidden bg-neutral-950 group"
+                  >
+                    <Image
+                      src={img}
+                      alt={`${project.title} detail ${idx + 1}`}
+                      fill
+                      className="object-cover object-center transition-transform duration-700 ease-out"
+                      sizes="(max-width: 640px) 100vw, 480px"
+                    />
+                    {/* Index tag */}
+                    <div className="absolute top-3.5 left-3.5 px-2 py-0.5 rounded bg-black/70 backdrop-blur-md border border-white/10 text-[10px] font-mono text-neutral-300">
+                      0{idx + 1}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* 4. FULL-WIDTH LANDSCAPE SHOWCASE (Positioned between both grid rows) */}
+            <section className="relative w-full aspect-[16/9] sm:h-[420px] md:h-[480px] border-b border-neutral-800/80 overflow-hidden bg-neutral-950 group">
+              <Image
+                src={fullWidthImg}
+                alt={`${project.title} full showcase`}
+                fill
+                className="object-cover object-center transition-transform duration-700 ease-out"
+                sizes="(max-width: 1024px) 100vw, 896px"
+              />  
+            </section>
+
+            {/* 5. BENTO GRID - ROW 2 (2 Columns: Images 03 & 04) */}
+            <section className="w-full border-b border-neutral-800/80 bg-black">
+              <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-neutral-800/80">
+                {gridImages.slice(2, 4).map((img, idx) => {
+                  const isReduced =
+                    idx === 0 ||
+                    img.toLowerCase().includes("diagram") ||
+                    img.toLowerCase().includes("flow");
+
+                  return (
+                    <div
+                      key={idx + 2}
+                      className="relative w-full aspect-[4/3] overflow-hidden bg-neutral-950 group flex items-center justify-center"
+                    >
+                      <Image
+                        src={img}
+                        alt={`${project.title} detail ${idx + 3}`}
+                        fill
+                        className={`object-center transition-transform duration-700 ease-out ${
+                          isReduced ? "object-contain scale-[1.05]" : "object-cover"
+                        }`}
+                        sizes="(max-width: 640px) 100vw, 480px"
+                      />
+                      {/* Index tag */}
+                      <div className="absolute top-3.5 left-3.5 px-2 py-0.5 rounded bg-black/70 backdrop-blur-md border border-white/10 text-[10px] font-mono text-neutral-300 z-10">
+                        0{idx + 3}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
+          </>
+        )}
 
         {/* 5. OBJECT NOTES / SPECIFICATIONS SECTION */}
         <section className="p-6 sm:p-10 border-b border-neutral-800/80 bg-black">
@@ -495,7 +563,7 @@ export default async function ProjectSlugPage({ params }: Props) {
             >
               All Projects
             </Link>
-            {project.behanceUrl && (
+            {project.behanceUrl ? (
               <a
                 href={project.behanceUrl}
                 target="_blank"
@@ -505,7 +573,17 @@ export default async function ProjectSlugPage({ params }: Props) {
                 <span>View on Behance</span>
                 <span className="text-xs">↗</span>
               </a>
-            )}
+            ) : project.liveUrl ? (
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2 rounded-full bg-white text-black hover:bg-neutral-200 text-xs sm:text-sm font-medium transition-all shadow-sm active:scale-95 inline-flex items-center gap-1.5"
+              >
+                <span>{project.buttonText || "Live Demo"}</span>
+                <span className="text-xs">↗</span>
+              </a>
+            ) : null}
             <a
               href="mailto:zaib7@example.com?subject=Project Inquiry"
               className="px-4 py-2 rounded-full border border-neutral-800 hover:border-neutral-600 text-neutral-300 hover:text-white text-xs sm:text-sm font-medium transition-colors"

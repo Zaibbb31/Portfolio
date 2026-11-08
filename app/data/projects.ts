@@ -63,6 +63,7 @@ export interface Project {
   liveUrl?: string;
   codeUrl?: string;
   behanceUrl?: string;
+  galleryLayout?: "bento" | "16:9";
   tags: string[];
   iconBg: string;
   gridImages?: string[];
@@ -229,7 +230,7 @@ export const PROJECTS: Project[] = [
         label: "Successful settlement rate",
       },
     ],
-    gallery: ["/projects/settlr.svg"],
+    gallery: [],
     process: [
       {
         step: "Behavioral Finance & Friction Analysis",
@@ -242,6 +243,156 @@ export const PROJECTS: Project[] = [
       {
         step: "Design System & High-Fidelity Prototyping",
         description: "Engineered responsive dark-mode component tokens and frictionless mobile-first interfaces.",
+      },
+    ],
+  },
+  {
+    id: "schooldash",
+    title: "SchoolDash | K-12 School Management System",
+    category: "EdTech Platform · UI/UX Case Study",
+    breadcrumb: "EDTECH PLATFORM  ·  UI/UX CASE STUDY",
+    tagline:
+      "A role-tailored school management platform unifying academic scheduling, attendance registers, examinations, and communication across Admin, Teacher, and Student portals.",
+    subtitle:
+      "A role-tailored school management platform unifying academic scheduling, attendance registers, examinations, and communication across Admin, Teacher, and Student portals.",
+    description:
+      "A comprehensive K-12 school management ecosystem engineered around three independent, role-specific portals—Admin, Teacher, and Student—streamlining admissions, daily registers, exams, timetables, and notices.",
+    client: "SchoolDash EdTech",
+    date: "2026",
+    image: "/schooldash/SchoolDash_Admin_Flow_Reference_Style_BW_1920x1080.png",
+    heroImage: "/projects/quantum-ui.jpg",
+    fullWidthImage: "/projects/noto-device.jpg",
+    gridImages: [
+      "/projects/noto-cafe.jpg",
+      "/projects/paperlab.svg",
+      "/projects/quantum-ui.jpg",
+      "/projects/noto-device.jpg",
+    ],
+    gallery: [
+      "/schooldash/SchoolDash_Admin_Flow_Reference_Style_BW_1920x1080.png",
+      "/schooldash/SchoolDash_Teacher_Flow_Reference_Style_BW_1920x1080.png",
+      "/schooldash/SchoolDash_Student_Flow_Reference_Style_BW_1920x1080.png",
+    ],
+    codeUrl: "https://github.com/Zaibbb31",
+    liveUrl: "https://emmanuelmission.vercel.app/",
+    buttonText: "Live Platform",
+    galleryLayout: "16:9",
+    tags: ["EdTech", "UI/UX Design", "Product Strategy", "Design System", "Information Architecture"],
+    iconBg: "bg-blue-600",
+    objectNotes: {
+      heading: "SchoolDash | Bringing Clarity & Structure to School Operations",
+      description: [
+        "Managing daily school operations across academic scheduling, student admissions, faculty allocations, attendance registers, and examinations often results in high cognitive friction and communication breakdowns.",
+        "SchoolDash was conceived to resolve this operational complexity by establishing three dedicated, role-tailored portals: an Admin Command Center, a Teacher Workspace, and a Student Read-Only Hub.",
+        "THE PROBLEM I SOLVE",
+        "Traditional school management systems suffer from one-size-fits-all clutter. Administrators are buried under disjointed spreadsheets; teachers lose teaching time navigating cumbersome registers and grading sheets; students and parents struggle to find transparent information about attendance and upcoming exams.",
+        "I designed SchoolDash around strict role boundaries and ergonomic workflows: administrators gain holistic governance over academic calendars and staff allocations; teachers get rapid, one-click attendance and intuitive marks entry; students receive an uncluttered, distraction-free view of their daily timetable and report cards.",
+      ],
+      specs: {
+        productType: "EdTech · School Management System",
+        platform: "Responsive Web Application",
+        deliverables: "User Research, Journey Mapping, Multi-Portal UI/UX Design System",
+        role: "Lead UI/UX & Product Designer",
+        timeline: "2026",
+        projectType: "Institutional Management Platform",
+        year: "2026",
+      },
+    },
+    materialMethod: {
+      heading: "Multi-Portal Ergonomics & Operational Workflow Strategy",
+      materialsFinishTitle: "Role-Tailored Portal Architecture",
+      materialsFinish: [
+        "Three isolated user experiences: Admin Control Center, Teacher Daily Desk, and Student Portal.",
+        "High-contrast dark-mode interface optimized for high-density tabular registers and prolonged usage.",
+        "Consistent typography hierarchy and tokenized component system for rapid data recognition.",
+        "Modular dialog-driven intake flows for student admissions, class setups, and academic calendar years.",
+      ],
+      productionMethodTitle: "Workflow Optimization & Interaction Design",
+      productionMethod: [
+        "Rapid daily attendance register with one-click bulk status application (Present, Late, Absent, Leave).",
+        "Tabular marks compilation sheets engineered with optimistic concurrency protection to prevent grading collisions.",
+        "Interactive 6-day timetable scheduler with automatic conflict detection across classes and teachers.",
+        "Targeted institutional notice broadcasting eliminating campus-wide communication fragmentation.",
+      ],
+    },
+    meta: {
+      role: "Lead UI/UX Designer & Product Architect",
+      platform: "Responsive Web (Desktop & Tablet First)",
+      focus: "EdTech UX, Multi-Role Dashboards, Operational Workflows",
+      timeline: "2026",
+      industry: "K-12 Education & Institutional Management",
+    },
+    challenge:
+      "K-12 educational institutions face enormous operational overhead when managing academic years, teacher assignments, student rosters, daily registers, and examination compilation. Legacy educational software is notoriously unintuitive, slow, and overly complex, forcing diverse user groups—office administrators, subject teachers, and students—into chaotic, cluttered interfaces.",
+    designGoals: [
+      "Role-specific portal separation guaranteeing focused, context-aware workspaces",
+      "Streamlined daily attendance register with single-click bulk confirmation",
+      "Frictionless examination paper configuration and transparent marks compilation",
+      "Interactive 6-day timetable schedule visualization preventing room and teacher conflicts",
+      "Targeted school notice bulletins with role and grade-level audience filtering",
+    ],
+    keyImprovements: [
+      {
+        num: "01",
+        title: "Tri-Portal Role Specialization",
+        description:
+          "Segregated administrative control, classroom operations, and student record access into three isolated, purpose-built portals.",
+      },
+      {
+        num: "02",
+        title: "Rapid Attendance Register",
+        description:
+          "Reduced daily morning register marking from minutes to seconds with one-click bulk-fill and tactile 4-way status toggles.",
+      },
+      {
+        num: "03",
+        title: "Streamlined Grading & Report Cards",
+        description:
+          "Designed paper-by-paper numeric scoring sheets with automated report card synthesis once all examination papers are graded.",
+      },
+      {
+        num: "04",
+        title: "Visual Conflict-Free Timetable",
+        description:
+          "Built an interactive weekly grid by class and teacher preventing double-booking and schedule collisions.",
+      },
+    ],
+    results:
+      "SchoolDash drastically reduces administrative burden, accelerates classroom register completion, and provides students and parents with instant, transparent access to academic schedules and report cards.",
+    metrics: [
+      {
+        value: "3",
+        label: "Dedicated Role Portals",
+      },
+      {
+        value: "<30s",
+        label: "Time to Mark Class Register",
+      },
+      {
+        value: "100%",
+        label: "Conflict-Free Timetables",
+      },
+    ],
+    process: [
+      {
+        step: "Stakeholder Discovery & Journey Mapping",
+        description:
+          "Analyzed daily operational friction across school administrators, teachers, and enrolled students to define three independent portal experiences.",
+      },
+      {
+        step: "Information Architecture & Access Control",
+        description:
+          "Structured role-scoped navigation and permissions ensuring each user interacts exclusively with tools pertinent to their responsibilities.",
+      },
+      {
+        step: "High-Density Data Table & Register Ergonomics",
+        description:
+          "Designed tactile, rapid-entry attendance registers, marks compilation sheets, and conflict-checked timetable grids.",
+      },
+      {
+        step: "Design System & Responsive Prototyping",
+        description:
+          "Created a cohesive, dark-aesthetic design system optimized for desktop administrative work and responsive mobile/tablet student access.",
       },
     ],
   },

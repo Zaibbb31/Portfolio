@@ -606,6 +606,40 @@ export default function Home() {
                   },
                 ],
               },
+              {
+                id: "schooldash",
+                title: "SchoolDash",
+                description: "A comprehensive K-12 school management ecosystem streamlining admissions, attendance, exams, and communication across Admin, Teacher, and Student portals.",
+                image: "/schooldash/SchoolDash_Admin_Flow_Reference_Style_BW_1920x1080.png",
+                liveUrl: "https://emmanuelmission.vercel.app/",
+                codeUrl: "https://github.com/Zaibbb31",
+                tags: [
+                  {
+                    name: "EdTech",
+                    icon: (
+                      <span className="w-3 h-3 rounded-[2px] bg-[#3b82f6] text-white font-bold text-[8px] flex items-center justify-center leading-none">
+                        ED
+                      </span>
+                    ),
+                  },
+                  {
+                    name: "UI/UX",
+                    icon: (
+                      <span className="w-3 h-3 rounded-[2px] bg-[#8b5cf6] text-white font-bold text-[8px] flex items-center justify-center leading-none">
+                        UX
+                      </span>
+                    ),
+                  },
+                  {
+                    name: "System Design",
+                    icon: (
+                      <span className="w-3 h-3 rounded-[2px] bg-[#10b981] text-white font-bold text-[8px] flex items-center justify-center leading-none">
+                        SYS
+                      </span>
+                    ),
+                  },
+                ],
+              },
             ] as Array<{
               id: string;
               title: string;
