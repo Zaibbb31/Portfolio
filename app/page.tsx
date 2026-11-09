@@ -140,7 +140,7 @@ export default function Home() {
 
   const composeEmail = () => {
     playClickSound();
-    window.location.href = "mailto:zaib7@example.com?subject=Hello%20Zaib%20-%20Project%20Inquiry";
+    window.location.href = "mailto:zaib.work31@gmail.com?subject=Hello%20Zaib%20-%20Project%20Inquiry";
   };
 
   // Sync isDarkMode with document.documentElement
@@ -207,7 +207,7 @@ export default function Home() {
     { title: "Activity", category: "Section", href: "#activity" },
     { title: "Featured Projects", category: "Section", href: "#projects" },
     { title: "View Resume (PDF)", category: "Document", href: "/Zaib_UI-UX_Designer_Resume.pdf", isExternal: true },
-    { title: "Send Email (zaib7@example.com)", category: "Contact", href: "mailto:zaib7@example.com" },
+    { title: "Send Email (zaib.work31@gmail.com)", category: "Contact", href: "mailto:zaib.work31@gmail.com" },
     ...PROJECTS.map((p) => ({
       title: p.title,
       category: `Project (${p.category})`,
@@ -361,7 +361,7 @@ export default function Home() {
               
               {/* Book a call */}
               <a
-                href="mailto:zaib7@example.com?subject=Book%20a%20Call%20-%20Project%20Discussion"
+                href="mailto:zaib.work31@gmail.com?subject=Book%20a%20Call%20-%20Project%20Discussion"
                 onClick={playClickSound}
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white text-black text-xs font-semibold transition-all duration-150 shadow-sm active:scale-95 cursor-pointer"
               >

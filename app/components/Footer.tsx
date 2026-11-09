@@ -5,9 +5,12 @@ export default function Footer() {
       <div className="flex flex-col items-center text-center gap-1 mb-7 px-4">
         <p className="text-xs sm:text-[13px] text-neutral-400 font-normal">
           Designed and developed by{" "}
-          <span className="underline underline-offset-4 decoration-neutral-500 font-medium text-white">
+          <a
+            href="mailto:zaib.work31@gmail.com"
+            className="underline underline-offset-4 decoration-neutral-500 hover:decoration-white font-medium text-white transition-colors"
+          >
             Zaib
-          </span>
+          </a>
         </p>
         <p className="text-xs text-neutral-500 font-mono">
           &copy; {new Date().getFullYear()}. From Brainwaves to Build Files.

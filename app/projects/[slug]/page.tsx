@@ -222,7 +222,7 @@ export default async function ProjectSlugPage({ params }: Props) {
               )}
 
               <a
-                href={`mailto:zaib7@example.com?subject=Inquiry about ${encodeURIComponent(project.title)}`}
+                href={`mailto:zaib.work31@gmail.com?subject=Inquiry about ${encodeURIComponent(project.title)}`}
                 className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-neutral-800 hover:border-neutral-600 text-neutral-400 hover:text-white text-xs sm:text-sm font-medium transition-colors"
               >
                 <span>Enquire</span>

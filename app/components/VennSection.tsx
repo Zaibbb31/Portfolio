@@ -12,7 +12,7 @@ export default function VennSection({ onBookCall }: VennSectionProps) {
     if (onBookCall) {
       onBookCall();
     } else {
-      window.location.href = "mailto:zaib7@example.com?subject=Book%20a%20call%20with%20Zaib";
+      window.location.href = "mailto:zaib.work31@gmail.com?subject=Book%20a%20call%20with%20Zaib";
     }
   };
 
