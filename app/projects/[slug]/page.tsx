@@ -29,13 +29,14 @@ export default async function ProjectSlugPage({ params }: Props) {
   const nextProject = PROJECTS[(projectIndex + 1) % PROJECTS.length];
 
   // Grid images fallback
-  const gridImages = [
-    ...(project.gridImages || []),
-    project.image,
-    project.heroImage || project.image,
-    "/projects/quantum-ui.jpg",
-    "/projects/noto-device.jpg",
-  ].slice(0, 4);
+  const gridImages = project.gridImages !== undefined
+    ? project.gridImages
+    : [
+        project.image,
+        project.heroImage || project.image,
+        "/projects/quantum-ui.jpg",
+        "/projects/noto-device.jpg",
+      ].slice(0, 4);
 
   // Full-width banner image fallback
   const fullWidthImg = project.fullWidthImage || project.heroImage || project.image;
@@ -272,29 +273,45 @@ export default async function ProjectSlugPage({ params }: Props) {
           </section>
         ) : (
           <>
-            {/* 3. BENTO GRID - ROW 1 (2 Columns: Images 01 & 02) */}
-            <section className="w-full border-b border-neutral-800/80 bg-black">
-              <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-neutral-800/80">
-                {gridImages.slice(0, 2).map((img, idx) => (
-                  <div
-                    key={idx}
-                    className="relative w-full aspect-[4/3] overflow-hidden bg-neutral-950 group"
-                  >
+            {/* 3. BENTO GRID - ROW 1 */}
+            {gridImages.length > 0 && (
+              <section className="w-full border-b border-neutral-800/80 bg-black">
+                {gridImages.length === 1 ? (
+                  <div className="relative w-full aspect-[16/9] sm:h-[420px] md:h-[480px] overflow-hidden bg-neutral-950 group">
                     <Image
-                      src={img}
-                      alt={`${project.title} detail ${idx + 1}`}
+                      src={gridImages[0]}
+                      alt={`${project.title} detail`}
                       fill
                       className="object-cover object-center transition-transform duration-700 ease-out"
-                      sizes="(max-width: 640px) 100vw, 480px"
+                      sizes="(max-width: 1024px) 100vw, 896px"
                     />
-                    {/* Index tag */}
                     <div className="absolute top-3.5 left-3.5 px-2 py-0.5 rounded bg-black/70 backdrop-blur-md border border-white/10 text-[10px] font-mono text-neutral-300">
-                      0{idx + 1}
+                      01
                     </div>
                   </div>
-                ))}
-              </div>
-            </section>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-neutral-800/80">
+                    {gridImages.slice(0, 2).map((img, idx) => (
+                      <div
+                        key={idx}
+                        className="relative w-full aspect-[4/3] overflow-hidden bg-neutral-950 group"
+                      >
+                        <Image
+                          src={img}
+                          alt={`${project.title} detail ${idx + 1}`}
+                          fill
+                          className="object-cover object-center transition-transform duration-700 ease-out"
+                          sizes="(max-width: 640px) 100vw, 480px"
+                        />
+                        <div className="absolute top-3.5 left-3.5 px-2 py-0.5 rounded bg-black/70 backdrop-blur-md border border-white/10 text-[10px] font-mono text-neutral-300">
+                          0{idx + 1}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </section>
+            )}
 
             {/* 4. FULL-WIDTH LANDSCAPE SHOWCASE (Positioned between both grid rows) */}
             <section className="relative w-full aspect-[16/9] sm:h-[420px] md:h-[480px] border-b border-neutral-800/80 overflow-hidden bg-neutral-950 group">
@@ -304,41 +321,47 @@ export default async function ProjectSlugPage({ params }: Props) {
                 fill
                 className="object-cover object-center transition-transform duration-700 ease-out"
                 sizes="(max-width: 1024px) 100vw, 896px"
-              />  
+              />
+              {gridImages.length === 1 && (
+                <div className="absolute top-3.5 left-3.5 px-2 py-0.5 rounded bg-black/70 backdrop-blur-md border border-white/10 text-[10px] font-mono text-neutral-300">
+                  02
+                </div>
+              )}
             </section>
 
-            {/* 5. BENTO GRID - ROW 2 (2 Columns: Images 03 & 04) */}
-            <section className="w-full border-b border-neutral-800/80 bg-black">
-              <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-neutral-800/80">
-                {gridImages.slice(2, 4).map((img, idx) => {
-                  const isReduced =
-                    idx === 0 ||
-                    img.toLowerCase().includes("diagram") ||
-                    img.toLowerCase().includes("flow");
+            {/* 5. BENTO GRID - ROW 2 (Rendered only if more than 2 grid images exist) */}
+            {gridImages.length > 2 && (
+              <section className="w-full border-b border-neutral-800/80 bg-black">
+                <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-neutral-800/80">
+                  {gridImages.slice(2, 4).map((img, idx) => {
+                    const isReduced =
+                      idx === 0 ||
+                      img.toLowerCase().includes("diagram") ||
+                      img.toLowerCase().includes("flow");
 
-                  return (
-                    <div
-                      key={idx + 2}
-                      className="relative w-full aspect-[4/3] overflow-hidden bg-neutral-950 group flex items-center justify-center"
-                    >
-                      <Image
-                        src={img}
-                        alt={`${project.title} detail ${idx + 3}`}
-                        fill
-                        className={`object-center transition-transform duration-700 ease-out ${
-                          isReduced ? "object-contain scale-[1.05]" : "object-cover"
-                        }`}
-                        sizes="(max-width: 640px) 100vw, 480px"
-                      />
-                      {/* Index tag */}
-                      <div className="absolute top-3.5 left-3.5 px-2 py-0.5 rounded bg-black/70 backdrop-blur-md border border-white/10 text-[10px] font-mono text-neutral-300 z-10">
-                        0{idx + 3}
+                    return (
+                      <div
+                        key={idx + 2}
+                        className="relative w-full aspect-[4/3] overflow-hidden bg-neutral-950 group flex items-center justify-center"
+                      >
+                        <Image
+                          src={img}
+                          alt={`${project.title} detail ${idx + 3}`}
+                          fill
+                          className={`object-center transition-transform duration-700 ease-out ${
+                            isReduced ? "object-contain scale-[1.05]" : "object-cover"
+                          }`}
+                          sizes="(max-width: 640px) 100vw, 480px"
+                        />
+                        <div className="absolute top-3.5 left-3.5 px-2 py-0.5 rounded bg-black/70 backdrop-blur-md border border-white/10 text-[10px] font-mono text-neutral-300 z-10">
+                          0{idx + 3}
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </section>
+                    );
+                  })}
+                </div>
+              </section>
+            )}
           </>
         )}
 
@@ -539,60 +562,7 @@ export default async function ProjectSlugPage({ params }: Props) {
           </section>
         )}
 
-        {/* 8. NEXT PROJECT & ENQUIRE CTA SECTION */}
-        <section className="p-6 sm:p-10 border-b border-neutral-800/80 bg-black flex flex-col sm:flex-row items-center justify-between gap-6">
-          <div className="flex flex-col gap-1 text-center sm:text-left">
-            <span className="text-xs font-mono uppercase tracking-widest text-neutral-500">
-              Next Up
-            </span>
-            <Link
-              href={`/projects/${nextProject.id}`}
-              className="text-2xl sm:text-3xl font-normal font-instrument text-white hover:text-neutral-300 transition-colors inline-flex items-center gap-2 group"
-            >
-              <span>{nextProject.title}</span>
-              <span className="text-neutral-500 group-hover:text-white transition-transform group-hover:translate-x-1 font-sans text-xl">
-                →
-              </span>
-            </Link>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <Link
-              href="/#projects"
-              className="px-4 py-2 rounded-full border border-neutral-800 hover:border-neutral-600 text-neutral-300 hover:text-white text-xs sm:text-sm font-medium transition-colors"
-            >
-              All Projects
-            </Link>
-            {project.behanceUrl ? (
-              <a
-                href={project.behanceUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-4 py-2 rounded-full bg-white text-black hover:bg-neutral-200 text-xs sm:text-sm font-medium transition-all shadow-sm active:scale-95 inline-flex items-center gap-1.5"
-              >
-                <span>View on Behance</span>
-                <span className="text-xs">↗</span>
-              </a>
-            ) : project.liveUrl ? (
-              <a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-4 py-2 rounded-full bg-white text-black hover:bg-neutral-200 text-xs sm:text-sm font-medium transition-all shadow-sm active:scale-95 inline-flex items-center gap-1.5"
-              >
-                <span>{project.buttonText || "Live Demo"}</span>
-                <span className="text-xs">↗</span>
-              </a>
-            ) : null}
-            <a
-              href="mailto:zaib7@example.com?subject=Project Inquiry"
-              className="px-4 py-2 rounded-full border border-neutral-800 hover:border-neutral-600 text-neutral-300 hover:text-white text-xs sm:text-sm font-medium transition-colors"
-            >
-              Book Consultation
-            </a>
-          </div>
-        </section>
-
+       
         {/* 9. EXACT FOOTER MATCHING HOMEPAGE */}
         <Footer />
       </main>

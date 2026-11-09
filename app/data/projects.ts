@@ -56,6 +56,7 @@ export interface Project {
   availability?: string;
   image: string;
   heroImage?: string;
+  heroImagePosition?: "left" | "right";
   mobileImage?: string;
   imageFit?: "cover" | "contain";
   logo?: string;
@@ -259,8 +260,8 @@ export const PROJECTS: Project[] = [
       "A comprehensive K-12 school management ecosystem engineered around three independent, role-specific portals—Admin, Teacher, and Student—streamlining admissions, daily registers, exams, timetables, and notices.",
     client: "SchoolDash EdTech",
     date: "2026",
-    image: "/schooldash/SchoolDash_Admin_Flow_Reference_Style_BW_1920x1080.png",
-    heroImage: "/projects/quantum-ui.jpg",
+    image: "/Emmanuel Mission School Login Workspace.png",
+    heroImage: "/Warm Office Administrator Sign-In Scene.png",
     fullWidthImage: "/projects/noto-device.jpg",
     gridImages: [
       "/projects/noto-cafe.jpg",
@@ -393,6 +394,148 @@ export const PROJECTS: Project[] = [
         step: "Design System & Responsive Prototyping",
         description:
           "Created a cohesive, dark-aesthetic design system optimized for desktop administrative work and responsive mobile/tablet student access.",
+      },
+    ],
+  },
+  {
+    id: "zero-friction-lab",
+    title: "Zero Friction Lab | AI Automation & Digital Systems Studio",
+    category: "AI Systems · Product & Web Design",
+    breadcrumb: "AI STUDIO  ·  DIGITAL SYSTEMS  ·  UI/UX",
+    tagline:
+      "Engineering custom intelligence workflows, AI automation engines, and high-converting digital products designed to eliminate operational friction.",
+    subtitle:
+      "Engineering custom intelligence workflows, AI automation engines, and high-converting digital products designed to eliminate operational friction.",
+    description:
+      "A forward-thinking digital studio specializing in custom-engineered web systems, AI automation engines, and conversion-focused UX architecture that removes operational bottlenecks.",
+    client: "Zero Friction Lab",
+    date: "2026",
+    image: "/Cinematic AI Workspace Website Mockup.png",
+    heroImage: "/Warm Minimalist Workspace Mockup.png",
+    fullWidthImage: "/Pixel Hands Workspace Showcase.png",
+    gridImages: [
+      "/Modern Workspace Showcasing Live Designs.png",
+    ],
+    gallery: [],
+    liveUrl: "https://www.zerofrictionlab.com/",
+    buttonText: "Visit Studio",
+    codeUrl: "https://github.com/Zaibbb31",
+    tags: ["AI Automation", "Product Design", "Next.js", "Design System", "Conversion UX"],
+    iconBg: "bg-violet-600",
+    objectNotes: {
+      heading: "Zero Friction Lab | Eliminating Bottlenecks Through Custom Digital Systems",
+      description: [
+        "Modern businesses routinely struggle with fragmented software stacks, manual repetitive processes, and leaky conversion funnels that throttle growth.",
+        "Zero Friction Lab was created as an elite design and engineering studio to eliminate friction across digital interfaces and backend operational workflows.",
+        "THE PROBLEM I SOLVE",
+        "Generic website templates and off-the-shelf automation tools often create more friction than they resolve—bloated code, disconnects between design and conversion, and brittle third-party integrations that break under load.",
+        "I designed and engineered the Zero Friction Lab digital presence around a clear architectural principle: radical simplicity, performance-first code, and tactile interaction design that transforms complex automation capabilities into intuitive client experiences.",
+      ],
+      specs: {
+        productType: "Digital Studio & Automation Agency",
+        platform: "Responsive Web Application",
+        deliverables: "Brand Identity, UI/UX Design System, Front-End Engineering, AI Workflows",
+        role: "Lead Product Designer & Design Engineer",
+        timeline: "2026",
+        projectType: "Agency Platform & Brand Ecosystem",
+        year: "2026",
+      },
+    },
+    materialMethod: {
+      heading: "System Architecture & Conversion Design Strategy",
+      materialsFinishTitle: "Tactile UI & Interaction System",
+      materialsFinish: [
+        "High-contrast dark-mode palette engineered for aesthetic authority, readability, and focused attention.",
+        "Custom typographic tokens blending editorial serif elegance with utilitarian monospace accents.",
+        "Tactile micro-interactions and hardware-accelerated animations delivering sub-100ms response feel.",
+        "Fluid responsive container layouts scaling smoothly from compact mobile viewports to ultrawide displays.",
+      ],
+      productionMethodTitle: "Workflow Engineering & Implementation",
+      productionMethod: [
+        "Custom Next.js App Router architecture with optimized server-side rendering and edge delivery.",
+        "Conversion-optimized funnel architecture designed to capture qualified automation inquiries with zero drop-off.",
+        "Seamless integration patterns connecting client onboarding directly into automated intelligence pipelines.",
+        "WCAG AAA accessible contrast standards verified across interactive elements and tabular data.",
+      ],
+    },
+    meta: {
+      role: "Lead Product Designer & Design Engineer",
+      platform: "Web (Desktop & Mobile Responsive)",
+      focus: "AI Systems, Conversion UX, Performance Architecture",
+      timeline: "2026",
+      industry: "AI Automation, Digital Systems & Agency Design",
+    },
+    challenge:
+      "Agency and studio websites frequently fall into two traps: over-designed fluff with confusing navigation, or dry corporate landing pages that fail to demonstrate technical authority. Zero Friction Lab required a digital flagship that instantly communicates cutting-edge AI capability while maintaining impeccable Scandinavian-inspired minimalism and effortless user journeys.",
+    designGoals: [
+      "Zero-latency tactile browsing experience reflecting extreme speed and precision",
+      "Clear information hierarchy separating AI Automation, Custom Web Systems, and Product Strategy",
+      "Interactive client enquiry flow with immediate friction-free consultation booking",
+      "Cohesive typography and tokenized dark aesthetic establishing immediate premium trust",
+      "Showcase of measurable operational ROI through clear architectural case studies",
+    ],
+    keyImprovements: [
+      {
+        num: "01",
+        title: "Frictionless Client Onboarding",
+        description:
+          "Built an intuitive intake flow cutting inquiry completion time to under 45 seconds.",
+      },
+      {
+        num: "02",
+        title: "Performance-First Architecture",
+        description:
+          "Optimized asset delivery, zero-CLS layout shifts, and perfect Lighthouse performance scores.",
+      },
+      {
+        num: "03",
+        title: "Modular Design Token System",
+        description:
+          "Engineered atomic component tokens for scalable design parity across agency touchpoints.",
+      },
+      {
+        num: "04",
+        title: "Interactive Automation Showcase",
+        description:
+          "Visualized complex backend workflows into clean, digestible schematic diagrams.",
+      },
+    ],
+    results:
+      "Zero Friction Lab’s digital experience drives higher qualified consultation bookings, sets an industry standard for agency performance, and showcases the transformative power of eliminating digital friction.",
+    metrics: [
+      {
+        value: "Sub-100ms",
+        label: "Interaction Response Latency",
+      },
+      {
+        value: "99/100",
+        label: "Lighthouse Performance & Accessibility",
+      },
+      {
+        value: "+45%",
+        label: "Qualified Inbound Inquiry Conversion",
+      },
+    ],
+    process: [
+      {
+        step: "Brand Positioning & Value Discovery",
+        description:
+          "Mapped client pain points around digital bottlenecks and manual workflows to define the core 'zero friction' narrative.",
+      },
+      {
+        step: "Information Architecture & Wireframing",
+        description:
+          "Structured frictionless user pathways from high-level agency capabilities down to specific automation proof points.",
+      },
+      {
+        step: "High-Fidelity UI & Tokenized Design System",
+        description:
+          "Crafted the bespoke dark visual language, monospace accents, and tactile interactive components.",
+      },
+      {
+        step: "Front-End Engineering & Optimization",
+        description:
+          "Built production Next.js implementation with hardware-accelerated animations and responsive fluidity.",
       },
     ],
   },

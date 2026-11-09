@@ -610,7 +610,7 @@ export default function Home() {
                 id: "schooldash",
                 title: "SchoolDash",
                 description: "A comprehensive K-12 school management ecosystem streamlining admissions, attendance, exams, and communication across Admin, Teacher, and Student portals.",
-                image: "/schooldash/SchoolDash_Admin_Flow_Reference_Style_BW_1920x1080.png",
+                image: "/Emmanuel Mission School Login Workspace.png",
                 liveUrl: "https://emmanuelmission.vercel.app/",
                 codeUrl: "https://github.com/Zaibbb31",
                 tags: [
@@ -632,6 +632,40 @@ export default function Home() {
                   },
                   {
                     name: "System Design",
+                    icon: (
+                      <span className="w-3 h-3 rounded-[2px] bg-[#10b981] text-white font-bold text-[8px] flex items-center justify-center leading-none">
+                        SYS
+                      </span>
+                    ),
+                  },
+                ],
+              },
+              {
+                id: "zero-friction-lab",
+                title: "Zero Friction Lab",
+                description: "Digital systems and AI automation studio engineering custom intelligence workflows and high-converting web architecture.",
+                image: "/Cinematic AI Workspace Website Mockup.png",
+                liveUrl: "https://www.zerofrictionlab.com/",
+                codeUrl: "https://github.com/Zaibbb31",
+                tags: [
+                  {
+                    name: "AI Automation",
+                    icon: (
+                      <span className="w-3 h-3 rounded-[2px] bg-[#8b5cf6] text-white font-bold text-[8px] flex items-center justify-center leading-none">
+                        AI
+                      </span>
+                    ),
+                  },
+                  {
+                    name: "Product Design",
+                    icon: (
+                      <span className="w-3 h-3 rounded-[2px] bg-[#3b82f6] text-white font-bold text-[8px] flex items-center justify-center leading-none">
+                        PD
+                      </span>
+                    ),
+                  },
+                  {
+                    name: "Systems",
                     icon: (
                       <span className="w-3 h-3 rounded-[2px] bg-[#10b981] text-white font-bold text-[8px] flex items-center justify-center leading-none">
                         SYS
@@ -711,18 +745,6 @@ export default function Home() {
                         className="inline-flex items-center justify-center px-2 py-1 rounded-full bg-neutral-900 border border-neutral-800 hover:border-neutral-700 hover:bg-neutral-800 text-neutral-400 hover:text-white text-[11px] font-medium transition-all active:scale-95"
                       >
                         Live
-                      </a>
-                    )}
-                    {project.codeUrl && (
-                      <a
-                        href={project.codeUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={playClickSound}
-                        className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-neutral-900 border border-neutral-800 hover:border-neutral-700 hover:bg-neutral-800 text-neutral-400 hover:text-white text-[11px] font-medium transition-all active:scale-95"
-                      >
-                        <HugeiconsIcon icon={GithubIcon} size={11} className="text-neutral-400 group-hover:text-white" />
-                        <span>Code</span>
                       </a>
                     )}
                   </div>
