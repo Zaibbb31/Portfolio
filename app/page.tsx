@@ -24,38 +24,6 @@ import VennSection from "./components/VennSection";
 import Lightfall from "./components/Lightfall";
 import { PROJECTS } from "./data/projects";
 
-const PRIMARY_SKILLS = [
-  "UX Design",
-  "UI Design",
-  "Product Design",
-  "Design Systems",
-  "Front-End Development",
-  "Workshops",
-  "Design Sprint",
-  "Interaction Design",
-  "User Testing",
-  "Usability Testing",
-  "UX Research",
-  "Leadership",
-  "Mentoring",
-  "No-Code",
-];
-
-const ADDITIONAL_SKILLS = [
-  "Figma",
-  "Design Tokens",
-  "Framer",
-  "Wireframing",
-  "React.js",
-  "Next.js",
-  "TypeScript",
-  "Tailwind CSS",
-  "Prototyping",
-  "Information Architecture",
-  "A/B Testing",
-  "Micro-interactions",
-];
-
 interface ExperienceItem {
   company: string;
   role: string;
@@ -63,27 +31,52 @@ interface ExperienceItem {
   period: string;
   logo?: string;
   logoSvg?: React.ReactNode;
+  points?: string[];
+}
+
+function renderFormattedPoint(text: string) {
+  const parts = text.split(/(\*\*.*?\*\*)/g);
+  return parts.map((part, i) => {
+    if (part.startsWith("**") && part.endsWith("**")) {
+      return (
+        <strong key={i} className="text-white font-medium">
+          {part.slice(2, -2)}
+        </strong>
+      );
+    }
+    return part;
+  });
 }
 
 const EXPERIENCES: ExperienceItem[] = [
-  
   {
     company: "AMA Legal Solutions",
     role: "UX/UI Designer",
     period: "Sept 2025 - Present",
     logo: "/AMA.svg",
+    points: [
+      "Designed **AMA Connect** (pro bono legal aid app) and complex legal-tech SaaS platforms (**LegalRecovery** and **WillDrafting**), architecting **case management**, **real-time tracking**, and consultation workflows.",
+      "Led **end-to-end UI/UX design** across web and mobile products—driving user research, user flows, wireframes, **high-fidelity prototypes**, and responsive interfaces.",
+      "Designed and developed **responsive web experiences**, directly translating Figma design systems into functional, accessible front-end interfaces.",
+      "Architected and deployed **10+ custom Shopify stores**, delivering tailored storefronts, conversion-focused UI, and optimized e-commerce user journeys.",
+      "Created multi-channel **digital marketing creatives**, brand campaigns, and promotional assets, generating **12,000+ additional page views** and expanding digital presence.",
+    ],
   },
   {
     company: "DroDro",
     role: "UX/UI Designer",
     period: "April 2025 - Aug 2025",
     logo: "/drodro-primary-logo.png",
+    points: [
+      "Owned the **end-to-end UX/UI design lifecycle from scratch** for both the website and mobile app, leading research, user flows, wireframes, interactive prototypes, and production UI with complete **design ownership**.",
+      "Designed intuitive **two-sided marketplace experiences** connecting clients with creative professionals for weddings and events, including streamlined **vendor onboarding** for photographers, videographers, and cinematographers.",
+      "Established **scalable design patterns** and a **unified visual design system** across web and mobile platforms, ensuring brand consistency, high usability, and seamless developer handoff.",
+    ],
   },
 ];
 
 export default function Home() {
   const [showAllProjects, setShowAllProjects] = useState(false);
-  const [showMoreSkills, setShowMoreSkills] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [isAvailable, setIsAvailable] = useState(true);
@@ -511,47 +504,65 @@ export default function Home() {
             Experience
           </h2>
 
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-6 sm:gap-7">
             {EXPERIENCES.map((exp, idx) => (
               <div
                 key={idx}
-                className="flex items-center justify-between gap-4 py-1"
+                className="flex flex-col py-0.5 group"
               >
-                {/* Left: Company Logo Box + Company Name & Role */}
-                <div className="flex items-center gap-3.5">
-                  <div className="w-10 h-10 rounded-lg bg-white border border-neutral-200/20 overflow-hidden flex items-center justify-center flex-shrink-0 p-1.5 shadow-sm">
-                    {exp.logo ? (
-                      <div className="relative w-full h-full">
-                        <Image
-                          src={exp.logo}
-                          alt={exp.company}
-                          fill
-                          className="object-contain"
-                        />
-                      </div>
-                    ) : (
-                      exp.logoSvg || (
-                        <span className="text-black font-bold text-sm">
-                          {exp.company.charAt(0)}
-                        </span>
-                      )
-                    )}
+                {/* Header row: Company Logo Box + Company Name & Role + Period */}
+                <div className="flex items-start sm:items-center justify-between gap-3">
+                  {/* Left: Logo + Info */}
+                  <div className="flex items-center gap-3.5">
+                    <div className="w-10 h-10 rounded-lg bg-white border border-neutral-200/20 overflow-hidden flex items-center justify-center flex-shrink-0 p-1.5 shadow-sm">
+                      {exp.logo ? (
+                        <div className="relative w-full h-full">
+                          <Image
+                            src={exp.logo}
+                            alt={exp.company}
+                            fill
+                            className="object-contain"
+                          />
+                        </div>
+                      ) : (
+                        exp.logoSvg || (
+                          <span className="text-black font-bold text-sm">
+                            {exp.company.charAt(0)}
+                          </span>
+                        )
+                      )}
+                    </div>
+
+                    <div>
+                      <h3 className="text-sm sm:text-[15px] font-semibold text-white tracking-tight">
+                        {exp.company}
+                      </h3>
+                      <p className="text-xs sm:text-[13px] text-neutral-400 font-normal mt-0.5">
+                        {exp.role} {exp.type && `• ${exp.type}`}
+                      </p>
+                    </div>
                   </div>
 
-                  <div>
-                    <h3 className="text-sm sm:text-[15px] font-semibold text-white tracking-tight">
-                      {exp.company}
-                    </h3>
-                    <p className="text-xs sm:text-[13px] text-neutral-400 font-normal mt-0.5">
-                      {exp.role} {exp.type && `• ${exp.type}`}
-                    </p>
-                  </div>
+                  {/* Right: Date */}
+                  <span className="text-xs sm:text-[13px] text-neutral-500 font-normal whitespace-nowrap text-right pt-0.5 sm:pt-0">
+                    {exp.period}
+                  </span>
                 </div>
 
-                {/* Right: Date */}
-                <span className="text-xs sm:text-[13px] text-neutral-500 font-normal whitespace-nowrap text-right">
-                  {exp.period}
-                </span>
+                {/* Pointers / Bullet Points describing contributions & role */}
+                {exp.points && exp.points.length > 0 && (
+                  <ul className="mt-3 pl-3 sm:pl-[54px] flex flex-col gap-2 list-none">
+                    {exp.points.map((point, pIdx) => (
+                      <li
+                        key={pIdx}
+                        className="text-xs sm:text-[13px] text-neutral-400 leading-relaxed flex items-start gap-2.5"
+                      >
+                        <span className="w-1.5 h-1.5 rounded-full bg-neutral-600 flex-shrink-0 mt-1.5" />
+                        <span>{renderFormattedPoint(point)}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             ))}
           </div>
