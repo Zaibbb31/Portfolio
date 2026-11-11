@@ -35,13 +35,10 @@ export default function Navbar() {
   }, []);
 
   return (
-    <header className="fixed top-6 left-1/2 -translate-x-1/2 z-50 flex items-center justify-center w-full max-w-[320px] sm:max-w-[420px] px-4">
-      <Link
-        href="/"
-        className="flex items-center justify-between w-full bg-zinc-950/90 dark:bg-black/80 backdrop-blur-md border border-white/10 px-3 py-2 rounded-full transition-all duration-300  shadow-2xl"
-      >
-        {/* Avatar and hireable badge */}
-        <div className="flex items-center gap-2.5">
+    <header className="fixed top-6 left-1/2 -translate-x-1/2 z-50 flex items-center justify-center w-full max-w-[340px] sm:max-w-[460px] px-4">
+      <div className="flex items-center justify-between w-full bg-zinc-950/90 dark:bg-black/80 backdrop-blur-md border border-white/10 px-3 py-2 rounded-full transition-all duration-300 shadow-2xl">
+        {/* Avatar and brand */}
+        <Link href="/" className="flex items-center gap-2.5 group">
           <div className="relative w-8 h-8 rounded-full overflow-hidden border border-white/20">
             <Image
               src="/avatar.jpeg"
@@ -54,21 +51,28 @@ export default function Navbar() {
           </div>
           <div className="flex items-center gap-1 select-none">
             <span className="text-[10px] sm:text-xs font-medium tracking-widest text-zinc-100 uppercase">
-              BUILDING THINGS PEOPLE USE
+              ZAIB
             </span>
-            
           </div>
-        </div>
+        </Link>
 
-        {/* Scroll counter */}
-        <div className="flex items-center gap-1 select-none">
-          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-zinc-900 border border-white/10 shadow-inner">
+        {/* Action items */}
+        <div className="flex items-center gap-2">
+          <Link
+            href="/the-mess"
+            className="text-neutral-400 hover:text-white transition-colors text-xs"
+          >
+            The Mess
+          </Link>
+
+          {/* Scroll counter */}
+          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-zinc-900 border border-white/10 shadow-inner select-none">
             <span className="text-xs font-extrabold font-mono text-zinc-200">
               {scrollPercent}
             </span>
           </div>
         </div>
-      </Link>
+      </div>
     </header>
   );
 }

@@ -206,6 +206,7 @@ export default function Home() {
     { title: "Experience", category: "Section", href: "#experience" },
     { title: "Activity", category: "Section", href: "#activity" },
     { title: "Featured Projects", category: "Section", href: "#projects" },
+    { title: "The Mess. (Creative Archive)", category: "Archive", href: "/the-mess" },
     { title: "View Resume (PDF)", category: "Document", href: "/Zaib_UI-UX_Designer_Resume.pdf", isExternal: true },
     { title: "Send Email (zaib.work31@gmail.com)", category: "Contact", href: "mailto:zaib.work31@gmail.com" },
     ...PROJECTS.map((p) => ({
@@ -265,6 +266,13 @@ export default function Home() {
               className="text-neutral-400 hover:text-white transition-colors text-xs"
             >
               Projects
+            </Link>
+            <Link
+              href="/the-mess"
+              onClick={playClickSound}
+              className="text-neutral-400 hover:text-white transition-colors text-xs"
+            >
+              The Mess.
             </Link>
             <Link
               href="#connect"

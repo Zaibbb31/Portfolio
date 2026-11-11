@@ -88,11 +88,8 @@ export default async function ProjectSlugPage({ params }: Props) {
         
         {/* 1. TOP HEADER / NAVBAR (Flush within container borders) */}
         <header className="sticky top-0 z-40 w-full px-5 sm:px-8 py-3.5 flex items-center justify-between border-b border-neutral-800/80 bg-[#000000]/90 backdrop-blur-md select-none">
-          
-
-          {/* Center/Right Brand & Category Pill */}
+          {/* Logo brand on left */}
           <div className="flex items-center gap-3">
-            
             <Link
               href="/"
               className="flex items-center select-none group"
@@ -108,6 +105,22 @@ export default async function ProjectSlugPage({ params }: Props) {
                   priority
                 />
               </div>
+            </Link>
+          </div>
+
+          {/* Navigation right */}
+          <div className="flex items-center gap-3 sm:gap-4 text-xs">
+            <Link
+              href="/#projects"
+              className="text-neutral-400 hover:text-white transition-colors"
+            >
+              Projects
+            </Link>
+            <Link
+              href="/the-mess"
+              className="text-neutral-400 hover:text-white transition-colors"
+            >
+              The Mess.
             </Link>
           </div>
         </header>
