@@ -682,6 +682,39 @@ export default function Home() {
                   },
                 ],
               },
+              {
+                id: "ux-teardowns",
+                title: "UX Teardowns & Redesigns",
+                description: "Systematic UX audits and iterative screen redesigns for leading consumer apps (Gmail, Instagram, IRCTC, Paytm, WhatsApp, Airtel, Spotify).",
+                image: "/P3.svg",
+                codeUrl: "https://github.com/Zaibbb31",
+                tags: [
+                  {
+                    name: "UI/UX",
+                    icon: (
+                      <span className="w-3 h-3 rounded-[2px] bg-[#8b5cf6] text-white font-bold text-[8px] flex items-center justify-center leading-none">
+                        UX
+                      </span>
+                    ),
+                  },
+                  {
+                    name: "Teardowns",
+                    icon: (
+                      <span className="w-3 h-3 rounded-[2px] bg-[#10b981] text-white font-bold text-[8px] flex items-center justify-center leading-none">
+                        AUD
+                      </span>
+                    ),
+                  },
+                  {
+                    name: "Systems",
+                    icon: (
+                      <span className="w-3 h-3 rounded-[2px] bg-[#3b82f6] text-white font-bold text-[8px] flex items-center justify-center leading-none">
+                        SYS
+                      </span>
+                    ),
+                  },
+                ],
+              },
             ] as Array<{
               id: string;
               title: string;

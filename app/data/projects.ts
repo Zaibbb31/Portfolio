@@ -57,6 +57,9 @@ export interface Project {
   image: string;
   heroImage?: string;
   heroImagePosition?: "left" | "right";
+  heroImageClassName?: string;
+  heroImageWidthClass?: string;
+  heroContentWidthClass?: string;
   mobileImage?: string;
   imageFit?: "cover" | "contain";
   logo?: string;
@@ -64,7 +67,7 @@ export interface Project {
   liveUrl?: string;
   codeUrl?: string;
   behanceUrl?: string;
-  galleryLayout?: "bento" | "16:9";
+  galleryLayout?: "bento" | "16:9" | "single-column-bento";
   tags: string[];
   iconBg: string;
   gridImages?: string[];
@@ -873,19 +876,24 @@ export const PROJECTS: Project[] = [
     ],
   },
   {
-    id: "digital-brand-system",
-    title: "Digital Brand & Experience System",
-    category: "Brand & Design System",
-    subtitle: "A scalable, expressive visual identity and component architecture for high-growth digital products.",
+    id: "ux-teardowns",
+    title: "UX Teardowns & Redesigns",
+    category: "Product & UI/UX Teardowns",
+    subtitle: "In-depth UX audits and systematic screen redesigns for leading digital products.",
     description:
-      "A comprehensive design system and visual identity crafted to elevate brand presence across web and mobile experiences.",
-    client: "Design Studio",
+      "A systematic collection of 8 UX teardowns and iterative screen redesigns for top digital consumer platforms, eliminating user friction and elevating visual hierarchy.",
+    client: "Product Audits",
     date: "2026",
     image: "/P3.svg",
-    mobileImage: "/Frame 427318586.svg",
+    heroImage: "/P3.svg",
+    heroImageClassName: "object-cover object-left",
+    heroImageWidthClass: "md:w-[60%] lg:w-[62%]",
+    heroContentWidthClass: "md:w-[40%] lg:w-[38%]",
+    mobileImage: "/P3.svg",
     buttonText: "View Case Study",
-    tags: ["Design System", "UI/UX", "Brand Identity", "Design Tokens"],
+    tags: ["UI/UX Teardown", "Product Redesign", "Case Study", "Design Systems"],
     iconBg: "bg-rose-500",
+    galleryLayout: "single-column-bento",
     meta: {
       role: "Lead Product Designer",
       platform: "Web & Mobile",

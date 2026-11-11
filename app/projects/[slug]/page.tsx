@@ -11,14 +11,18 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-  return PROJECTS.map((project) => ({
+  const params = PROJECTS.map((project) => ({
     slug: project.id,
   }));
+  params.push({ slug: "digital-brand-system" });
+  return params;
 }
 
 export default async function ProjectSlugPage({ params }: Props) {
   const { slug } = await params;
-  const projectIndex = PROJECTS.findIndex((p) => p.id === slug);
+  const projectIndex = PROJECTS.findIndex(
+    (p) => p.id === slug || (slug === "digital-brand-system" && p.id === "ux-teardowns")
+  );
   const project = PROJECTS[projectIndex];
 
   if (!project) {
@@ -40,6 +44,11 @@ export default async function ProjectSlugPage({ params }: Props) {
 
   // Full-width banner image fallback
   const fullWidthImg = project.fullWidthImage || project.heroImage || project.image;
+
+  // Custom hero layout sizing for teardowns / visual case studies
+  const isTeardown = project.id === "ux-teardowns" || project.id === "digital-brand-system";
+  const heroImageWidthClass = project.heroImageWidthClass || (isTeardown ? "md:w-[60%] lg:w-[62%]" : "md:w-[50%]");
+  const heroContentWidthClass = project.heroContentWidthClass || (isTeardown ? "md:w-[40%] lg:w-[38%]" : "md:w-[50%]");
 
   // Object notes fallback
   const objectNotes = project.objectNotes || {
@@ -128,21 +137,30 @@ export default async function ProjectSlugPage({ params }: Props) {
         {/* 2. TOP HERO SECTION (Split Studio Image & Details) */}
         <section className="relative w-full flex flex-col md:flex-row items-stretch border-b border-neutral-800/80 overflow-hidden bg-black">
           {/* Left Studio Image */}
-          <div className="w-full md:w-[50%] relative min-h-[360px] sm:min-h-[460px] md:min-h-[500px] bg-neutral-950 md:border-r border-neutral-800/80 overflow-hidden group">
+          <div
+            className={`w-full ${heroImageWidthClass} relative ${
+              isTeardown ? "aspect-[4/3] sm:aspect-auto" : ""
+            } min-h-[320px] sm:min-h-[460px] md:min-h-[500px] bg-neutral-950 md:border-r border-neutral-800/80 overflow-hidden group`}
+          >
             <Image
               src={project.heroImage || project.image}
               alt={project.title}
               fill
               priority
-              className="object-cover object-center transition-transform duration-700 ease-out"
-              sizes="(max-width: 768px) 100vw, 480px"
+              className={`transition-transform duration-700 ease-out ${
+                project.heroImageClassName ||
+                (isTeardown
+                  ? "object-cover object-left"
+                  : "object-cover object-center")
+              }`}
+              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 62vw, 680px"
             />
             {/* Subtle Gradient Vignette */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
           </div>
 
           {/* Right Hero Details */}
-          <div className="w-full md:w-[50%] p-6 sm:p-8 lg:p-10 flex flex-col justify-between bg-black">
+          <div className={`w-full ${heroContentWidthClass} p-6 sm:p-8 lg:p-10 flex flex-col justify-between bg-black`}>
             <div className="flex flex-col gap-4">
               {/* Breadcrumb & Production Status */}
               <div className="flex items-center justify-between gap-2 text-xs font-mono text-neutral-500 uppercase tracking-widest">
@@ -244,8 +262,118 @@ export default async function ProjectSlugPage({ params }: Props) {
           </div>
         </section>
 
-        {/* 3. IMAGE GALLERY: 16:9 SCHEMATICS (FOR SCHOOLDASH) OR BENTO GRID (FOR SETTLR & OTHERS) */}
-        {project.galleryLayout === "16:9" || project.id === "schooldash" ? (
+        {/* 3. IMAGE GALLERY / BENTO LAYOUTS */}
+        {project.galleryLayout === "single-column-bento" || project.id === "ux-teardowns" ? (
+          <section className="p-5 sm:p-8 lg:p-10 border-b border-neutral-800/80 bg-black flex flex-col gap-10 sm:gap-14">
+            <div className="border-b border-neutral-800/80 pb-5">
+              <span className="text-xs font-mono uppercase tracking-widest text-emerald-400 mb-1.5 block">
+                UX Audits &amp; Redesigns • 8 Core Flows
+              </span>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-normal font-instrument text-white leading-tight">
+                Case Study Breakdown
+              </h2>
+              <p className="text-xs sm:text-sm text-neutral-400 mt-2 max-w-2xl font-normal leading-relaxed">
+                A systematic audit of interaction friction, cognitive load, and hierarchy flaws in popular digital consumer apps, paired with focused, high-contrast interface redesigns.
+              </p>
+            </div>
+
+            {/* In each row: Heading above, write-up above, and exactly one image from public/projects/New folder */}
+            <div className="flex flex-col gap-10 sm:gap-14">
+              {project.screens && project.screens.map((screen, idx) => (
+                <div
+                  key={idx}
+                  className="flex flex-col gap-6 p-6 sm:p-8 rounded-2xl border border-neutral-800/80 bg-neutral-950/70 shadow-2xl transition-all duration-300 hover:border-neutral-700"
+                >
+                  {/* Top: Heading and write-up above the image */}
+                  <div className="flex flex-col gap-2.5 border-b border-neutral-800/80 pb-6">
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="text-[11px] font-mono uppercase tracking-widest text-emerald-400 bg-emerald-950/60 border border-emerald-900/80 px-2.5 py-0.5 rounded-full">
+                        Flow 0{idx + 1}
+                      </span>
+                      <span className="text-xs font-mono text-neutral-500">
+                        1080 × 1350 · Vector SVG
+                      </span>
+                    </div>
+
+                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-normal font-instrument text-white leading-snug">
+                      {screen.title}
+                    </h3>
+
+                    {/* Write-up narrative */}
+                    <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed font-normal pt-1">
+                      {screen.description}
+                    </p>
+
+                    {/* Highlights chips if available */}
+                    {screen.highlights && screen.highlights.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5 pt-2">
+                        {screen.highlights.map((h, hIdx) => (
+                          <span
+                            key={hIdx}
+                            className="px-2.5 py-1 text-[11px] font-mono text-neutral-400 rounded-md bg-neutral-900 border border-neutral-800/80"
+                          >
+                            ✓ {h}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* UX Friction vs Solution writeup breakdown above the image */}
+                  {(screen.flaws || screen.improvements) && (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 bg-black/50 p-4 sm:p-5 rounded-xl border border-neutral-900">
+                      {screen.flaws && screen.flaws.length > 0 && (
+                        <div className="flex flex-col gap-2">
+                          <span className="text-[11px] font-mono uppercase tracking-wider text-rose-400 flex items-center gap-1.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
+                            <span>UX Friction Identified</span>
+                          </span>
+                          <ul className="space-y-1.5 text-xs text-neutral-400">
+                            {screen.flaws.map((flaw, fIdx) => (
+                              <li key={fIdx} className="flex items-start gap-2">
+                                <span className="text-rose-500 font-mono mt-0.5">•</span>
+                                <span>{flaw}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+
+                      {screen.improvements && screen.improvements.length > 0 && (
+                        <div className="flex flex-col gap-2">
+                          <span className="text-[11px] font-mono uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                            <span>Solution Implemented</span>
+                          </span>
+                          <ul className="space-y-1.5 text-xs text-neutral-400">
+                            {screen.improvements.map((imp, iIdx) => (
+                              <li key={iIdx} className="flex items-start gap-2">
+                                <span className="text-emerald-500 font-mono mt-0.5">•</span>
+                                <span>{imp}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Exactly ONE image from public/projects/New folder for this row */}
+                  <div className="relative w-full max-w-[620px] mx-auto aspect-[1080/1350] rounded-xl overflow-hidden border border-neutral-800 bg-black shadow-2xl flex items-center justify-center">
+                    <Image
+                      src={screen.image}
+                      alt={screen.title}
+                      fill
+                      priority={idx === 0}
+                      className="object-contain p-2 sm:p-4"
+                      sizes="(max-width: 768px) 100vw, 620px"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        ) : project.galleryLayout === "16:9" || project.id === "schooldash" ? (
           <section className="w-full border-b border-neutral-800/80 bg-black flex flex-col">
             {(
               (project.gallery && project.gallery.length > 0)
@@ -503,7 +631,7 @@ export default async function ProjectSlugPage({ params }: Props) {
         </section>
 
         {/* 7. DETAILED SCREENS SECTION (IF SCREEN REDESIGNS EXIST, E.G. AMA CONNECT / DRODRO) */}
-        {project.screens && project.screens.length > 0 && (
+        {project.screens && project.screens.length > 0 && project.galleryLayout !== "single-column-bento" && (
           <section className="p-6 sm:p-10 border-b border-neutral-800/80 bg-black flex flex-col gap-12">
             <div className="border-b border-neutral-800/80 pb-4">
               <span className="text-xs font-mono uppercase tracking-widest text-neutral-500 mb-1 block">
