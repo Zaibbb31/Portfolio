@@ -8,7 +8,6 @@ import {
   Search01Icon,
   Sun01Icon,
   Moon01Icon,
-  Video01Icon,
   Mail01Icon,
   File01Icon,
   SentIcon,
@@ -360,21 +359,23 @@ export default function Home() {
             {/* Action Buttons Row */}
             <div className="flex flex-wrap items-center gap-2.5 mt-4 sm:mt-5">
               
-              {/* Book a call */}
+              {/* View resume */}
               <a
-                href="mailto:zaib.work31@gmail.com?subject=Book%20a%20Call%20-%20Project%20Discussion"
+                href="/Zaib_UI-UX_Designer_Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={playClickSound}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white text-black text-xs font-semibold transition-all duration-150 shadow-sm active:scale-95 cursor-pointer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white text-black hover:bg-neutral-200 text-xs font-semibold transition-all duration-150 shadow-sm active:scale-95 cursor-pointer"
               >
-                <HugeiconsIcon icon={Video01Icon} size={15} className="text-black" />
-                <span>Book a call</span>
+                <HugeiconsIcon icon={File01Icon} size={15} className="text-black" />
+                <span>View resume</span>
               </a>
 
               {/* Send an email */}
               <button
                 type="button"
                 onClick={composeEmail}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-neutral-900 border border-neutral-800 text-white text-xs font-semibold transition-all duration-150 shadow-sm active:scale-95 cursor-pointer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-neutral-900 border border-neutral-800 hover:border-neutral-700 hover:bg-neutral-800 text-white text-xs font-semibold transition-all duration-150 shadow-sm active:scale-95 cursor-pointer"
               >
                 <HugeiconsIcon icon={Mail01Icon} size={15} className="text-white" />
                 <span>Send an email</span>
