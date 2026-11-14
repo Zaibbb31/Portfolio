@@ -21,6 +21,7 @@ import Footer from "./components/Footer";
 import SkillsSection from "./components/SkillsSection";
 import VennSection from "./components/VennSection";
 import Lightfall from "./components/Lightfall";
+import DogMascot from "./components/DogMascot";
 import { PROJECTS } from "./data/projects";
 
 interface ExperienceItem {
@@ -324,23 +325,24 @@ export default function Home() {
         </section>
 
         {/* 3. HERO PROFILE SECTION - Avatar + Info + CTA buttons */}
-        <section className="p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center gap-6 border-b border-neutral-800/80">
+        <section className="pt-10 sm:pt-12 pb-6 sm:pb-8 px-6 sm:px-8 flex flex-col sm:flex-row items-start sm:items-center gap-6 border-b border-neutral-800/80">
           
           {/* Left Column: Avatar + status toggle underneath */}
           <div className="flex flex-col items-center sm:items-start flex-shrink-0">
-            {/* Square avatar with rounded corners */}
-            <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden border border-neutral-700/60 bg-[#121215] shadow-lg group">
-              <Image
-                src="/avatar.jpeg"
-                alt="Zaib portrait"
-                fill
-                sizes="(max-width: 640px) 96px, 112px"
-                className="object-cover grayscale contrast-110 group-hover:grayscale-0 transition-all duration-300"
-                priority
-              />
+            {/* Square avatar with rounded corners + Animated Dog Mascot */}
+            <div className="relative">
+              <DogMascot />
+              <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden border border-neutral-700/60 bg-[#121215] shadow-lg group">
+                <Image
+                  src="/avatar.jpeg"
+                  alt="Zaib portrait"
+                  fill
+                  sizes="(max-width: 640px) 96px, 112px"
+                  className="object-cover grayscale contrast-110 group-hover:grayscale-0 transition-all duration-300"
+                  priority
+                />
+              </div>
             </div>
-
-          
           </div>
 
           {/* Right Column: Name, Titles & CTA Actions */}
