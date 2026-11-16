@@ -380,7 +380,7 @@ export default async function ProjectSlugPage({ params }: Props) {
               ))}
             </div>
           </section>
-        ) : project.galleryLayout === "16:9" || project.id === "schooldash" ? (
+        ) : project.galleryLayout === "16:9" ? (
           <section className="w-full border-b border-neutral-800/80 bg-black flex flex-col">
             {(
               (project.gallery && project.gallery.length > 0)
@@ -442,7 +442,7 @@ export default async function ProjectSlugPage({ params }: Props) {
                     {gridImages.slice(0, 2).map((img, idx) => (
                       <div
                         key={idx}
-                        className="relative w-full aspect-[4/3] overflow-hidden bg-neutral-950 group"
+                        className={`relative w-full ${project.id === "schooldash" ? "aspect-[16/10]" : "aspect-[4/3]"} overflow-hidden bg-neutral-950 group`}
                       >
                         <Image
                           src={img}
@@ -451,8 +451,12 @@ export default async function ProjectSlugPage({ params }: Props) {
                           className="object-cover object-center transition-transform duration-700 ease-out"
                           sizes="(max-width: 640px) 100vw, 480px"
                         />
-                        <div className="absolute top-3.5 left-3.5 px-2 py-0.5 rounded bg-black/70 backdrop-blur-md border border-white/10 text-[10px] font-mono text-neutral-300">
-                          0{idx + 1}
+                        <div className="absolute top-3.5 left-3.5 px-2.5 py-1 rounded bg-black/70 backdrop-blur-md border border-white/10 text-[10px] font-mono text-neutral-300 z-10">
+                          {project.id === "schooldash"
+                            ? idx === 0
+                              ? "01 · Emmanuel Mission Dashboard Mockup"
+                              : "02 · Minimalist Laptop Workspace"
+                            : `0${idx + 1}`}
                         </div>
                       </div>
                     ))}
@@ -467,14 +471,20 @@ export default async function ProjectSlugPage({ params }: Props) {
                 src={fullWidthImg}
                 alt={`${project.title} full showcase`}
                 fill
-                className="object-cover object-center transition-transform duration-700 ease-out"
+                className={`transition-transform duration-700 ease-out ${
+                  fullWidthImg.toLowerCase().includes("flow")
+                    ? "object-contain bg-neutral-950 p-2 sm:p-4"
+                    : "object-cover object-center"
+                }`}
                 sizes="(max-width: 1024px) 100vw, 896px"
               />
-              {gridImages.length === 1 && (
-                <div className="absolute top-3.5 left-3.5 px-2 py-0.5 rounded bg-black/70 backdrop-blur-md border border-white/10 text-[10px] font-mono text-neutral-300">
-                  02
-                </div>
-              )}
+              <div className="absolute top-3.5 left-3.5 px-2.5 py-1 rounded bg-black/70 backdrop-blur-md border border-white/10 text-[10px] font-mono text-neutral-300 z-10">
+                {project.id === "schooldash"
+                  ? "03 · Administrator Command Center Workflow"
+                  : gridImages.length === 1
+                  ? "02"
+                  : "Showcase"}
+              </div>
             </section>
 
             {/* 5. BENTO GRID - ROW 2 (Rendered only if more than 2 grid images exist) */}
@@ -490,7 +500,7 @@ export default async function ProjectSlugPage({ params }: Props) {
                     return (
                       <div
                         key={idx + 2}
-                        className="relative w-full aspect-[4/3] overflow-hidden bg-neutral-950 group flex items-center justify-center"
+                        className={`relative w-full ${project.id === "schooldash" ? "aspect-[16/10]" : "aspect-[4/3]"} overflow-hidden bg-neutral-950 group flex items-center justify-center`}
                       >
                         <Image
                           src={img}
@@ -501,8 +511,12 @@ export default async function ProjectSlugPage({ params }: Props) {
                           }`}
                           sizes="(max-width: 640px) 100vw, 480px"
                         />
-                        <div className="absolute top-3.5 left-3.5 px-2 py-0.5 rounded bg-black/70 backdrop-blur-md border border-white/10 text-[10px] font-mono text-neutral-300 z-10">
-                          0{idx + 3}
+                        <div className="absolute top-3.5 left-3.5 px-2.5 py-1 rounded bg-black/70 backdrop-blur-md border border-white/10 text-[10px] font-mono text-neutral-300 z-10">
+                          {project.id === "schooldash"
+                            ? idx === 0
+                              ? "04 · Teacher Daily Desk Workflow"
+                              : "05 · Student & Guardian Portal Workflow"
+                            : `0${idx + 3}`}
                         </div>
                       </div>
                     );
