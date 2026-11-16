@@ -59,6 +59,10 @@ export default function TheMessPage() {
   const pehnavri = ITSME_MESS_ITEMS.find((it) => it.id === "itsme-pehnavri")!;
   const editorial1 = ITSME_MESS_ITEMS.find((it) => it.id === "itsme-1")!;
   const editorial2 = ITSME_MESS_ITEMS.find((it) => it.id === "itsme-2")!;
+  const cryptoMinimal = ITSME_MESS_ITEMS.find((it) => it.id === "itsme-crypto-minimal")!;
+  const cryptoVine = ITSME_MESS_ITEMS.find((it) => it.id === "itsme-crypto-vine")!;
+  const iphoneCreation = ITSME_MESS_ITEMS.find((it) => it.id === "itsme-iphone-creation")!;
+  const iphoneStudio = ITSME_MESS_ITEMS.find((it) => it.id === "itsme-iphone-studio")!;
   const for4 = ITSME_MESS_ITEMS.find((it) => it.id === "itsme-for4")!;
 
   return (
@@ -106,7 +110,9 @@ export default function TheMessPage() {
               The Mess.
             </Link>
             <a
-              href="mailto:zaib.work31@gmail.com"
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=zaib.work31@gmail.com&su=Hello%20Zaib%20-%20Creative%20Inquiry"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-neutral-400 hover:text-white transition-colors hidden sm:inline-block"
             >
               Contact
@@ -129,7 +135,84 @@ export default function TheMessPage() {
 
         {/* 3. SIMPLE BENTO GRID ORGANIZED BY IMAGE RESOLUTIONS */}
         <section className="p-4 sm:p-8 flex flex-col gap-4 sm:gap-6 flex-1">
-          {/* Bento Item 1: Panoramic Widescreen Header (1920x800) */}
+          {/* Bento Showcase: Top Mobile & iPhone Mockups (3:4) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+            {/* Minimal Crypto App Mockup */}
+            <div
+              onClick={() => setActiveItem(cryptoMinimal)}
+              className="group relative w-full overflow-hidden rounded-2xl bg-neutral-950 border border-neutral-800/80 shadow-2xl transition-colors duration-200 hover:border-neutral-600 cursor-pointer"
+              style={{ aspectRatio: cryptoMinimal.aspectRatio }}
+            >
+              <Image
+                src={cryptoMinimal.src}
+                alt={cryptoMinimal.title}
+                fill
+                priority
+                sizes="(max-width: 640px) 100vw, 440px"
+                className="object-cover object-center"
+              />
+              <div className="absolute top-3 right-3 px-2 py-0.5 rounded-md bg-black/80 backdrop-blur-md border border-neutral-800 text-[10px] font-mono text-neutral-300 z-10 select-none">
+                {cryptoMinimal.sizeLabel}
+              </div>
+            </div>
+
+            {/* Vine Coin Crypto App Mockup */}
+            <div
+              onClick={() => setActiveItem(cryptoVine)}
+              className="group relative w-full overflow-hidden rounded-2xl bg-neutral-950 border border-neutral-800/80 shadow-2xl transition-colors duration-200 hover:border-neutral-600 cursor-pointer"
+              style={{ aspectRatio: cryptoVine.aspectRatio }}
+            >
+              <Image
+                src={cryptoVine.src}
+                alt={cryptoVine.title}
+                fill
+                priority
+                sizes="(max-width: 640px) 100vw, 440px"
+                className="object-cover object-center"
+              />
+              <div className="absolute top-3 right-3 px-2 py-0.5 rounded-md bg-black/80 backdrop-blur-md border border-neutral-800 text-[10px] font-mono text-neutral-300 z-10 select-none">
+                {cryptoVine.sizeLabel}
+              </div>
+            </div>
+
+            {/* iPhone Product Perspective Mockup */}
+            <div
+              onClick={() => setActiveItem(iphoneCreation)}
+              className="group relative w-full overflow-hidden rounded-2xl bg-neutral-950 border border-neutral-800/80 shadow-2xl transition-colors duration-200 hover:border-neutral-600 cursor-pointer"
+              style={{ aspectRatio: iphoneCreation.aspectRatio }}
+            >
+              <Image
+                src={iphoneCreation.src}
+                alt={iphoneCreation.title}
+                fill
+                sizes="(max-width: 640px) 100vw, 440px"
+                className="object-cover object-center"
+              />
+              <div className="absolute top-3 right-3 px-2 py-0.5 rounded-md bg-black/80 backdrop-blur-md border border-neutral-800 text-[10px] font-mono text-neutral-300 z-10 select-none">
+                {iphoneCreation.sizeLabel}
+              </div>
+            </div>
+
+            {/* iPhone Minimalist Device Showcase */}
+            <div
+              onClick={() => setActiveItem(iphoneStudio)}
+              className="group relative w-full overflow-hidden rounded-2xl bg-neutral-950 border border-neutral-800/80 shadow-2xl transition-colors duration-200 hover:border-neutral-600 cursor-pointer"
+              style={{ aspectRatio: iphoneStudio.aspectRatio }}
+            >
+              <Image
+                src={iphoneStudio.src}
+                alt={iphoneStudio.title}
+                fill
+                sizes="(max-width: 640px) 100vw, 440px"
+                className="object-cover object-center"
+              />
+              <div className="absolute top-3 right-3 px-2 py-0.5 rounded-md bg-black/80 backdrop-blur-md border border-neutral-800 text-[10px] font-mono text-neutral-300 z-10 select-none">
+                {iphoneStudio.sizeLabel}
+              </div>
+            </div>
+          </div>
+
+          {/* Bento Item 2: Panoramic Widescreen Header (1920x800) */}
           <div
             onClick={() => setActiveItem(trivora)}
             className="group relative w-full overflow-hidden rounded-2xl bg-neutral-950 border border-neutral-800/80 shadow-2xl transition-colors duration-200 hover:border-neutral-600 cursor-pointer"
@@ -360,7 +443,12 @@ export default function TheMessPage() {
                     maxWidth:
                       activeItem.id === "itsme-pehnavri-mobile"
                         ? "380px"
-                        : activeItem.id === "itsme-1" || activeItem.id === "itsme-2"
+                        : activeItem.id === "itsme-1" ||
+                          activeItem.id === "itsme-2" ||
+                          activeItem.id === "itsme-crypto-minimal" ||
+                          activeItem.id === "itsme-crypto-vine" ||
+                          activeItem.id === "itsme-iphone-creation" ||
+                          activeItem.id === "itsme-iphone-studio"
                         ? "500px"
                         : "100%",
                   }}

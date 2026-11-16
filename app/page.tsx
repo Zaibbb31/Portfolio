@@ -10,7 +10,8 @@ import {
   Moon01Icon,
   Mail01Icon,
   File01Icon,
-  SentIcon,
+  Copy01Icon,
+  CheckmarkBadge01Icon,
   GithubIcon,
   Linkedin01Icon,
   NewTwitterIcon,
@@ -131,10 +132,26 @@ export default function Home() {
     }
   };
 
-  const composeEmail = () => {
+  const [emailCopied, setEmailCopied] = useState(false);
+  const [heroEmailCopied, setHeroEmailCopied] = useState(false);
+
+  const handleCopyEmail = (isHero = false) => {
     playClickSound();
-    window.location.href = "mailto:zaib.work31@gmail.com?subject=Hello%20Zaib%20-%20Project%20Inquiry";
+    try {
+      if (navigator?.clipboard) {
+        navigator.clipboard.writeText("zaib.work31@gmail.com");
+      }
+    } catch {}
+    if (isHero) {
+      setHeroEmailCopied(true);
+      setTimeout(() => setHeroEmailCopied(false), 2000);
+    } else {
+      setEmailCopied(true);
+      setTimeout(() => setEmailCopied(false), 2000);
+    }
   };
+
+  const composeEmail = () => handleCopyEmail(false);
 
   // Sync isDarkMode with document.documentElement
   useEffect(() => {
@@ -166,7 +183,7 @@ export default function Home() {
 
       if (event.key === "c" || event.key === "C") {
         event.preventDefault();
-        composeEmail();
+        handleCopyEmail(true);
       }
     };
 
@@ -200,7 +217,7 @@ export default function Home() {
     { title: "Activity", category: "Section", href: "#activity" },
     { title: "Featured Projects", category: "Section", href: "#projects" },
     { title: "The Mess. (Creative Archive)", category: "Archive", href: "/the-mess" },
-    { title: "View Resume (PDF)", category: "Document", href: "/Zaib_UI-UX_Designer_Resume.pdf", isExternal: true },
+    { title: "View Resume (PDF)", category: "Document", href: "/Zaib_UI-UX_Designer_Resume copy.pdf", isExternal: true },
     { title: "Send Email (zaib.work31@gmail.com)", category: "Contact", href: "mailto:zaib.work31@gmail.com" },
     ...PROJECTS.map((p) => ({
       title: p.title,
@@ -363,7 +380,7 @@ export default function Home() {
               
               {/* View resume */}
               <a
-                href="/Zaib_UI-UX_Designer_Resume.pdf"
+                href="/Zaib_UI-UX_Designer_Resume copy.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={playClickSound}
@@ -373,14 +390,20 @@ export default function Home() {
                 <span>View resume</span>
               </a>
 
-              {/* Send an email */}
+              {/* Send an email (Click to copy email) */}
               <button
                 type="button"
-                onClick={composeEmail}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-neutral-900 border border-neutral-800 hover:border-neutral-700 hover:bg-neutral-800 text-white text-xs font-semibold transition-all duration-150 shadow-sm active:scale-95 cursor-pointer"
+                onClick={() => handleCopyEmail(true)}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-neutral-900 border border-neutral-800 hover:border-neutral-700 hover:bg-neutral-800 text-white text-xs font-semibold transition-all duration-150 shadow-sm active:scale-95 cursor-pointer group"
+                title="Click to copy email address"
               >
                 <HugeiconsIcon icon={Mail01Icon} size={15} className="text-white" />
-                <span>Send an email</span>
+                <span>{heroEmailCopied ? "Email copied!" : "Send an email"}</span>
+                {heroEmailCopied ? (
+                  <HugeiconsIcon icon={CheckmarkBadge01Icon} size={14} className="text-emerald-400 animate-in fade-in duration-150" />
+                ) : (
+                  <HugeiconsIcon icon={Copy01Icon} size={14} className="text-neutral-400 group-hover:text-white transition-colors" />
+                )}
               </button>
 
             </div>
@@ -432,7 +455,7 @@ export default function Home() {
             
             {/* Resume button */}
             <a
-              href="/Zaib_UI-UX_Designer_Resume.pdf"
+              href="/Zaib_UI-UX_Designer_Resume copy.pdf"
               target="_blank"
               rel="noopener noreferrer"
               onClick={playClickSound}
@@ -441,16 +464,6 @@ export default function Home() {
               <HugeiconsIcon icon={File01Icon} size={14} className="text-neutral-400" />
               <span>Resume</span>
             </a>
-
-            {/* Contact button */}
-            <button
-              type="button"
-              onClick={composeEmail}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-neutral-900 border border-neutral-800 hover:border-neutral-700 hover:bg-neutral-800 text-white text-xs font-medium transition-all duration-150 active:scale-95 cursor-pointer"
-            >
-              <HugeiconsIcon icon={SentIcon} size={14} className="text-neutral-400" />
-              <span>Contact</span>
-            </button>
 
             {/* GitHub */}
             <a
@@ -488,14 +501,25 @@ export default function Home() {
               <span>X (Twitter)</span>
             </a>
 
-            {/* Email */}
+            {/* Email CTA with Copy Icon */}
             <button
               type="button"
-              onClick={composeEmail}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-neutral-900 border border-neutral-800 hover:border-neutral-700 hover:bg-neutral-800 text-white text-xs font-medium transition-all duration-150 active:scale-95 cursor-pointer"
+              onClick={() => handleCopyEmail(false)}
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-neutral-900 border border-neutral-800 hover:border-neutral-700 hover:bg-neutral-800 text-white text-xs font-medium transition-all duration-150 active:scale-95 cursor-pointer group"
+              title="Click to copy email address"
             >
-              <HugeiconsIcon icon={Mail01Icon} size={14} className="text-neutral-400" />
-              <span>Email</span>
+              <HugeiconsIcon icon={Mail01Icon} size={14} className="text-neutral-400 group-hover:text-neutral-300 transition-colors" />
+              <span>zaib.work31@gmail.com</span>
+              <span className="flex items-center pl-1 text-neutral-400 group-hover:text-white transition-colors">
+                {emailCopied ? (
+                  <span className="inline-flex items-center gap-1 text-emerald-400 text-[11px] font-mono animate-in fade-in duration-150">
+                    <HugeiconsIcon icon={CheckmarkBadge01Icon} size={13} className="text-emerald-400" />
+                    <span>Copied!</span>
+                  </span>
+                ) : (
+                  <HugeiconsIcon icon={Copy01Icon} size={13} className="text-neutral-500 group-hover:text-neutral-300 transition-colors" />
+                )}
+              </span>
             </button>
 
           </div>

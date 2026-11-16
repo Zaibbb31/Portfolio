@@ -12,7 +12,7 @@ export default function VennSection({ onBookCall }: VennSectionProps) {
     if (onBookCall) {
       onBookCall();
     } else {
-      window.location.href = "mailto:zaib.work31@gmail.com?subject=Book%20a%20call%20with%20Zaib";
+      window.open("https://mail.google.com/mail/?view=cm&fs=1&to=zaib.work31@gmail.com&su=Book%20a%20call%20with%20Zaib", "_blank", "noopener,noreferrer");
     }
   };
 
@@ -146,7 +146,7 @@ export default function VennSection({ onBookCall }: VennSectionProps) {
 
       {/* Resume link button */}
       <a
-        href="/Zaib_UI-UX_Designer_Resume.pdf"
+        href="/Zaib_UI-UX_Designer_Resume copy.pdf"
         target="_blank"
         rel="noopener noreferrer"
         onClick={onBookCall}

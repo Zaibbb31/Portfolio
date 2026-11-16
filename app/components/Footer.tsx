@@ -6,7 +6,9 @@ export default function Footer() {
         <p className="text-xs sm:text-[13px] text-neutral-400 font-normal">
           Designed and developed by{" "}
           <a
-            href="mailto:zaib.work31@gmail.com"
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=zaib.work31@gmail.com"
+            target="_blank"
+            rel="noopener noreferrer"
             className="underline underline-offset-4 decoration-neutral-500 hover:decoration-white font-medium text-white transition-colors"
           >
             Zaib

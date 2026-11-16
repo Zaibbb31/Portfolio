@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { PROJECTS } from "../../data/projects";
 import Footer from "../../components/Footer";
+import CopyEmailButton from "../../components/CopyEmailButton";
 
 interface Props {
   params: Promise<{
@@ -195,12 +196,39 @@ export default async function ProjectSlugPage({ params }: Props) {
 
             {/* Action Buttons */}
             <div className="flex flex-wrap items-center gap-3 pt-6 mt-6 border-t border-neutral-800/80">
+              {/* View resume button */}
+              <a
+                href="/Zaib_UI-UX_Designer_Resume copy.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white text-black hover:bg-neutral-200 text-xs sm:text-sm font-semibold transition-all duration-150 shadow-sm active:scale-95 cursor-pointer"
+              >
+                <svg
+                  className="w-4 h-4 fill-none stroke-current"
+                  viewBox="0 0 24 24"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                  <polyline points="14 2 14 8 20 8" />
+                  <line x1="16" y1="13" x2="8" y2="13" />
+                  <line x1="16" y1="17" x2="8" y2="17" />
+                  <polyline points="10 9 9 9 8 9" />
+                </svg>
+                <span>View resume</span>
+              </a>
+
+              {/* Send an email (Click to copy) */}
+              <CopyEmailButton />
+
               {project.behanceUrl && (
                 <a
                   href={project.behanceUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white text-black hover:bg-neutral-200 text-xs sm:text-sm font-medium transition-all shadow-sm active:scale-95 group"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-neutral-800 hover:border-neutral-600 text-neutral-300 hover:text-white text-xs sm:text-sm font-medium transition-colors"
                 >
                   <svg
                     className="w-4 h-4 fill-current"
@@ -210,9 +238,7 @@ export default async function ProjectSlugPage({ params }: Props) {
                     <path d="M22 7h-7v-2h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-4.074 0-5.875-2.887-5.875-5.874 0-3.567 2.128-6.126 5.875-6.126 3.996 0 5.485 2.766 5.253 6.002h-8.529c.088 1.83 1.144 3.518 3.329 3.518 1.541 0 2.505-.726 2.871-1.52h2.177zm-5.155-5.002c-.083-1.424-.871-2.482-2.396-2.482-1.488 0-2.316 1.058-2.438 2.482h4.834zm-13.571-7.998h5.385c1.782 0 3.197.357 4.045 1.483.67.892.877 2.052.877 3.197 0 1.258-.396 2.312-1.332 3.013 1.257.696 1.879 1.956 1.879 3.491 0 1.523-.48 2.775-1.394 3.635-.913.86-2.28 1.181-4.075 1.181h-6.385v-16zm2.748 6.452h2.385c.82 0 1.477-.197 1.848-.549.372-.352.548-.871.548-1.533 0-.649-.176-1.155-.548-1.5-.371-.345-1.028-.528-1.848-.528h-2.385v4.11zm0 6.84h2.529c.928 0 1.666-.219 2.078-.619.412-.4.619-.98.619-1.72 0-.753-.207-1.346-.619-1.758-.412-.413-1.15-.623-2.078-.623h-2.529v4.72z" />
                   </svg>
                   <span>View on Behance</span>
-                  <span className="text-neutral-500 group-hover:text-black transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 text-xs">
-                    ↗
-                  </span>
+                  <span className="text-neutral-500 text-xs">↗</span>
                 </a>
               )}
 
@@ -221,11 +247,7 @@ export default async function ProjectSlugPage({ params }: Props) {
                   href={project.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={
-                    !project.behanceUrl
-                      ? "inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white text-black hover:bg-neutral-200 text-xs sm:text-sm font-medium transition-all shadow-sm active:scale-95 group"
-                      : "inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-neutral-800 hover:border-neutral-600 text-neutral-300 hover:text-white text-xs sm:text-sm font-medium transition-colors"
-                  }
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-neutral-800 hover:border-neutral-600 text-neutral-300 hover:text-white text-xs sm:text-sm font-medium transition-colors"
                 >
                   <svg
                     className="w-3.5 h-3.5 fill-none stroke-current"
@@ -240,24 +262,9 @@ export default async function ProjectSlugPage({ params }: Props) {
                     <line x1="10" y1="14" x2="21" y2="3" />
                   </svg>
                   <span>{project.buttonText || "Live Demo"}</span>
-                  <span
-                    className={
-                      !project.behanceUrl
-                        ? "text-neutral-500 group-hover:text-black transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 text-xs"
-                        : "text-neutral-500 text-xs"
-                    }
-                  >
-                    ↗
-                  </span>
+                  <span className="text-neutral-500 text-xs">↗</span>
                 </a>
               )}
-
-              <a
-                href={`mailto:zaib.work31@gmail.com?subject=Inquiry about ${encodeURIComponent(project.title)}`}
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-neutral-800 hover:border-neutral-600 text-neutral-400 hover:text-white text-xs sm:text-sm font-medium transition-colors"
-              >
-                <span>Enquire</span>
-              </a>
             </div>
           </div>
         </section>
