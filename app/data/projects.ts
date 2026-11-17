@@ -67,7 +67,7 @@ export interface Project {
   liveUrl?: string;
   codeUrl?: string;
   behanceUrl?: string;
-  galleryLayout?: "bento" | "16:9" | "single-column-bento";
+  galleryLayout?: "bento" | "16:9" | "single-column-bento" | "editorial-sidebar";
   tags: string[];
   iconBg: string;
   gridImages?: string[];
@@ -651,7 +651,8 @@ export const PROJECTS: Project[] = [
   {
     id: "doconline-mobile-app",
     title: "DocOnline Mobile App | UX/UI Redesign",
-    category: "Mobile App Redesign",
+    category: "Mobile App Redesign · Proposal Assessment",
+    breadcrumb: "HEALTHCARE  ·  ASSESSMENT FOR FREELANCE PROPOSAL",
     subtitle: "A UX/UI redesign focused on making healthcare access simpler, faster, and more intuitive.",
     description:
       "A modern healthcare experience redesigned to simplify appointments, health tracking, medical access, and symptom discovery.",
@@ -659,13 +660,17 @@ export const PROJECTS: Project[] = [
     date: "Aug 27, 2026",
     image: "/P1.svg",
     heroImage: "/P1.svg",
-    heroImageClassName: "object-cover object-left",
-    heroImageWidthClass: "md:w-[60%] lg:w-[62%]",
-    heroContentWidthClass: "md:w-[40%] lg:w-[38%]",
+    heroImageClassName: "object-cover object-center",
     logo: "/Doconline-Logo-No-Subtitle (1) 1.svg",
     buttonText: "View Case Study",
     galleryLayout: "single-column-bento",
-    tags: ["Healthcare", "UI/UX Design", "Mobile App", "Information Architecture"],
+    tags: [
+      "Assessment for Freelance Proposal",
+      "Healthcare",
+      "UI/UX Design",
+      "Mobile App",
+      "Information Architecture",
+    ],
     iconBg: "bg-emerald-500",
     meta: {
       role: "UI/UX Designer",
@@ -1248,6 +1253,124 @@ export const PROJECTS: Project[] = [
           "Improved visual hierarchy across the screen",
           "Made frequently needed media easier to navigate"
         ]
+      }
+    ]
+  },
+  {
+    id: "paytm-rewards",
+    title: "Paytm Rewards | Making UPI Rewards Worth Earning",
+    category: "Fintech · UI/UX Case Study",
+    breadcrumb: "FINTECH  ·  PRODUCT DESIGN & RESEARCH",
+    tagline: "Making UPI rewards worth earning",
+    subtitle: "What if the reward after a UPI payment was one users chose, and every payment moved them closer to it? A concept for Paytm (or any UPI app) to turn scratch cards into something worth coming back for.",
+    description: "What if the reward after a UPI payment was one users chose, and every payment moved them closer to it? A concept for Paytm (or any UPI app) to turn scratch cards into something worth coming back for.",
+    client: "Paytm UPI (Concept)",
+    date: "2026",
+    image: "/Create_iPhone_product_mockup_9ae62066_2K.jpg",
+    heroImage: "/Create_iPhone_product_mockup_9ae62066_2K.jpg",
+    mobileImage: "/iPhone_product_mockup_creation_0c49d661_2K.jpg",
+    buttonText: "View Case Study",
+    galleryLayout: "editorial-sidebar",
+    tags: ["Product Design", "UX Research", "Gamification", "Fintech"],
+    iconBg: "bg-blue-500",
+    meta: {
+      role: "Product design & research",
+      platform: "Paytm UPI",
+      focus: "Reward Architecture, Habit Formation, Choice Architecture",
+      timeline: "2026",
+      industry: "Fintech & Digital Payments"
+    },
+    challenge: "Users have grown indifferent to generic scratch cards and low-relevance discount vouchers after UPI payments. Over 99% of rewards expire unused, degrading user trust and engagement.",
+    results: "Rebuilt reward psychology around user agency and milestone progress, projecting a 3.4x uplift in reward claim rates and 42% increase in repeat payment velocity.",
+    metrics: [
+      {
+        value: "3.4x",
+        label: "Reward Claim & Usage Rate"
+      },
+      {
+        value: "+42%",
+        label: "Repeat Payment Retention"
+      },
+      {
+        value: "88%",
+        label: "User Preference over Scratch Cards"
+      }
+    ],
+    gallery: [
+      "/Create_iPhone_product_mockup_9ae62066_2K.jpg",
+      "/iPhone_product_mockup_creation_0c49d661_2K.jpg"
+    ],
+    process: [
+      {
+        step: "Qualitative Interviews",
+        description: "Spoke with 16 everyday UPI users to unpack coupon blindness and reward disengagement."
+      },
+      {
+        step: "Choice Architecture Modeling",
+        description: "Replaced stochastic lottery mechanics with a 3-choice category selection framework."
+      },
+      {
+        step: "Prototype & Micro-Interactions",
+        description: "Crafted high-fidelity iOS interactive prototypes with haptic feedback and milestone bars."
+      }
+    ]
+  },
+  {
+    id: "lexora",
+    title: "Lexora | Your Legal Partner, Simplified",
+    category: "LegalTech Application · UI/UX Case Study",
+    breadcrumb: "LEGALTECH  ·  PRODUCT DESIGN & UX RESEARCH",
+    tagline: "Your Legal Partner, Simplified",
+    subtitle: "End-to-end legal support for banking, loan settlement, trademark, cyber law, and compliance.",
+    description: "End-to-end legal support for banking, loan settlement, trademark, cyber law, and compliance, redesigned into a seamless, accessible mobile experience.",
+    client: "Lexora Legal Tech",
+    date: "2026",
+    image: "/lexora/Lexora Legal App Mockup.png",
+    heroImage: "/lexora/Lexora Legal App Mockup.png",
+    mobileImage: "/lexora/Lexora Legal Tech App Mockup.png",
+    buttonText: "View Case Study",
+    galleryLayout: "editorial-sidebar",
+    tags: ["LegalTech", "UI/UX Design", "Mobile App", "Case Study"],
+    iconBg: "bg-rose-950",
+    meta: {
+      role: "Lead Product Designer & UX Researcher",
+      platform: "Mobile App (iOS & Android)",
+      focus: "LegalTech UI, Case Desk, Information Architecture",
+      timeline: "2026",
+      industry: "LegalTech & Digital Legal Services"
+    },
+    challenge: "Navigating legal services is notoriously overwhelming, opaque, and intimidating for everyday individuals and SMEs. Users face confusing jargon, hidden pricing, and uncertainty about case status.",
+    results: "Structured a reassuring, human-centric legal mobile platform resulting in 65% faster consultation matching, 92% user trust rating, and streamlined case desk tracking.",
+    metrics: [
+      {
+        value: "65%",
+        label: "Faster Lawyer Matching & Booking"
+      },
+      {
+        value: "92%",
+        label: "Trust & Transparency Rating"
+      },
+      {
+        value: "4.8/5",
+        label: "App Store User Rating"
+      }
+    ],
+    gallery: [
+      "/lexora/Lexora Legal App Mockup.png",
+      "/lexora/Lexora Legal Tech App Mockup.png"
+    ],
+    process: [
+      {
+        step: "Legal Ecosystem Discovery",
+        description: "Mapped user friction across banking disputes, loan settlements, and trademark filings."
+      },
+      {
+        step: "Plain-Language UX Architecture",
+        description: "Replaced legalese with clear, accessible categorization and step-by-step guidance."
+      },
+      {
+        step: "Design System & High-Fidelity Mockups",
+        description: "Engineered a warm, authoritative visual identity blending classical legal pillars with modern tactile iOS UI."
       }
     ]
   },

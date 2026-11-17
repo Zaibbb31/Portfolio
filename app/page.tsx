@@ -650,59 +650,102 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
-            {(projectCategory === "case-study"
-              ? [
-                  {
-                    id: "doconline-mobile-app",
-                    title: "DocOnline Mobile App",
-                    description: "A modern healthcare experience redesigned to simplify appointments, health tracking, medical access, and symptom discovery.",
-                    image: "/P1.svg",
-                    codeUrl: "https://github.com/Zaibbb31",
-                    tags: ["Healthcare", "UI/UX", "Mobile App"],
-                    buttonLabel: "Case Study",
-                  },
-                ]
-              : [
-                  {
-                    id: "schooldash",
-                    title: "SchoolDash",
-                    description: "A comprehensive K-12 school management ecosystem streamlining admissions, attendance, exams, and communication across Admin, Teacher, and Student portals.",
-                    image: "/Emmanuel Mission School Login Workspace.png",
-                    liveUrl: "https://emmanuelmission.vercel.app/",
-                    codeUrl: "https://github.com/Zaibbb31",
-                    tags: ["EdTech", "UI/UX", "System Design"],
-                    buttonLabel: "View Screens",
-                  },
-                  {
-                    id: "ux-teardowns",
-                    title: "UX Teardowns & Redesigns",
-                    description: "Systematic UX audits and iterative screen redesigns for leading consumer apps (Gmail, Instagram, IRCTC, Paytm, WhatsApp, Airtel, Spotify).",
-                    image: "/P3.svg",
-                    codeUrl: "https://github.com/Zaibbb31",
-                    tags: ["UI/UX", "Teardowns", "Systems"],
-                    buttonLabel: "View Screens",
-                  },
-                  {
-                    id: "settlr",
-                    title: "Settlr",
-                    description: "Helping people take control of their debt through clear loan insights, financial education, and accessible legal support.",
-                    image: "/Settlr.png",
-                    behanceUrl: "https://www.behance.net/gallery/257455215/Settlr",
-                    codeUrl: "https://github.com/Zaibbb31",
-                    tags: ["Figma", "Fintech", "UX Research"],
-                    buttonLabel: "View Screens",
-                  },
-                  {
-                    id: "zero-friction-lab",
-                    title: "Zero Friction Lab",
-                    description: "Digital systems and AI automation studio engineering custom intelligence workflows and high-converting web architecture.",
-                    image: "/Cinematic AI Workspace Website Mockup.png",
-                    liveUrl: "https://www.zerofrictionlab.com/",
-                    codeUrl: "https://github.com/Zaibbb31",
-                    tags: ["AI Automation", "Product Design", "Systems"],
-                    buttonLabel: "View Screens",
-                  },
-                ]
+            {(
+              (projectCategory === "case-study"
+                ? [
+                    {
+                      id: "lexora",
+                      title: "Lexora",
+                      description: "End-to-end legal support for banking, loan settlement, trademark, cyber law, and compliance, redesigned into a seamless mobile experience.",
+                      image: "/lexora/Lexora Legal App Mockup.png",
+                      tags: [
+                        "LegalTech",
+                        "UI/UX Design",
+                        "Mobile App",
+                        "Case Study",
+                      ],
+                      buttonLabel: "Case Study",
+                    },
+                    {
+                      id: "paytm-rewards",
+                      title: "Paytm Rewards",
+                      description: "Turning generic scratch cards into goal-oriented rewards that users actually care to earn through choice architecture.",
+                      image: "/Create_iPhone_product_mockup_9ae62066_2K.jpg",
+                      tags: [
+                        "Fintech",
+                        "Product Strategy",
+                        "UX Research",
+                        "Gamification",
+                      ],
+                      buttonLabel: "Case Study",
+                    },
+                    {
+                      id: "doconline-mobile-app",
+                      title: "DocOnline Mobile App",
+                      description: "A modern healthcare experience redesigned to simplify appointments, health tracking, medical access, and symptom discovery.",
+                      image: "/P1.svg",
+                      codeUrl: "https://github.com/Zaibbb31",
+                      tags: [
+                        "Assessment for Freelance Proposal",
+                        "Healthcare",
+                        "UI/UX",
+                        "Mobile App",
+                      ],
+                      buttonLabel: "Case Study",
+                    },
+                  ]
+                : [
+                    {
+                      id: "schooldash",
+                      title: "SchoolDash",
+                      description: "A comprehensive K-12 school management ecosystem streamlining admissions, attendance, exams, and communication across Admin, Teacher, and Student portals.",
+                      image: "/Emmanuel Mission School Login Workspace.png",
+                      liveUrl: "https://emmanuelmission.vercel.app/",
+                      codeUrl: "https://github.com/Zaibbb31",
+                      tags: ["EdTech", "UI/UX", "System Design"],
+                      buttonLabel: "View Screens",
+                    },
+                    {
+                      id: "ux-teardowns",
+                      title: "UX Teardowns & Redesigns",
+                      description: "Systematic UX audits and iterative screen redesigns for leading consumer apps (Gmail, Instagram, IRCTC, Paytm, WhatsApp, Airtel, Spotify).",
+                      image: "/P3.svg",
+                      codeUrl: "https://github.com/Zaibbb31",
+                      tags: ["UI/UX", "Teardowns", "Systems"],
+                      buttonLabel: "View Screens",
+                    },
+                    {
+                      id: "settlr",
+                      title: "Settlr",
+                      description: "Helping people take control of their debt through clear loan insights, financial education, and accessible legal support.",
+                      image: "/Settlr.png",
+                      behanceUrl: "https://www.behance.net/gallery/257455215/Settlr",
+                      codeUrl: "https://github.com/Zaibbb31",
+                      tags: ["Figma", "Fintech", "UX Research"],
+                      buttonLabel: "View Screens",
+                    },
+                    {
+                      id: "zero-friction-lab",
+                      title: "Zero Friction Lab",
+                      description: "Digital systems and AI automation studio engineering custom intelligence workflows and high-converting web architecture.",
+                      image: "/Cinematic AI Workspace Website Mockup.png",
+                      liveUrl: "https://www.zerofrictionlab.com/",
+                      codeUrl: "https://github.com/Zaibbb31",
+                      tags: ["AI Automation", "Product Design", "Systems"],
+                      buttonLabel: "View Screens",
+                    },
+                  ]
+              ) as Array<{
+                id: string;
+                title: string;
+                description: string;
+                image: string;
+                tags: string[];
+                buttonLabel?: string;
+                liveUrl?: string;
+                behanceUrl?: string;
+                codeUrl?: string;
+              }>
             ).map((project) => (
               <div
                 key={project.id}
@@ -712,15 +755,30 @@ export default function Home() {
                 <Link
                   href={`/projects/${project.id}`}
                   onClick={playClickSound}
-                  className="relative w-full aspect-[16/10] rounded-xl overflow-hidden border border-neutral-800 bg-[#09090b] mb-3.5 flex items-center justify-center group-hover:border-neutral-600 transition-colors cursor-pointer"
+                  className={`relative w-full aspect-[16/10] rounded-xl overflow-hidden border border-neutral-800 ${
+                    project.id === "lexora" ? "bg-[#e2d8cd]" : "bg-[#09090b]"
+                  } mb-3.5 flex items-center justify-center group-hover:border-neutral-600 transition-colors cursor-pointer`}
                   aria-label={`View ${project.title}`}
                 >
+                  {project.id === "lexora" && (
+                    <Image
+                      src={project.image}
+                      alt=""
+                      fill
+                      aria-hidden="true"
+                      className="object-cover blur-2xl scale-125 opacity-70 pointer-events-none"
+                    />
+                  )}
                   <Image
                     src={project.image}
                     alt={project.title}
                     fill
                     sizes="(max-width: 768px) 100vw, 450px"
-                    className="object-cover group-hover:scale-[1.03] transition-transform duration-500 ease-out"
+                    className={`relative z-10 transition-transform duration-500 ease-out ${
+                      project.id === "lexora"
+                        ? "object-contain p-2.5 group-hover:scale-[1.03]"
+                        : "object-cover group-hover:scale-[1.03]"
+                    }`}
                   />
                 </Link>
 
@@ -782,14 +840,21 @@ export default function Home() {
 
                 {/* Tech stack badge pills */}
                 <div className="flex items-center gap-1.5 flex-wrap mt-2.5">
-                  {project.tags.map((tag, tagIdx) => (
-                    <span
-                      key={tagIdx}
-                      className="inline-flex items-center px-2 py-0.5 rounded-md bg-neutral-900/90 border border-neutral-800 text-[11px] text-neutral-300 select-none"
-                    >
-                      {tag}
-                    </span>
-                  ))}
+                  {project.tags.map((tag, tagIdx) => {
+                    const isProposal = tag.toLowerCase().includes("assessment") || tag.toLowerCase().includes("proposal");
+                    return (
+                      <span
+                        key={tagIdx}
+                        className={`inline-flex items-center px-2 py-0.5 rounded-md text-[11px] select-none transition-colors ${
+                          isProposal
+                            ? "bg-emerald-950/60 border border-emerald-800/80 text-emerald-300 font-medium"
+                            : "bg-neutral-900/90 border border-neutral-800 text-neutral-300"
+                        }`}
+                      >
+                        {tag}
+                      </span>
+                    );
+                  })}
                 </div>
               </div>
             ))}

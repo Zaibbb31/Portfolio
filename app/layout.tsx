@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Instrument_Serif, Geist } from "next/font/google";
 import "./globals.css";
 import CustomCursor from "./components/CustomCursor";
-import GlowCursor from "./components/GlowCursor";
 import { cn } from "@/lib/utils";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
@@ -55,20 +54,6 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col bg-black text-[#ededed] relative font-sans selection:bg-neutral-800 selection:text-white">
-        {/* Full-Website Fluid Glow Cursor */}
-        <div className="fixed inset-0 pointer-events-none z-30 overflow-hidden" aria-hidden="true">
-          <GlowCursor
-            color="#4f93ff"
-            intensity={1.3}
-            trailWidth={3}
-            linger={1.4}
-            glow={1.2}
-            clickBurst
-            theme="dark"
-            className="w-full h-full pointer-events-none"
-          />
-        </div>
-
         {/* Custom Pointer Arrow Cursor */}
         <CustomCursor />
 

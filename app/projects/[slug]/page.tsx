@@ -4,6 +4,7 @@ import Link from "next/link";
 import { PROJECTS } from "../../data/projects";
 import Footer from "../../components/Footer";
 import CopyEmailButton from "../../components/CopyEmailButton";
+import EditorialSidebarCaseStudy from "../../components/EditorialSidebarCaseStudy";
 
 interface Props {
   params: Promise<{
@@ -30,6 +31,15 @@ export default async function ProjectSlugPage({ params }: Props) {
     notFound();
   }
 
+  // Editorial sidebar layout (Collapsible TOC, responsive mobile drawer & device hero)
+  if (
+    project.galleryLayout === "editorial-sidebar" ||
+    project.id === "paytm-rewards" ||
+    project.id === "lexora"
+  ) {
+    return <EditorialSidebarCaseStudy project={project} />;
+  }
+
   // Next project for pagination
   const nextProject = PROJECTS[(projectIndex + 1) % PROJECTS.length];
 
@@ -46,14 +56,15 @@ export default async function ProjectSlugPage({ params }: Props) {
   // Full-width banner image fallback
   const fullWidthImg = project.fullWidthImage || project.heroImage || project.image;
 
-  // Custom hero layout sizing for teardowns / visual case studies
+  // Custom hero layout sizing: 50/50 split (half side image, half side content) for every project except UX Teardowns & Redesigns
   const isTeardown =
-    project.id === "ux-teardowns" ||
-    project.id === "digital-brand-system" ||
-    project.id === "doconline-mobile-app" ||
-    project.galleryLayout === "single-column-bento";
-  const heroImageWidthClass = project.heroImageWidthClass || (isTeardown ? "md:w-[60%] lg:w-[62%]" : "md:w-[50%]");
-  const heroContentWidthClass = project.heroContentWidthClass || (isTeardown ? "md:w-[40%] lg:w-[38%]" : "md:w-[50%]");
+    project.id === "ux-teardowns" || project.id === "digital-brand-system";
+  const heroImageWidthClass = isTeardown
+    ? (project.heroImageWidthClass || "md:w-[60%] lg:w-[62%]")
+    : "md:w-1/2";
+  const heroContentWidthClass = isTeardown
+    ? (project.heroContentWidthClass || "md:w-[40%] lg:w-[38%]")
+    : "md:w-1/2";
 
   // Object notes fallback
   const objectNotes = project.objectNotes || {
