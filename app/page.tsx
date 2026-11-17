@@ -650,146 +650,149 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
-            {projectCategory === "case-study" ? (
-              <div className="col-span-full py-16 px-4 flex flex-col items-center justify-center text-center border border-dashed border-neutral-800/80 rounded-2xl bg-neutral-950/40">
-                <div className="w-10 h-10 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center text-neutral-400 mb-3">
-                  <HugeiconsIcon icon={File01Icon} size={18} />
-                </div>
-                <h3 className="text-sm font-medium text-neutral-200">
-                  Case Studies Coming Soon
-                </h3>
-                <p className="text-xs text-neutral-500 max-w-sm mt-1">
-                  In-depth architectural breakdowns and product case studies are currently being curated.
-                </p>
-              </div>
-            ) : (
-              [
-                {
-                  id: "schooldash",
-                  title: "SchoolDash",
-                  description: "A comprehensive K-12 school management ecosystem streamlining admissions, attendance, exams, and communication across Admin, Teacher, and Student portals.",
-                  image: "/Emmanuel Mission School Login Workspace.png",
-                  liveUrl: "https://emmanuelmission.vercel.app/",
-                  codeUrl: "https://github.com/Zaibbb31",
-                  tags: ["EdTech", "UI/UX", "System Design"],
-                },
-                {
-                  id: "ux-teardowns",
-                  title: "UX Teardowns & Redesigns",
-                  description: "Systematic UX audits and iterative screen redesigns for leading consumer apps (Gmail, Instagram, IRCTC, Paytm, WhatsApp, Airtel, Spotify).",
-                  image: "/P3.svg",
-                  codeUrl: "https://github.com/Zaibbb31",
-                  tags: ["UI/UX", "Teardowns", "Systems"],
-                },
-                {
-                  id: "settlr",
-                  title: "Settlr",
-                  description: "Helping people take control of their debt through clear loan insights, financial education, and accessible legal support.",
-                  image: "/Settlr.png",
-                  behanceUrl: "https://www.behance.net/gallery/257455215/Settlr",
-                  codeUrl: "https://github.com/Zaibbb31",
-                  tags: ["Figma", "Fintech", "UX Research"],
-                },
-                {
-                  id: "zero-friction-lab",
-                  title: "Zero Friction Lab",
-                  description: "Digital systems and AI automation studio engineering custom intelligence workflows and high-converting web architecture.",
-                  image: "/Cinematic AI Workspace Website Mockup.png",
-                  liveUrl: "https://www.zerofrictionlab.com/",
-                  codeUrl: "https://github.com/Zaibbb31",
-                  tags: ["AI Automation", "Product Design", "Systems"],
-                },
-              ].map((project) => (
-                <div
-                  key={project.id}
-                  className="flex flex-col rounded-xl bg-transparent transition-all duration-200 group"
+            {(projectCategory === "case-study"
+              ? [
+                  {
+                    id: "doconline-mobile-app",
+                    title: "DocOnline Mobile App",
+                    description: "A modern healthcare experience redesigned to simplify appointments, health tracking, medical access, and symptom discovery.",
+                    image: "/P1.svg",
+                    codeUrl: "https://github.com/Zaibbb31",
+                    tags: ["Healthcare", "UI/UX", "Mobile App"],
+                    buttonLabel: "Case Study",
+                  },
+                ]
+              : [
+                  {
+                    id: "schooldash",
+                    title: "SchoolDash",
+                    description: "A comprehensive K-12 school management ecosystem streamlining admissions, attendance, exams, and communication across Admin, Teacher, and Student portals.",
+                    image: "/Emmanuel Mission School Login Workspace.png",
+                    liveUrl: "https://emmanuelmission.vercel.app/",
+                    codeUrl: "https://github.com/Zaibbb31",
+                    tags: ["EdTech", "UI/UX", "System Design"],
+                    buttonLabel: "View Screens",
+                  },
+                  {
+                    id: "ux-teardowns",
+                    title: "UX Teardowns & Redesigns",
+                    description: "Systematic UX audits and iterative screen redesigns for leading consumer apps (Gmail, Instagram, IRCTC, Paytm, WhatsApp, Airtel, Spotify).",
+                    image: "/P3.svg",
+                    codeUrl: "https://github.com/Zaibbb31",
+                    tags: ["UI/UX", "Teardowns", "Systems"],
+                    buttonLabel: "View Screens",
+                  },
+                  {
+                    id: "settlr",
+                    title: "Settlr",
+                    description: "Helping people take control of their debt through clear loan insights, financial education, and accessible legal support.",
+                    image: "/Settlr.png",
+                    behanceUrl: "https://www.behance.net/gallery/257455215/Settlr",
+                    codeUrl: "https://github.com/Zaibbb31",
+                    tags: ["Figma", "Fintech", "UX Research"],
+                    buttonLabel: "View Screens",
+                  },
+                  {
+                    id: "zero-friction-lab",
+                    title: "Zero Friction Lab",
+                    description: "Digital systems and AI automation studio engineering custom intelligence workflows and high-converting web architecture.",
+                    image: "/Cinematic AI Workspace Website Mockup.png",
+                    liveUrl: "https://www.zerofrictionlab.com/",
+                    codeUrl: "https://github.com/Zaibbb31",
+                    tags: ["AI Automation", "Product Design", "Systems"],
+                    buttonLabel: "View Screens",
+                  },
+                ]
+            ).map((project) => (
+              <div
+                key={project.id}
+                className="flex flex-col rounded-xl bg-transparent transition-all duration-200 group"
+              >
+                {/* Preview Image Box - Clickable link to slug page */}
+                <Link
+                  href={`/projects/${project.id}`}
+                  onClick={playClickSound}
+                  className="relative w-full aspect-[16/10] rounded-xl overflow-hidden border border-neutral-800 bg-[#09090b] mb-3.5 flex items-center justify-center group-hover:border-neutral-600 transition-colors cursor-pointer"
+                  aria-label={`View ${project.title}`}
                 >
-                  {/* Preview Image Box - Clickable link to slug page */}
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 450px"
+                    className="object-cover group-hover:scale-[1.03] transition-transform duration-500 ease-out"
+                  />
+                </Link>
+
+                {/* Title & Action Buttons */}
+                <div className="flex items-center justify-between gap-2">
                   <Link
                     href={`/projects/${project.id}`}
                     onClick={playClickSound}
-                    className="relative w-full aspect-[16/10] rounded-xl overflow-hidden border border-neutral-800 bg-[#09090b] mb-3.5 flex items-center justify-center group-hover:border-neutral-600 transition-colors cursor-pointer"
-                    aria-label={`View ${project.title}`}
+                    className="hover:text-neutral-300 transition-colors group/title"
                   >
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 450px"
-                      className="object-cover group-hover:scale-[1.03] transition-transform duration-500 ease-out"
-                    />
+                    <h3 className="text-base sm:text-lg font-normal font-instrument text-white tracking-tight group-hover/title:underline underline-offset-4">
+                      {project.title}
+                    </h3>
                   </Link>
 
-                  {/* Title & Action Buttons */}
-                  <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2 flex-shrink-0">
                     <Link
                       href={`/projects/${project.id}`}
                       onClick={playClickSound}
-                      className="hover:text-neutral-300 transition-colors group/title"
+                      className="inline-flex items-center justify-center px-3.5 py-1.5 rounded-full bg-neutral-900 border border-neutral-800 hover:border-neutral-600 hover:bg-neutral-800 text-neutral-300 hover:text-white text-xs font-medium transition-all duration-150 active:scale-95 cursor-pointer"
                     >
-                      <h3 className="text-base sm:text-lg font-normal font-instrument text-white tracking-tight group-hover/title:underline underline-offset-4">
-                        {project.title}
-                      </h3>
+                      <span>{project.buttonLabel || "View Screens"}</span>
                     </Link>
-
-                    <div className="flex items-center gap-2 flex-shrink-0">
-                      <Link
-                        href={`/projects/${project.id}`}
+                    {project.behanceUrl && (
+                      <a
+                        href={project.behanceUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         onClick={playClickSound}
-                        className="inline-flex items-center justify-center px-3.5 py-1.5 rounded-full bg-neutral-900 border border-neutral-800 hover:border-neutral-600 hover:bg-neutral-800 text-neutral-300 hover:text-white text-xs font-medium transition-all duration-150 active:scale-95 cursor-pointer"
+                        className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white text-black hover:bg-neutral-200 text-xs font-semibold transition-all duration-150 active:scale-95 shadow-sm cursor-pointer"
                       >
-                        <span>View Screens</span>
-                      </Link>
-                      {project.behanceUrl && (
-                        <a
-                          href={project.behanceUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={playClickSound}
-                          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white text-black hover:bg-neutral-200 text-xs font-semibold transition-all duration-150 active:scale-95 shadow-sm cursor-pointer"
-                        >
-                          <span>Behance</span>
-                          <span className="text-[11px] font-mono leading-none">↗</span>
-                        </a>
-                      )}
-                      {project.liveUrl && project.liveUrl.startsWith("http") && (
-                        <a
-                          href={project.liveUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={playClickSound}
-                          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white text-black hover:bg-neutral-200 text-xs font-semibold transition-all duration-150 active:scale-95 shadow-sm cursor-pointer"
-                        >
-                          <span>Live Site</span>
-                          <span className="text-[11px] font-mono leading-none">↗</span>
-                        </a>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Short description */}
-                  <Link
-                    href={`/projects/${project.id}`}
-                    onClick={playClickSound}
-                    className="text-xs text-neutral-400 hover:text-neutral-300 font-normal line-clamp-1 mt-1.5 transition-colors"
-                  >
-                    {project.description}
-                  </Link>
-
-                  {/* Tech stack badge pills */}
-                  <div className="flex items-center gap-1.5 flex-wrap mt-2.5">
-                    {project.tags.map((tag, tagIdx) => (
-                      <span
-                        key={tagIdx}
-                        className="inline-flex items-center px-2 py-0.5 rounded-md bg-neutral-900/90 border border-neutral-800 text-[11px] text-neutral-300 select-none"
+                        <span>Behance</span>
+                        <span className="text-[11px] font-mono leading-none">↗</span>
+                      </a>
+                    )}
+                    {project.liveUrl && project.liveUrl.startsWith("http") && (
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={playClickSound}
+                        className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white text-black hover:bg-neutral-200 text-xs font-semibold transition-all duration-150 active:scale-95 shadow-sm cursor-pointer"
                       >
-                        {tag}
-                      </span>
-                    ))}
+                        <span>Live Site</span>
+                        <span className="text-[11px] font-mono leading-none">↗</span>
+                      </a>
+                    )}
                   </div>
                 </div>
-              ))
-            )}
+
+                {/* Short description */}
+                <Link
+                  href={`/projects/${project.id}`}
+                  onClick={playClickSound}
+                  className="text-xs text-neutral-400 hover:text-neutral-300 font-normal line-clamp-1 mt-1.5 transition-colors"
+                >
+                  {project.description}
+                </Link>
+
+                {/* Tech stack badge pills */}
+                <div className="flex items-center gap-1.5 flex-wrap mt-2.5">
+                  {project.tags.map((tag, tagIdx) => (
+                    <span
+                      key={tagIdx}
+                      className="inline-flex items-center px-2 py-0.5 rounded-md bg-neutral-900/90 border border-neutral-800 text-[11px] text-neutral-300 select-none"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
         </section>
 

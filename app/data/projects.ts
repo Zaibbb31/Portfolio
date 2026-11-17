@@ -658,8 +658,13 @@ export const PROJECTS: Project[] = [
     client: "DocOnline",
     date: "Aug 27, 2026",
     image: "/P1.svg",
+    heroImage: "/P1.svg",
+    heroImageClassName: "object-cover object-left",
+    heroImageWidthClass: "md:w-[60%] lg:w-[62%]",
+    heroContentWidthClass: "md:w-[40%] lg:w-[38%]",
     logo: "/Doconline-Logo-No-Subtitle (1) 1.svg",
     buttonText: "View Case Study",
+    galleryLayout: "single-column-bento",
     tags: ["Healthcare", "UI/UX Design", "Mobile App", "Information Architecture"],
     iconBg: "bg-emerald-500",
     meta: {
@@ -763,6 +768,60 @@ export const PROJECTS: Project[] = [
         description:
           "Crafted high-contrast accessible tokens, tactile card containers, and interactive symptom discovery chips.",
       },
+    ],
+    screens: [
+      {
+        title: "Homepage & Appointment Hierarchy Redesign",
+        image: "/DocOnline/Doconline1.jpg",
+        description:
+          "Redesigning the DocOnline mobile home experience to streamline doctor appointments, consolidate vital health metrics, and eliminate clutter from low-priority promotional content.",
+        highlights: [
+          "Action-first home hierarchy",
+          "Unified appointment overview",
+          "Consolidated vitals & records",
+          "Reduced cognitive overload"
+        ],
+        flaws: [
+          "Too much information on one screen",
+          "Difficult to find important features",
+          "Too many promotional banners",
+          "Health details spread across sections",
+          "Actions placed in different areas"
+        ],
+        improvements: [
+          "Clean and organised layout",
+          "Important features easy to find",
+          "Better placement of banners",
+          "Health details in one place",
+          "Quick access to key services"
+        ]
+      },
+      {
+        title: "Symptom Discovery & Daily Health Progress Tracking",
+        image: "/DocOnline/Doconline2.jpg",
+        description:
+          "Restructuring symptom discovery into intuitive quick-access chips and transforming fragmented health metrics into a cohesive daily tracking dashboard.",
+        highlights: [
+          "Visual symptom chips",
+          "Goal-oriented progress tracker",
+          "Curated wellness reading feed",
+          "Scannable typography & cards"
+        ],
+        flaws: [
+          "Crowded content sections",
+          "Too many items displayed together",
+          "Difficult to browse symptoms",
+          "Health articles lack clear focus",
+          "Inconsistent content layout"
+        ],
+        improvements: [
+          "Better organised sections",
+          "Clear and simple health tracking",
+          "Easy-to-browse symptom options",
+          "Clean and readable article cards",
+          "Consistent layout throughout"
+        ]
+      }
     ],
   },
   {

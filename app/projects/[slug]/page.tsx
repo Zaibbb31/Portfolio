@@ -47,7 +47,11 @@ export default async function ProjectSlugPage({ params }: Props) {
   const fullWidthImg = project.fullWidthImage || project.heroImage || project.image;
 
   // Custom hero layout sizing for teardowns / visual case studies
-  const isTeardown = project.id === "ux-teardowns" || project.id === "digital-brand-system";
+  const isTeardown =
+    project.id === "ux-teardowns" ||
+    project.id === "digital-brand-system" ||
+    project.id === "doconline-mobile-app" ||
+    project.galleryLayout === "single-column-bento";
   const heroImageWidthClass = project.heroImageWidthClass || (isTeardown ? "md:w-[60%] lg:w-[62%]" : "md:w-[50%]");
   const heroContentWidthClass = project.heroContentWidthClass || (isTeardown ? "md:w-[40%] lg:w-[38%]" : "md:w-[50%]");
 
@@ -274,17 +278,21 @@ export default async function ProjectSlugPage({ params }: Props) {
           <section className="p-5 sm:p-8 lg:p-10 border-b border-neutral-800/80 bg-black flex flex-col gap-10 sm:gap-14">
             <div className="border-b border-neutral-800/80 pb-5">
               <span className="text-xs font-mono uppercase tracking-widest text-emerald-400 mb-1.5 block">
-                UX Audits &amp; Redesigns • 8 Core Flows
+                {project.id === "doconline-mobile-app"
+                  ? "Healthcare UX Case Study • Core Flow Teardowns"
+                  : "UX Audits & Redesigns • 8 Core Flows"}
               </span>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-normal font-instrument text-white leading-tight">
                 Case Study Breakdown
               </h2>
               <p className="text-xs sm:text-sm text-neutral-400 mt-2 max-w-2xl font-normal leading-relaxed">
-                A systematic audit of interaction friction, cognitive load, and hierarchy flaws in popular digital consumer apps, paired with focused, high-contrast interface redesigns.
+                {project.id === "doconline-mobile-app"
+                  ? "A systematic audit of healthcare access friction, complex appointment hierarchies, and scattered vital tracking, redesigned into streamlined, patient-centric workflows."
+                  : "A systematic audit of interaction friction, cognitive load, and hierarchy flaws in popular digital consumer apps, paired with focused, high-contrast interface redesigns."}
               </p>
             </div>
 
-            {/* In each row: Heading above, write-up above, and exactly one image from public/projects/New folder */}
+            {/* In each row: Heading above, write-up above, and exactly one image */}
             <div className="flex flex-col gap-10 sm:gap-14">
               {project.screens && project.screens.map((screen, idx) => (
                 <div
@@ -298,7 +306,7 @@ export default async function ProjectSlugPage({ params }: Props) {
                         Flow 0{idx + 1}
                       </span>
                       <span className="text-xs font-mono text-neutral-500">
-                        1080 × 1350 · Vector SVG
+                        1080 × 1350 · Visual Teardown
                       </span>
                     </div>
 
@@ -326,46 +334,7 @@ export default async function ProjectSlugPage({ params }: Props) {
                     )}
                   </div>
 
-                  {/* UX Friction vs Solution writeup breakdown above the image */}
-                  {(screen.flaws || screen.improvements) && (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 bg-black/50 p-4 sm:p-5 rounded-xl border border-neutral-900">
-                      {screen.flaws && screen.flaws.length > 0 && (
-                        <div className="flex flex-col gap-2">
-                          <span className="text-[11px] font-mono uppercase tracking-wider text-rose-400 flex items-center gap-1.5">
-                            <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
-                            <span>UX Friction Identified</span>
-                          </span>
-                          <ul className="space-y-1.5 text-xs text-neutral-400">
-                            {screen.flaws.map((flaw, fIdx) => (
-                              <li key={fIdx} className="flex items-start gap-2">
-                                <span className="text-rose-500 font-mono mt-0.5">•</span>
-                                <span>{flaw}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-
-                      {screen.improvements && screen.improvements.length > 0 && (
-                        <div className="flex flex-col gap-2">
-                          <span className="text-[11px] font-mono uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                            <span>Solution Implemented</span>
-                          </span>
-                          <ul className="space-y-1.5 text-xs text-neutral-400">
-                            {screen.improvements.map((imp, iIdx) => (
-                              <li key={iIdx} className="flex items-start gap-2">
-                                <span className="text-emerald-500 font-mono mt-0.5">•</span>
-                                <span>{imp}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                    </div>
-                  )}
-
-                  {/* Exactly ONE image from public/projects/New folder for this row */}
+                  {/* Teardown Visual Image */}
                   <div className="relative w-full max-w-[620px] mx-auto aspect-[1080/1350] rounded-xl overflow-hidden border border-neutral-800 bg-black shadow-2xl flex items-center justify-center">
                     <Image
                       src={screen.image}
