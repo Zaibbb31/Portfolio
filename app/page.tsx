@@ -657,7 +657,7 @@ export default function Home() {
                       id: "lexora",
                       title: "Lexora",
                       description: "End-to-end legal support for banking, loan settlement, trademark, cyber law, and compliance, redesigned into a seamless mobile experience.",
-                      image: "/lexora/Lexora Legal App Mockup.png",
+                      image: "/lexora/Lexora Legal App Promo.png",
                       tags: [
                         "LegalTech",
                         "UI/UX Design",
@@ -755,30 +755,15 @@ export default function Home() {
                 <Link
                   href={`/projects/${project.id}`}
                   onClick={playClickSound}
-                  className={`relative w-full aspect-[16/10] rounded-xl overflow-hidden border border-neutral-800 ${
-                    project.id === "lexora" ? "bg-[#e2d8cd]" : "bg-[#09090b]"
-                  } mb-3.5 flex items-center justify-center group-hover:border-neutral-600 transition-colors cursor-pointer`}
+                  className="relative w-full aspect-[16/10] rounded-xl overflow-hidden border border-neutral-800 bg-[#09090b] mb-3.5 flex items-center justify-center group-hover:border-neutral-600 transition-colors cursor-pointer"
                   aria-label={`View ${project.title}`}
                 >
-                  {project.id === "lexora" && (
-                    <Image
-                      src={project.image}
-                      alt=""
-                      fill
-                      aria-hidden="true"
-                      className="object-cover blur-2xl scale-125 opacity-70 pointer-events-none"
-                    />
-                  )}
                   <Image
                     src={project.image}
                     alt={project.title}
                     fill
                     sizes="(max-width: 768px) 100vw, 450px"
-                    className={`relative z-10 transition-transform duration-500 ease-out ${
-                      project.id === "lexora"
-                        ? "object-contain p-2.5 group-hover:scale-[1.03]"
-                        : "object-cover group-hover:scale-[1.03]"
-                    }`}
+                    className="object-cover group-hover:scale-[1.03] transition-transform duration-500 ease-out"
                   />
                 </Link>
 
