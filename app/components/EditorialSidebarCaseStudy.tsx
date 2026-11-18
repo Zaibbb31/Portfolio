@@ -90,62 +90,20 @@ export default function EditorialSidebarCaseStudy({ project }: EditorialSidebarC
   const isLexora = project.id === "lexora";
 
   // Table of contents navigation list
-  const navSections = isLexora
-    ? [
-        { id: "intro", num: "00", label: "Intro" },
-        { id: "problem-space", num: "02", label: "Problem space" },
-        { id: "strategy", num: "03", label: "Product strategy & vision" },
-        { id: "core-flows", num: "04", label: "Core flows" },
-        { id: "psychology", num: "05", label: "Module breakdown & psychology" },
-        { id: "outcomes", num: "06", label: "Outcomes" },
-      ]
-    : [
-        { id: "intro", num: "00", label: "Intro" },
-        { id: "context", num: "01", label: "Context" },
-        { id: "problem-space", num: "02", label: "Problem space" },
-        { id: "strategy", num: "03", label: "Strategy" },
-        { id: "core-flows", num: "04", label: "Core flows" },
-        { id: "psychology", num: "05", label: "Psychology" },
-        { id: "decisions", num: "06", label: "Decisions" },
-        { id: "outcomes", num: "07", label: "Outcomes" },
-        { id: "reflections", num: "08", label: "Reflections" },
-      ];
-
-  const researchItems = isLexora
-    ? [
-        { id: "why-lexora", label: "Why Lexora LegalTech" },
-        { id: "scope", label: "Scope & Compliance" },
-        { id: "who-i-spoke-to", label: "User Interviews" },
-        { id: "affinity-clusters", label: "Affinity Clusters" },
-      ]
-    : [
-        { id: "why-paytm-rewards", label: "Why Paytm Rewards" },
-        { id: "scope", label: "Scope & Constraints" },
-        { id: "who-i-spoke-to", label: "User Interviews" },
-        { id: "affinity-clusters", label: "Affinity Clusters" },
-      ];
-
-  const insightItems = isLexora
-    ? [
-        { id: "jargon-blindness", label: "Jargon Blindness" },
-        { id: "pricing-opacity", label: "Pricing Opacity" },
-        { id: "intake-anxiety", label: "Intake Anxiety" },
-      ]
-    : [
-        { id: "coupon-fatigue", label: "Coupon Fatigue" },
-        { id: "agency-gap", label: "The Agency Gap" },
-        { id: "milestone-anchoring", label: "Milestone Anchoring" },
-      ];
+  const navSections = [
+    { id: "intro", num: "00", label: "Intro" },
+    { id: "problem-space", num: "02", label: "Problem space" },
+    { id: "strategy", num: "03", label: isLexora ? "Product strategy & vision" : "Strategy" },
+    { id: "core-flows", num: "04", label: "Core flows" },
+    { id: "psychology", num: "05", label: "Module breakdown & psychology" },
+    { id: "outcomes", num: "06", label: "Outcomes" },
+  ];
 
   // Scrollspy to automatically highlight active section
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY + 180;
-      const allIds = [
-        ...navSections.map((s) => s.id),
-        ...researchItems.map((s) => s.id),
-        ...insightItems.map((s) => s.id),
-      ];
+      const allIds = navSections.map((s) => s.id);
 
       for (let i = allIds.length - 1; i >= 0; i--) {
         const el = document.getElementById(allIds[i]);
@@ -158,7 +116,7 @@ export default function EditorialSidebarCaseStudy({ project }: EditorialSidebarC
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [navSections, researchItems, insightItems]);
+  }, [navSections]);
 
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
@@ -302,32 +260,7 @@ export default function EditorialSidebarCaseStudy({ project }: EditorialSidebarC
                 ))}
               </nav>
 
-              {!isLexora && (
-                /* Research sub items */
-                <div className="pt-2 border-t border-neutral-200/60 dark:border-neutral-800">
-                  <span className="text-xs font-mono uppercase tracking-wider text-neutral-400 block mb-1.5">
-                    Research & Process
-                  </span>
-                  <div className="flex flex-col space-y-1 pl-2">
-                    {researchItems.map((item) => (
-                      <button
-                        key={item.id}
-                        type="button"
-                        onClick={() => scrollToSection(item.id)}
-                        className={`text-xs text-left py-1 transition-colors cursor-pointer ${
-                          activeSection === item.id
-                            ? isLight
-                              ? "text-black font-semibold"
-                              : "text-white font-semibold"
-                            : "text-neutral-500 hover:text-neutral-800 dark:hover:text-neutral-300"
-                        }`}
-                      >
-                        {item.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
+
             </div>
 
             <div className="pt-4 border-t border-neutral-200/60 dark:border-neutral-800 text-[11px] text-neutral-400">
@@ -442,80 +375,6 @@ export default function EditorialSidebarCaseStudy({ project }: EditorialSidebarC
                 );
               })}
             </nav>
-
-            {!isLexora && (
-              <>
-                {/* Collapsible Accordion: Research & process */}
-                <div className="pt-3 border-t border-neutral-200/70 dark:border-neutral-800">
-                  <button
-                    type="button"
-                    onClick={() => setResearchOpen(!researchOpen)}
-                    className="w-full flex items-center justify-between text-xs font-medium text-neutral-700 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white cursor-pointer py-1"
-                  >
-                    <span>Research & process</span>
-                    <span className="font-mono text-neutral-400 text-xs">
-                      {researchOpen ? "×" : "+"}
-                    </span>
-                  </button>
-
-                  {researchOpen && (
-                    <div className="flex flex-col space-y-1 mt-1 pl-2 border-l border-neutral-200 dark:border-neutral-800 ml-1">
-                      {researchItems.map((item) => (
-                        <button
-                          key={item.id}
-                          type="button"
-                          onClick={() => scrollToSection(item.id)}
-                          className={`text-left text-xs py-1 transition-colors cursor-pointer ${
-                            activeSection === item.id
-                              ? isLight
-                                ? "text-black font-medium"
-                                : "text-white font-medium"
-                              : "text-neutral-500 hover:text-neutral-800 dark:hover:text-neutral-200"
-                          }`}
-                        >
-                          {item.label}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-
-                {/* Collapsible Accordion: Insights */}
-                <div className="pt-2">
-                  <button
-                    type="button"
-                    onClick={() => setInsightsOpen(!insightsOpen)}
-                    className="w-full flex items-center justify-between text-xs font-medium text-neutral-700 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white cursor-pointer py-1"
-                  >
-                    <span>Insights</span>
-                    <span className="font-mono text-neutral-400 text-xs">
-                      {insightsOpen ? "–" : "+"}
-                    </span>
-                  </button>
-
-                  {insightsOpen && (
-                    <div className="flex flex-col space-y-1 mt-1 pl-2 border-l border-neutral-200 dark:border-neutral-800 ml-1">
-                      {insightItems.map((item) => (
-                        <button
-                          key={item.id}
-                          type="button"
-                          onClick={() => scrollToSection(item.id)}
-                          className={`text-left text-xs py-1 transition-colors cursor-pointer ${
-                            activeSection === item.id
-                              ? isLight
-                                ? "text-black font-medium"
-                                : "text-white font-medium"
-                              : "text-neutral-500 hover:text-neutral-800 dark:hover:text-neutral-200"
-                          }`}
-                        >
-                          {item.label}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </>
-            )}
           </div>
 
           {/* Footer note */}
@@ -595,7 +454,7 @@ export default function EditorialSidebarCaseStudy({ project }: EditorialSidebarC
                     >
                       {isLexora
                         ? "LegalTech · Product Design Case Study"
-                        : "Self-Initiated concept"}
+                        : "Self-initiated concept"}
                     </span>
                   </div>
 
@@ -636,98 +495,119 @@ export default function EditorialSidebarCaseStudy({ project }: EditorialSidebarC
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
                   </div>
                 ) : (
-                  /* Paytm Interactive Reward Stack Mockup */
-                  <div className="relative w-full max-w-[340px] sm:max-w-[380px] aspect-[9/18] rounded-[52px] p-3 sm:p-3.5 bg-neutral-900 border-[6px] border-neutral-700 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.5)] overflow-hidden transition-transform duration-500 hover:scale-[1.01]">
-                    {/* Dynamic Island Capsule */}
-                    <div className="absolute top-5 left-1/2 -translate-x-1/2 w-28 h-6 bg-black rounded-full z-20 flex items-center justify-between px-3">
-                      <div className="w-2.5 h-2.5 rounded-full bg-neutral-900" />
-                      <div className="w-2.5 h-2.5 rounded-full bg-[#0a192f] border border-blue-900/60" />
-                    </div>
+                  /* Paytm Exact UI Screen with iPhone Mockup (Matching user's reference image) */
+                  <div className="relative w-full max-w-[260px] sm:max-w-[285px] aspect-[9/18.5] flex items-center justify-center select-none group">
+                    {/* Realistic iPhone Titanium Outer Chassis */}
+                    <div className="relative w-full h-full rounded-[46px] sm:rounded-[50px] p-[2.5px] bg-gradient-to-b from-[#e2e8f0] via-[#cbd5e1] to-[#94a3b8] shadow-[0_20px_50px_-12px_rgba(0,0,0,0.6)]">
+                      {/* Left Side Buttons: Action Button, Volume Up, Volume Down */}
+                      <div className="absolute -left-[4.5px] top-20 w-[3px] h-5 bg-[#94a3b8] rounded-l-xs border-y border-l border-neutral-400/80 shadow-xs" />
+                      <div className="absolute -left-[4.5px] top-28 w-[3px] h-9 bg-[#94a3b8] rounded-l-xs border-y border-l border-neutral-400/80 shadow-xs" />
+                      <div className="absolute -left-[4.5px] top-40 w-[3px] h-9 bg-[#94a3b8] rounded-l-xs border-y border-l border-neutral-400/80 shadow-xs" />
 
-                    {/* Inner Phone Screen Content */}
-                    <div className="relative w-full h-full rounded-[40px] overflow-hidden bg-gradient-to-b from-[#090b10] via-[#0f131a] to-[#07080b] text-white flex flex-col justify-between p-5 pt-12 select-none">
-                      <div className="text-center pt-2">
-                        <h3 className="text-lg font-semibold tracking-tight text-white">
-                          Pick your reward
-                        </h3>
-                        <p className="text-xs text-neutral-400 mt-0.5">
-                          Choose one card. The one you pick is yours.
-                        </p>
-                      </div>
+                      {/* Right Side Button: Power / Lock */}
+                      <div className="absolute -right-[4.5px] top-26 w-[3px] h-13 bg-[#94a3b8] rounded-r-xs border-y border-r border-neutral-400/80 shadow-xs" />
 
-                      <div className="relative w-full my-auto flex items-center justify-center h-64">
-                        <div className="absolute left-1 top-8 w-36 h-48 rounded-xl bg-neutral-900/90 border border-neutral-700/80 p-3 shadow-xl transform -rotate-12 opacity-70">
-                          <div className="w-full h-20 rounded-lg bg-neutral-800 mb-2 overflow-hidden relative">
-                            <Image
-                              src="/projects/New folder/Paytm_Balance.svg"
-                              alt="Reward option"
-                              fill
-                              className="object-cover"
-                            />
-                          </div>
-                          <span className="text-[10px] font-medium text-neutral-300 block line-clamp-2">
-                            Flat 32% off on MOV ₹3,999
-                          </span>
-                          <div className="mt-3 px-2 py-1 rounded bg-black text-[9px] font-semibold text-center text-white">
-                            I want this
-                          </div>
-                        </div>
+                      {/* Inner Black Bezel Frame */}
+                      <div className="relative w-full h-full rounded-[43px] sm:rounded-[47px] p-[6px] sm:p-[7px] bg-black">
+                        {/* Phone Screen Glass with Exact Paytm Soft Mint Gradient */}
+                        <div className="relative w-full h-full rounded-[37px] sm:rounded-[41px] overflow-hidden bg-gradient-to-b from-[#ebf8fa] via-[#e2f5f8] to-[#f4fcfe] flex flex-col justify-between">
+                          {/* Gentle circular background radial glow behind success badge */}
+                          <div className="absolute top-24 left-1/2 -translate-x-1/2 w-40 h-40 bg-white/70 rounded-full blur-2xl pointer-events-none" />
 
-                        <div className="absolute right-1 top-8 w-36 h-48 rounded-xl bg-neutral-900/90 border border-neutral-700/80 p-3 shadow-xl transform rotate-12 opacity-70">
-                          <div className="w-full h-20 rounded-lg bg-neutral-800 mb-2 overflow-hidden relative">
-                            <Image
-                              src="/Settlr.png"
-                              alt="Reward option"
-                              fill
-                              className="object-cover"
-                            />
-                          </div>
-                          <span className="text-[10px] font-medium text-neutral-300 block line-clamp-2">
-                            Flat 20% off on Smartwatch
-                          </span>
-                          <div className="mt-3 px-2 py-1 rounded bg-black text-[9px] font-semibold text-center text-white">
-                            I want this
-                          </div>
-                        </div>
+                          {/* Top Status Bar: 9:41, Dynamic Island, Signal / Wifi / Battery */}
+                          <div className="relative z-20 w-full pt-2.5 px-5 sm:px-6 flex items-center justify-between text-neutral-900">
+                            {/* Time: 9:41 */}
+                            <span className="text-[11px] sm:text-[12px] font-semibold tracking-tight text-neutral-900 font-sans">
+                              9:41
+                            </span>
 
-                        <div className="relative z-10 w-44 h-56 rounded-2xl bg-white text-black p-3.5 shadow-2xl border border-neutral-200 transform scale-105 flex flex-col justify-between">
-                          <div>
-                            <div className="w-full h-24 rounded-xl bg-neutral-900 overflow-hidden relative mb-2.5">
-                              <Image
-                                src="/Create_iPhone_product_mockup_9ae62066_2K.jpg"
-                                alt="BoAt Headphones Reward"
-                                fill
-                                className="object-cover"
-                              />
-                              <span className="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded text-[8px] font-semibold bg-white/90 text-black">
-                                boAt
+                            {/* Dynamic Island Capsule */}
+                            <div className="absolute left-1/2 -translate-x-1/2 top-2 w-22 sm:w-24 h-5.5 sm:h-6 bg-black rounded-full flex items-center justify-between px-2.5 shadow-xs">
+                              <div className="w-1.5 h-1.5 rounded-full bg-neutral-900" />
+                              <div className="w-2 h-2 rounded-full bg-[#0a192f] border border-blue-900/60" />
+                            </div>
+
+                            {/* Status Icons: Signal, Wifi, Battery */}
+                            <div className="flex items-center gap-1.5 text-neutral-900">
+                              {/* Cellular Signal Bars */}
+                              <svg className="w-3 h-2.5 fill-current" viewBox="0 0 16 12">
+                                <rect x="1" y="9" width="2" height="3" rx="0.5" />
+                                <rect x="5" y="6" width="2" height="6" rx="0.5" />
+                                <rect x="9" y="3" width="2" height="9" rx="0.5" />
+                                <rect x="13" y="0" width="2" height="12" rx="0.5" />
+                              </svg>
+
+                              {/* Wifi Icon */}
+                              <svg className="w-3 h-2.5 stroke-current stroke-2 fill-none" viewBox="0 0 24 24" strokeLinecap="round">
+                                <path d="M5 12.55a11 11 0 0 1 14.08 0" />
+                                <path d="M1.42 9a16 16 0 0 1 21.16 0" />
+                                <path d="M8.53 16.11a6 6 0 0 1 6.95 0" />
+                                <circle cx="12" cy="20" r="1" fill="currentColor" />
+                              </svg>
+
+                              {/* Battery Icon with Fill */}
+                              <div className="w-4.5 h-2.5 rounded-[3.5px] border border-neutral-900 p-[1.5px] flex items-center relative">
+                                <div className="w-full h-full bg-neutral-900 rounded-[1px]" />
+                                <div className="absolute -right-1 top-0.5 w-0.5 h-1 bg-neutral-900 rounded-r-xs" />
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Middle Section: Paytm Wordmark Logo, Green Checkmark, ₹500, Paid to Fresh Basket Kirana */}
+                          <div className="relative z-10 flex flex-col items-center justify-center text-center px-3 my-auto pt-1">
+                            {/* Official Paytm Brand Logo */}
+                            <div className="mb-5 sm:mb-6">
+                              <span className="text-xl sm:text-[22px] font-black tracking-tight select-none font-sans">
+                                <span className="text-[#002970]">Pay</span>
+                                <span className="text-[#00b9f5]">tm</span>
                               </span>
                             </div>
-                            <span className="text-xs font-bold leading-tight block text-neutral-900">
-                              Flat 32% off on MOV of ₹5,000
-                            </span>
-                            <span className="text-[10px] text-neutral-500 block mt-0.5">
-                              BoAt Rockerz Headphones
-                            </span>
+
+                            {/* Circular Green Checkmark Badge */}
+                            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#20bf6b] flex items-center justify-center shadow-lg shadow-emerald-500/25 mb-3 sm:mb-4 transition-transform duration-300 group-hover:scale-105">
+                              <svg
+                                className="w-7 h-7 sm:w-8 sm:h-8 text-white stroke-white stroke-[3.2]"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              >
+                                <polyline points="20 6 9 17 4 12" />
+                              </svg>
+                            </div>
+
+                            {/* Payment Amount: ₹500 */}
+                            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#111827] tracking-tight font-sans">
+                              ₹500
+                            </h2>
+
+                            {/* Recipient Details: Paid to Fresh Basket Kirana */}
+                            <p className="text-[11px] sm:text-xs font-semibold text-neutral-800 mt-1.5 font-sans tracking-tight">
+                              Paid to Fresh Basket Kirana
+                            </p>
+
+                            {/* Timestamp & UPI Reference */}
+                            <p className="text-[9.5px] sm:text-[10px] text-neutral-500 mt-1 font-medium font-sans tracking-tight">
+                              21 Aug, 08:00 PM · UPI Ref 63788203851
+                            </p>
                           </div>
 
-                          <button
-                            type="button"
-                            className="w-full py-2 rounded-lg bg-black text-white text-[11px] font-semibold hover:bg-neutral-800 transition-colors shadow-sm"
-                          >
-                            I want this
-                          </button>
-                        </div>
-                      </div>
+                          {/* Bottom Section: Floating Reward Card Pill & Home Indicator */}
+                          <div className="relative z-10 w-full flex flex-col items-center pb-2 px-3">
+                            {/* Floating Reward Card Pill: 🎁 You won a reward card */}
+                            <div className="w-full max-w-[200px] sm:max-w-[215px] py-2 px-3 rounded-full bg-[#fef3c7] border border-[#fde68a] shadow-xs flex items-center justify-center gap-1.5 mb-5 sm:mb-6 transition-all duration-300 hover:bg-[#fef08a] cursor-pointer">
+                              <span className="text-xs leading-none" role="img" aria-label="gift">
+                                🎁
+                              </span>
+                              <span className="text-[10px] sm:text-[11px] font-semibold text-[#78350f] tracking-tight font-sans">
+                                You won a reward card
+                              </span>
+                            </div>
 
-                      <div className="pt-2">
-                        <button
-                          type="button"
-                          className="w-full py-3 rounded-xl bg-neutral-900 border border-neutral-800 text-neutral-400 text-xs font-medium text-center shadow-lg"
-                        >
-                          Select a card to continue
-                        </button>
-                        <div className="w-32 h-1 bg-white/30 rounded-full mx-auto mt-4" />
+                            {/* Home Indicator Bar */}
+                            <div className="w-24 sm:w-28 h-1 bg-black/80 rounded-full mx-auto mb-1" />
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -736,43 +616,7 @@ export default function EditorialSidebarCaseStudy({ project }: EditorialSidebarC
             </div>
           </section>
 
-          {/* 01 CONTEXT SECTION (UPI / Paytm only) */}
-          {!isLexora && (
-            <section
-              id="context"
-              className={`w-full max-w-5xl mx-auto px-6 sm:px-10 lg:px-14 py-16 border-t ${
-                isLight ? "border-neutral-200/80" : "border-neutral-800"
-              }`}
-            >
-              <div className="flex items-center gap-2 mb-3">
-                <span className="text-xs font-mono font-semibold text-blue-600 dark:text-blue-400">
-                  01
-                </span>
-                <span className="text-xs font-mono uppercase tracking-widest text-neutral-400">
-                  Context
-                </span>
-              </div>
-              <h2
-                className={`text-2xl sm:text-3xl lg:text-4xl font-normal font-instrument leading-snug ${
-                  isLight ? "text-neutral-900" : "text-white"
-                }`}
-              >
-                The state of UPI payment gamification in India
-              </h2>
-              <div
-                className={`prose max-w-none text-sm sm:text-base leading-relaxed space-y-4 mt-6 ${
-                  isLight ? "text-neutral-700" : "text-neutral-300"
-                }`}
-              >
-                <p>
-                  Unified Payments Interface (UPI) handles billions of transactions each month across India. To drive consumer stickiness, major UPI platforms like Paytm, Google Pay, and PhonePe introduced post-payment scratch cards.
-                </p>
-                <p>
-                  In the early days, scratch cards rewarded users with immediate cashback, creating a strong dopamine loop. Over time, as consumer adoption skyrocketed and unit economics shifted, cashback was replaced by generic third-party affiliate coupons.
-                </p>
-              </div>
-            </section>
-          )}
+
 
           {/* 02 PROBLEM SPACE SECTION (01 for Lexora) */}
           <section
@@ -1593,14 +1437,16 @@ export default function EditorialSidebarCaseStudy({ project }: EditorialSidebarC
                     isLight ? "text-neutral-900" : "text-white"
                   }`}
                 >
-                  Core user flows
+                  {isLexora ? "Core user flows" : "The 3-Step Selection & Progress Loop"}
                 </h2>
                 <p
                   className={`text-xs sm:text-sm mt-2 sm:mt-3 font-mono uppercase tracking-wider ${
                     isLight ? "text-neutral-500" : "text-neutral-400"
                   }`}
                 >
-                  Primary experience · Case management & community legal support
+                  {isLexora
+                    ? "Primary experience · Case management & community legal support"
+                    : "Choice architecture · From payment success to goal redemption"}
                 </p>
               </div>
 
@@ -1637,6 +1483,8 @@ export default function EditorialSidebarCaseStudy({ project }: EditorialSidebarC
               </div>
             </div>
 
+{isLexora ? (
+              <>
             {/* Sub-header Flow Overview Pill */}
             <div className={`p-4 sm:p-5 rounded-2xl border mb-6 sm:mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 ${
               isLight ? "bg-neutral-50/80 border-neutral-200/90 text-neutral-800" : "bg-[#10141d]/80 border-[#1c2230] text-neutral-200"
@@ -2072,6 +1920,293 @@ export default function EditorialSidebarCaseStudy({ project }: EditorialSidebarC
                 </div>
               </div>
             </div>
+              </>
+            ) : (
+              /* Paytm Exact Carousel Flow Matching Lexora Structure */
+              <>
+                {/* Sub-header Flow Overview Pill */}
+                <div className={`p-4 sm:p-5 rounded-2xl border mb-6 sm:mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 ${
+                  isLight ? "bg-neutral-50/80 border-neutral-200/90 text-neutral-800" : "bg-[#10141d]/80 border-[#1c2230] text-neutral-200"
+                }`}>
+                  <div>
+                    <span className="text-[11px] font-mono font-semibold uppercase tracking-wider text-blue-400">
+                      Choice Architecture & Milestone Progress
+                    </span>
+                    <p className={`text-xs sm:text-sm mt-0.5 leading-relaxed ${isLight ? "text-neutral-600" : "text-neutral-400"}`}>
+                      <strong className={isLight ? "text-neutral-900" : "text-white"}>Pick your reward</strong>: Users choose what they earn rather than receiving random coupons. · <strong className={isLight ? "text-neutral-900" : "text-white"}>Milestone Progress</strong>: Routine payments tick off a clear goal until unlocked.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Continuous Horizontal Flow Carousel */}
+                <div
+                  ref={flowContainerRef}
+                  className="flex items-stretch gap-4 sm:gap-6 overflow-x-auto pb-6 pt-2 scrollbar-none snap-x snap-mandatory scroll-smooth"
+                  style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+                >
+                  {/* Card 1: Screen 1 — Post-Payment Reward Choice */}
+                  <div
+                    className={`w-[310px] sm:w-[370px] lg:w-[400px] shrink-0 snap-center rounded-3xl p-3.5 sm:p-5 flex flex-col justify-between border transition-all duration-300 ${
+                      isLight
+                        ? "bg-white border-neutral-200/90 shadow-xs"
+                        : "bg-[#0f121a] border-[#1c2230]"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between gap-2.5 sm:gap-3 relative min-h-[385px] sm:min-h-[440px]">
+                      {/* Phone Mockup Frame */}
+                      <div className="relative w-[175px] sm:w-[215px] lg:w-[225px] h-[385px] sm:h-[440px] rounded-[26px] sm:rounded-[30px] p-[4px] sm:p-[5px] bg-[#11131a] border-2 sm:border-[3px] border-[#292f40] shadow-[0_12px_32px_rgba(0,0,0,0.5)] shrink-0 overflow-hidden flex flex-col">
+                        <div className="relative w-full h-full rounded-[20px] sm:rounded-[24px] overflow-hidden bg-neutral-900">
+                          <Image
+                            src="/iPhone_product_mockup_creation_0c49d661_2K.jpg"
+                            alt="Screen 1 — Post-Payment Reward Choice"
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 640px) 175px, 225px"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Annotations Column */}
+                      <div className="flex-1 min-w-[105px] sm:min-w-[125px] flex flex-col justify-around py-2 sm:py-3 space-y-2 sm:space-y-3">
+                        <div className="flex items-start gap-1">
+                          <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0 mt-1 shadow-[0_0_8px_rgba(34,211,238,0.8)]" />
+                          <div className="w-3.5 sm:w-4 border-b border-dashed border-cyan-400/80 shrink-0 mt-1.5" />
+                          <div className="leading-tight">
+                            <p className={`text-[10.5px] sm:text-[11px] font-semibold tracking-tight ${isLight ? "text-neutral-900" : "text-white"}`}>
+                              User agency
+                            </p>
+                            <p className={`text-[9px] sm:text-[9.5px] leading-tight mt-0.5 ${isLight ? "text-neutral-600" : "text-neutral-400"}`}>
+                              Select from 3 relevant reward choices.
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="flex items-start gap-1">
+                          <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0 mt-1 shadow-[0_0_8px_rgba(34,211,238,0.8)]" />
+                          <div className="w-3.5 sm:w-4 border-b border-dashed border-cyan-400/80 shrink-0 mt-1.5" />
+                          <div className="leading-tight">
+                            <p className={`text-[10.5px] sm:text-[11px] font-semibold tracking-tight ${isLight ? "text-neutral-900" : "text-white"}`}>
+                              Brand relevance
+                            </p>
+                            <p className={`text-[9px] sm:text-[9.5px] leading-tight mt-0.5 ${isLight ? "text-neutral-600" : "text-neutral-400"}`}>
+                              Electronics, dining, and daily essentials.
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="flex items-start gap-1">
+                          <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0 mt-1 shadow-[0_0_8px_rgba(34,211,238,0.8)]" />
+                          <div className="w-3.5 sm:w-4 border-b border-dashed border-cyan-400/80 shrink-0 mt-1.5" />
+                          <div className="leading-tight">
+                            <p className={`text-[10.5px] sm:text-[11px] font-semibold tracking-tight ${isLight ? "text-neutral-900" : "text-white"}`}>
+                              Ownership
+                            </p>
+                            <p className={`text-[9px] sm:text-[9.5px] leading-tight mt-0.5 ${isLight ? "text-neutral-600" : "text-neutral-400"}`}>
+                              Tapping "I want this" creates buy-in.
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="flex items-start gap-1">
+                          <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0 mt-1 shadow-[0_0_8px_rgba(34,211,238,0.8)]" />
+                          <div className="w-3.5 sm:w-4 border-b border-dashed border-cyan-400/80 shrink-0 mt-1.5" />
+                          <div className="leading-tight">
+                            <p className={`text-[10.5px] sm:text-[11px] font-semibold tracking-tight ${isLight ? "text-neutral-900" : "text-white"}`}>
+                              Zero clutter
+                            </p>
+                            <p className={`text-[9px] sm:text-[9.5px] leading-tight mt-0.5 ${isLight ? "text-neutral-600" : "text-neutral-400"}`}>
+                              No forced scratches or spam vouchers.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Bottom Caption */}
+                    <div className={`mt-3 pt-2.5 sm:mt-4 sm:pt-3 border-t ${isLight ? "border-neutral-100" : "border-[#1c2230]"}`}>
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-[9.5px] sm:text-[10px] font-mono px-2 py-0.5 rounded-full bg-blue-950 text-blue-300">
+                          Choice
+                        </span>
+                        <h4 className={`text-xs sm:text-[13px] font-semibold ${isLight ? "text-neutral-900" : "text-white"}`}>
+                          Screen 1 — Post-Payment Reward Choice
+                        </h4>
+                      </div>
+                      <p className={`text-[10.5px] sm:text-[11px] mt-0.5 leading-snug ${isLight ? "text-neutral-600" : "text-neutral-400"}`}>
+                        Users select what they want to earn directly after paying, turning passive luck into deliberate choice.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Card 2: Screen 2 — Milestone Progress Dashboard */}
+                  <div
+                    className={`w-[310px] sm:w-[370px] lg:w-[400px] shrink-0 snap-center rounded-3xl p-3.5 sm:p-5 flex flex-col justify-between border transition-all duration-300 ${
+                      isLight
+                        ? "bg-white border-neutral-200/90 shadow-xs"
+                        : "bg-[#0f121a] border-[#1c2230]"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between gap-2.5 sm:gap-3 relative min-h-[385px] sm:min-h-[440px]">
+                      {/* Phone Mockup Frame */}
+                      <div className="relative w-[175px] sm:w-[215px] lg:w-[225px] h-[385px] sm:h-[440px] rounded-[26px] sm:rounded-[30px] p-[4px] sm:p-[5px] bg-[#11131a] border-2 sm:border-[3px] border-[#292f40] shadow-[0_12px_32px_rgba(0,0,0,0.5)] shrink-0 overflow-hidden flex flex-col">
+                        <div className="relative w-full h-full rounded-[20px] sm:rounded-[24px] overflow-hidden bg-neutral-900">
+                          <Image
+                            src="/Create_iPhone_product_mockup_9ae62066_2K.jpg"
+                            alt="Screen 2 — Milestone Progress Dashboard"
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 640px) 175px, 225px"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Annotations Column */}
+                      <div className="flex-1 min-w-[105px] sm:min-w-[125px] flex flex-col justify-around py-2 sm:py-3 space-y-2 sm:space-y-3">
+                        <div className="flex items-start gap-1">
+                          <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0 mt-1 shadow-[0_0_8px_rgba(34,211,238,0.8)]" />
+                          <div className="w-3.5 sm:w-4 border-b border-dashed border-cyan-400/80 shrink-0 mt-1.5" />
+                          <div className="leading-tight">
+                            <p className={`text-[10.5px] sm:text-[11px] font-semibold tracking-tight ${isLight ? "text-neutral-900" : "text-white"}`}>
+                              Visible progress
+                            </p>
+                            <p className={`text-[9px] sm:text-[9.5px] leading-tight mt-0.5 ${isLight ? "text-neutral-600" : "text-neutral-400"}`}>
+                              "1 of 2 payments" shows the goal is underway.
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="flex items-start gap-1">
+                          <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0 mt-1 shadow-[0_0_8px_rgba(34,211,238,0.8)]" />
+                          <div className="w-3.5 sm:w-4 border-b border-dashed border-cyan-400/80 shrink-0 mt-1.5" />
+                          <div className="leading-tight">
+                            <p className={`text-[10.5px] sm:text-[11px] font-semibold tracking-tight ${isLight ? "text-neutral-900" : "text-white"}`}>
+                              Dashboard anchor
+                            </p>
+                            <p className={`text-[9px] sm:text-[9.5px] leading-tight mt-0.5 ${isLight ? "text-neutral-600" : "text-neutral-400"}`}>
+                              Pinned on home screen as a reminder.
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="flex items-start gap-1">
+                          <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0 mt-1 shadow-[0_0_8px_rgba(34,211,238,0.8)]" />
+                          <div className="w-3.5 sm:w-4 border-b border-dashed border-cyan-400/80 shrink-0 mt-1.5" />
+                          <div className="leading-tight">
+                            <p className={`text-[10.5px] sm:text-[11px] font-semibold tracking-tight ${isLight ? "text-neutral-900" : "text-white"}`}>
+                              Durable habit
+                            </p>
+                            <p className={`text-[9px] sm:text-[9.5px] leading-tight mt-0.5 ${isLight ? "text-neutral-600" : "text-neutral-400"}`}>
+                              Brings users back to pay with Paytm repeatedly.
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="flex items-start gap-1">
+                          <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0 mt-1 shadow-[0_0_8px_rgba(34,211,238,0.8)]" />
+                          <div className="w-3.5 sm:w-4 border-b border-dashed border-cyan-400/80 shrink-0 mt-1.5" />
+                          <div className="leading-tight">
+                            <p className={`text-[10.5px] sm:text-[11px] font-semibold tracking-tight ${isLight ? "text-neutral-900" : "text-white"}`}>
+                              Automatic unlock
+                            </p>
+                            <p className={`text-[9px] sm:text-[9.5px] leading-tight mt-0.5 ${isLight ? "text-neutral-600" : "text-neutral-400"}`}>
+                              Unlocks code upon final eligible transfer.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Bottom Caption */}
+                    <div className={`mt-3 pt-2.5 sm:mt-4 sm:pt-3 border-t ${isLight ? "border-neutral-100" : "border-[#1c2230]"}`}>
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-[9.5px] sm:text-[10px] font-mono px-2 py-0.5 rounded-full bg-blue-950 text-blue-300">
+                          Progress
+                        </span>
+                        <h4 className={`text-xs sm:text-[13px] font-semibold ${isLight ? "text-neutral-900" : "text-white"}`}>
+                          Screen 2 — Milestone Progress Dashboard
+                        </h4>
+                      </div>
+                      <p className={`text-[10.5px] sm:text-[11px] mt-0.5 leading-snug ${isLight ? "text-neutral-600" : "text-neutral-400"}`}>
+                        Every routine payment advances the progress bar until the reward code is unlocked automatically.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Card 3: Outcome Card — Habit & Repeat Velocity */}
+                  <div
+                    className={`w-[310px] sm:w-[370px] lg:w-[400px] shrink-0 snap-center rounded-3xl p-3.5 sm:p-5 flex flex-col justify-between border transition-all duration-300 ${
+                      isLight
+                        ? "bg-white border-blue-500/80 ring-2 ring-blue-200/80 shadow-md"
+                        : "bg-[#0f121a] border-blue-500/80 ring-2 ring-blue-950/60 shadow-lg shadow-black/40"
+                    }`}
+                  >
+                    <div className="w-full max-w-[270px] mx-auto h-[385px] sm:h-[440px] bg-white rounded-[22px] sm:rounded-[26px] p-4 sm:p-5 shadow-xl border border-neutral-200 flex flex-col justify-between text-neutral-900">
+                      <div>
+                        <span className="text-[8.5px] sm:text-[9px] font-mono font-bold tracking-widest text-blue-600 uppercase">
+                          RETENTION OUTCOME
+                        </span>
+                        <h4 className="text-sm sm:text-base font-bold leading-tight mt-1 mb-4 sm:mb-5 text-neutral-900">
+                          Durable repeat payments
+                        </h4>
+
+                        {/* Checklist */}
+                        <div className="space-y-3 sm:space-y-4">
+                          <div className="flex items-start gap-2 sm:gap-2.5">
+                            <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center shrink-0 mt-0.5 text-[9px] sm:text-[10px] font-bold">
+                              ✓
+                            </div>
+                            <div>
+                              <p className="text-[11px] sm:text-[12px] font-bold text-neutral-900 leading-tight">Agency over luck</p>
+                              <p className="text-[9.5px] sm:text-[10px] text-neutral-600 leading-tight mt-0.5">Users value rewards they actively choose.</p>
+                            </div>
+                          </div>
+
+                          <div className="flex items-start gap-2 sm:gap-2.5">
+                            <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center shrink-0 mt-0.5 text-[9px] sm:text-[10px] font-bold">
+                              ✓
+                            </div>
+                            <div>
+                              <p className="text-[11px] sm:text-[12px] font-bold text-neutral-900 leading-tight">Visible progress</p>
+                              <p className="text-[9.5px] sm:text-[10px] text-neutral-600 leading-tight mt-0.5">Predictable steps replace scratch card lottery.</p>
+                            </div>
+                          </div>
+
+                          <div className="flex items-start gap-2 sm:gap-2.5">
+                            <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center shrink-0 mt-0.5 text-[9px] sm:text-[10px] font-bold">
+                              ✓
+                            </div>
+                            <div>
+                              <p className="text-[11px] sm:text-[12px] font-bold text-neutral-900 leading-tight">D7 / D14 velocity</p>
+                              <p className="text-[9.5px] sm:text-[10px] text-neutral-600 leading-tight mt-0.5">Everyday kirana transactions turn into habit.</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="bg-neutral-100/90 border border-neutral-200 rounded-xl p-2.5 sm:p-3 text-center mt-auto">
+                        <p className="text-[9.5px] sm:text-[10px] text-neutral-700 font-medium leading-snug">
+                          Converting one-off payments into deliberate, rewarding user preference.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className={`mt-3 pt-2.5 sm:mt-4 sm:pt-3 border-t ${isLight ? "border-neutral-100" : "border-[#1c2230]"}`}>
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-[9.5px] sm:text-[10px] font-mono px-2 py-0.5 rounded-full bg-blue-100 text-blue-800">
+                          Outcome
+                        </span>
+                        <h4 className="text-xs sm:text-[13px] font-semibold text-blue-400">
+                          Retention Outcome
+                        </h4>
+                      </div>
+                      <p className={`text-[10.5px] sm:text-[11px] mt-0.5 leading-snug ${isLight ? "text-neutral-600" : "text-neutral-400"}`}>
+                        Users return to Paytm because the reward represents genuine personal value.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
           </section>
 
           {/* 05 TRUST & SECURITY / PSYCHOLOGY SECTION */}
@@ -2376,50 +2511,207 @@ export default function EditorialSidebarCaseStudy({ project }: EditorialSidebarC
               </>
             ) : (
               <>
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="text-xs font-mono font-semibold text-blue-600 dark:text-blue-400">
-                    05
-                  </span>
-                  <span className="text-xs font-mono uppercase tracking-widest text-neutral-400">
-                    Psychology
-                  </span>
-                </div>
-                <h2
-                  className={`text-2xl sm:text-3xl lg:text-4xl font-normal font-instrument leading-snug ${
-                    isLight ? "text-neutral-900" : "text-white"
-                  }`}
-                >
-                  Behavioral Economics & Game Mechanics
-                </h2>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-                  <div
-                    className={`p-6 rounded-2xl border ${
-                      isLight
-                        ? "bg-white border-neutral-200/80"
-                        : "bg-neutral-950 border-neutral-800"
+                {/* Section Header */}
+                <div className="mb-8 sm:mb-10">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-xs font-mono font-semibold text-blue-400">
+                      05
+                    </span>
+                    <span className="text-xs font-mono uppercase tracking-widest text-neutral-400">
+                      Module Breakdown & Psychology
+                    </span>
+                  </div>
+                  <h2
+                    className={`text-3xl sm:text-4xl lg:text-5xl font-normal font-instrument leading-tight tracking-tight ${
+                      isLight ? "text-neutral-900" : "text-white"
                     }`}
                   >
-                    <h4 className="text-sm font-semibold mb-2 text-blue-600 dark:text-blue-400">
-                      Endowed Progress Effect
-                    </h4>
-                    <p className="text-xs text-neutral-500 leading-relaxed">
-                      When users pick a reward card, the system immediately credits them with 1/3rd of the progress required ('You are already 33% there!'), drastically reducing abandonment.
+                    Module breakdown <br className="hidden sm:block" />
+                    and psychology
+                  </h2>
+                </div>
+
+                {/* 3 Core Psychology Cards: Choose, Build, Play (Matching User Screenshot) */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 mb-10 sm:mb-14">
+                  {/* Card 01 - Choose */}
+                  <div
+                    className={`p-5 sm:p-6 rounded-2xl border flex flex-col justify-start transition-all duration-200 ${
+                      isLight
+                        ? "bg-white border-neutral-200/90 shadow-2xs hover:shadow-xs"
+                        : "bg-[#0b0e17] border-[#1c2230] hover:border-[#2a3449]"
+                    }`}
+                  >
+                    <span
+                      className={`self-start px-3 py-0.5 sm:py-1 rounded-full text-xs font-medium font-sans mb-3 sm:mb-4 ${
+                        isLight
+                          ? "bg-neutral-100 text-neutral-700 border border-neutral-200"
+                          : "bg-[#181d29] text-neutral-300 border border-[#263043]"
+                      }`}
+                    >
+                      Choose
+                    </span>
+                    <h3
+                      className={`text-lg sm:text-xl font-bold font-sans tracking-tight mb-2 sm:mb-2.5 ${
+                        isLight ? "text-neutral-900" : "text-white"
+                      }`}
+                    >
+                      “Is this for me?”
+                    </h3>
+                    <p
+                      className={`text-xs sm:text-sm leading-relaxed ${
+                        isLight ? "text-neutral-600" : "text-neutral-400"
+                      }`}
+                    >
+                      A reward he picked feels relevant, so he comes back for it.
                     </p>
                   </div>
 
+                  {/* Card 02 - Build */}
                   <div
-                    className={`p-6 rounded-2xl border ${
+                    className={`p-5 sm:p-6 rounded-2xl border flex flex-col justify-start transition-all duration-200 ${
                       isLight
-                        ? "bg-white border-neutral-200/80"
-                        : "bg-neutral-950 border-neutral-800"
+                        ? "bg-white border-neutral-200/90 shadow-2xs hover:shadow-xs"
+                        : "bg-[#0b0e17] border-[#1c2230] hover:border-[#2a3449]"
                     }`}
                   >
-                    <h4 className="text-sm font-semibold mb-2 text-blue-600 dark:text-blue-400">
-                      The IKEA Effect in UX
-                    </h4>
-                    <p className="text-xs text-neutral-500 leading-relaxed">
-                      Because users actively invested the mental effort of choosing their reward rather than being passively assigned one, they place a significantly higher psychological value on it.
+                    <span
+                      className={`self-start px-3 py-0.5 sm:py-1 rounded-full text-xs font-medium font-sans mb-3 sm:mb-4 ${
+                        isLight
+                          ? "bg-neutral-100 text-neutral-700 border border-neutral-200"
+                          : "bg-[#181d29] text-neutral-300 border border-[#263043]"
+                      }`}
+                    >
+                      Build
+                    </span>
+                    <h3
+                      className={`text-lg sm:text-xl font-bold font-sans tracking-tight mb-2 sm:mb-2.5 ${
+                        isLight ? "text-neutral-900" : "text-white"
+                      }`}
+                    >
+                      “Am I getting closer?”
+                    </h3>
+                    <p
+                      className={`text-xs sm:text-sm leading-relaxed ${
+                        isLight ? "text-neutral-600" : "text-neutral-400"
+                      }`}
+                    >
+                      “1 of 2 payments” shows the goal is underway.
+                    </p>
+                  </div>
+
+                  {/* Card 03 - Play */}
+                  <div
+                    className={`p-5 sm:p-6 rounded-2xl border flex flex-col justify-start transition-all duration-200 ${
+                      isLight
+                        ? "bg-white border-neutral-200/90 shadow-2xs hover:shadow-xs"
+                        : "bg-[#0b0e17] border-[#1c2230] hover:border-[#2a3449]"
+                    }`}
+                  >
+                    <span
+                      className={`self-start px-3 py-0.5 sm:py-1 rounded-full text-xs font-medium font-sans mb-3 sm:mb-4 ${
+                        isLight
+                          ? "bg-neutral-100 text-neutral-700 border border-neutral-200"
+                          : "bg-[#181d29] text-neutral-300 border border-[#263043]"
+                      }`}
+                    >
+                      Play
+                    </span>
+                    <h3
+                      className={`text-lg sm:text-xl font-bold font-sans tracking-tight mb-2 sm:mb-2.5 ${
+                        isLight ? "text-neutral-900" : "text-white"
+                      }`}
+                    >
+                      “What's next?”
+                    </h3>
+                    <p
+                      className={`text-xs sm:text-sm leading-relaxed ${
+                        isLight ? "text-neutral-600" : "text-neutral-400"
+                      }`}
+                    >
+                      Reminder, payment, progress, then a new goal.
+                    </p>
+                  </div>
+                </div>
+
+                {/* User Experience Loop Container (Matching User Screenshot) */}
+                <div className={`p-4 sm:p-7 rounded-2xl sm:rounded-3xl border space-y-6 sm:space-y-7 ${
+                  isLight ? "bg-neutral-50/70 border-neutral-200/90" : "bg-[#0b0e17]/80 border-[#1c2230]"
+                }`}>
+                  <div className="flex items-center gap-2 sm:gap-4 overflow-x-auto pb-2 scrollbar-none snap-x">
+                    {/* Step 1: Home reminder */}
+                    <div className="flex flex-col items-start shrink-0 snap-start">
+                      <span className={`text-sm sm:text-base lg:text-lg font-bold tracking-tight whitespace-nowrap ${isLight ? "text-neutral-900" : "text-white"}`}>
+                        Home reminder
+                      </span>
+                      <span className={`mt-1.5 px-2 sm:px-2.5 py-0.5 rounded-full text-[10px] sm:text-[11px] font-mono uppercase tracking-wider font-semibold ${
+                        isLight ? "bg-white text-neutral-600 border border-neutral-200 shadow-2xs" : "bg-[#181d29] text-neutral-300 border border-[#263043]"
+                      }`}>
+                        Trigger
+                      </span>
+                    </div>
+
+                    {/* Arrow */}
+                    <span className={`select-none text-base sm:text-xl shrink-0 self-center mb-3 sm:mb-4 px-1 ${isLight ? "text-neutral-300" : "text-neutral-600"}`}>
+                      →
+                    </span>
+
+                    {/* Step 2: Eligible payment */}
+                    <div className="flex flex-col items-start shrink-0 snap-start">
+                      <span className={`text-sm sm:text-base lg:text-lg font-bold tracking-tight whitespace-nowrap ${isLight ? "text-neutral-900" : "text-white"}`}>
+                        Eligible payment
+                      </span>
+                      <span className={`mt-1.5 px-2 sm:px-2.5 py-0.5 rounded-full text-[10px] sm:text-[11px] font-mono uppercase tracking-wider font-semibold ${
+                        isLight ? "bg-white text-neutral-600 border border-neutral-200 shadow-2xs" : "bg-[#181d29] text-neutral-300 border border-[#263043]"
+                      }`}>
+                        Action
+                      </span>
+                    </div>
+
+                    {/* Arrow */}
+                    <span className={`select-none text-base sm:text-xl shrink-0 self-center mb-3 sm:mb-4 px-1 ${isLight ? "text-neutral-300" : "text-neutral-600"}`}>
+                      →
+                    </span>
+
+                    {/* Step 3: Visible progress */}
+                    <div className="flex flex-col items-start shrink-0 snap-start">
+                      <span className={`text-sm sm:text-base lg:text-lg font-bold tracking-tight whitespace-nowrap ${isLight ? "text-neutral-900" : "text-white"}`}>
+                        Visible progress
+                      </span>
+                      <span className={`mt-1.5 px-2 sm:px-2.5 py-0.5 rounded-full text-[10px] sm:text-[11px] font-mono uppercase tracking-wider font-semibold ${
+                        isLight ? "bg-white text-neutral-600 border border-neutral-200 shadow-2xs" : "bg-[#181d29] text-neutral-300 border border-[#263043]"
+                      }`}>
+                        Reward
+                      </span>
+                    </div>
+
+                    {/* Arrow */}
+                    <span className={`select-none text-base sm:text-xl shrink-0 self-center mb-3 sm:mb-4 px-1 ${isLight ? "text-neutral-300" : "text-neutral-600"}`}>
+                      →
+                    </span>
+
+                    {/* Step 4: Choose the next reward */}
+                    <div className="flex flex-col items-start shrink-0 snap-start">
+                      <span className={`text-sm sm:text-base lg:text-lg font-bold tracking-tight whitespace-nowrap flex items-center gap-1 ${isLight ? "text-neutral-900" : "text-white"}`}>
+                        Choose the next reward <span className="text-xs text-neutral-400">↺</span>
+                      </span>
+                      <span className={`mt-1.5 px-2 sm:px-2.5 py-0.5 rounded-full text-[10px] sm:text-[11px] font-mono uppercase tracking-wider font-semibold ${
+                        isLight ? "bg-white text-neutral-600 border border-neutral-200 shadow-2xs" : "bg-[#181d29] text-neutral-300 border border-[#263043]"
+                      }`}>
+                        Investment
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Closing Design Rationale Callout with Cyan Accent Line (Matching User Screenshot) */}
+                <div className="mt-8 sm:mt-12 pt-2">
+                  <div className="pl-4 sm:pl-5 border-l-2 border-cyan-400 py-0.5 max-w-3xl">
+                    <p
+                      className={`text-xs sm:text-sm lg:text-base leading-relaxed ${
+                        isLight ? "text-neutral-800" : "text-neutral-200"
+                      }`}
+                    >
+                      The reminder should prompt, not pressure. The payment should be one the user already intends to make. That's the loop I'd want to test.
                     </p>
                   </div>
                 </div>
@@ -2612,249 +2904,158 @@ export default function EditorialSidebarCaseStudy({ project }: EditorialSidebarC
               </>
             ) : (
               <>
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="text-xs font-mono font-semibold text-blue-600 dark:text-blue-400">
-                    07
-                  </span>
-                  <span className="text-xs font-mono uppercase tracking-widest text-neutral-400">
-                    Outcomes
-                  </span>
+                {/* Header (Matching User Screenshot) */}
+                <div className="mb-6 sm:mb-8">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-xs font-mono font-semibold text-blue-400">
+                      06
+                    </span>
+                    <span className="text-xs font-mono uppercase tracking-widest text-neutral-400">
+                      Outcomes
+                    </span>
+                  </div>
+                  <h2
+                    className={`text-3xl sm:text-4xl lg:text-5xl font-normal font-instrument leading-tight tracking-tight ${
+                      isLight ? "text-neutral-900" : "text-white"
+                    }`}
+                  >
+                    Outcomes: <br className="hidden sm:block" />
+                    hypotheses, not results
+                  </h2>
+                  <p
+                    className={`text-xs sm:text-sm lg:text-base leading-relaxed max-w-2xl mt-3 ${
+                      isLight ? "text-neutral-600" : "text-neutral-400"
+                    }`}
+                  >
+                    Relevant choices should lift selection and redemption. Visible progress may lift repeat payments and D7/D14 retention. Tested against the current scratch-card flow.
+                  </p>
                 </div>
-                <h2
-                  className={`text-2xl sm:text-3xl lg:text-4xl font-normal font-instrument leading-snug ${
-                    isLight ? "text-neutral-900" : "text-white"
-                  }`}
-                >
-                  Measurable User & Operational Impact
-                </h2>
 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-8">
-                  <div
-                    className={`p-6 rounded-2xl border text-center ${
-                      isLight
-                        ? "bg-white border-neutral-200/80 shadow-sm"
-                        : "bg-neutral-950 border-neutral-800"
+                {/* Metrics Table (Matching User Screenshot) */}
+                <div className="w-full overflow-x-auto mt-6 sm:mt-8">
+                  <table className="w-full text-left border-collapse min-w-[340px] sm:min-w-[560px]">
+                    <thead>
+                      <tr
+                        className={`border-b text-[10px] sm:text-[11px] font-mono uppercase tracking-wider ${
+                          isLight ? "border-neutral-200 text-neutral-500" : "border-neutral-800 text-neutral-400"
+                        }`}
+                      >
+                        <th className="py-2.5 sm:py-3.5 pr-3 sm:pr-6 font-semibold w-[32%] sm:w-[28%]">Metric</th>
+                        <th className="py-2.5 sm:py-3.5 px-2 sm:px-6 font-semibold w-[48%] sm:w-[52%]">Question</th>
+                        <th className="py-2.5 sm:py-3.5 pl-2 sm:pl-6 font-semibold w-[20%] text-right sm:text-center">Want</th>
+                      </tr>
+                    </thead>
+                    <tbody
+                      className={`divide-y ${
+                        isLight ? "divide-neutral-200/80" : "divide-neutral-800/80"
+                      }`}
+                    >
+                      {/* Row 1: Repeat payments */}
+                      <tr className="transition-colors hover:bg-neutral-50/50 dark:hover:bg-neutral-900/30">
+                        <td className={`py-3 sm:py-4 pr-3 sm:pr-6 font-bold text-xs sm:text-sm lg:text-base tracking-tight ${isLight ? "text-neutral-900" : "text-white"}`}>
+                          Repeat payments
+                        </td>
+                        <td className={`py-3 sm:py-4 px-2 sm:px-6 text-[11px] sm:text-xs lg:text-sm leading-snug ${isLight ? "text-neutral-600" : "text-neutral-300"}`}>
+                          Do people come back to pay with Paytm?
+                        </td>
+                        <td className="py-3 sm:py-4 pl-2 sm:pl-6 text-right sm:text-center">
+                          <span className="inline-flex items-center justify-center px-2.5 sm:px-3.5 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold tracking-wide bg-[#0d2818] text-[#4ade80] border border-[#1b4332]">
+                            Up
+                          </span>
+                        </td>
+                      </tr>
+
+                      {/* Row 2: D7 / D14 retention */}
+                      <tr className="transition-colors hover:bg-neutral-50/50 dark:hover:bg-neutral-900/30">
+                        <td className={`py-3 sm:py-4 pr-3 sm:pr-6 font-bold text-xs sm:text-sm lg:text-base tracking-tight ${isLight ? "text-neutral-900" : "text-white"}`}>
+                          D7 / D14 retention
+                        </td>
+                        <td className={`py-3 sm:py-4 px-2 sm:px-6 text-[11px] sm:text-xs lg:text-sm leading-snug ${isLight ? "text-neutral-600" : "text-neutral-300"}`}>
+                          Does the test group stay longer?
+                        </td>
+                        <td className="py-3 sm:py-4 pl-2 sm:pl-6 text-right sm:text-center">
+                          <span className="inline-flex items-center justify-center px-2.5 sm:px-3.5 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold tracking-wide bg-[#0d2818] text-[#4ade80] border border-[#1b4332]">
+                            Up
+                          </span>
+                        </td>
+                      </tr>
+
+                      {/* Row 3: Selection */}
+                      <tr className="transition-colors hover:bg-neutral-50/50 dark:hover:bg-neutral-900/30">
+                        <td className={`py-3 sm:py-4 pr-3 sm:pr-6 font-bold text-xs sm:text-sm lg:text-base tracking-tight ${isLight ? "text-neutral-900" : "text-white"}`}>
+                          Selection
+                        </td>
+                        <td className={`py-3 sm:py-4 px-2 sm:px-6 text-[11px] sm:text-xs lg:text-sm leading-snug ${isLight ? "text-neutral-600" : "text-neutral-300"}`}>
+                          After paying, do people choose a reward?
+                        </td>
+                        <td className="py-3 sm:py-4 pl-2 sm:pl-6 text-right sm:text-center">
+                          <span className="inline-flex items-center justify-center px-2.5 sm:px-3.5 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold tracking-wide bg-[#0d2818] text-[#4ade80] border border-[#1b4332]">
+                            Up
+                          </span>
+                        </td>
+                      </tr>
+
+                      {/* Row 4: Redemption */}
+                      <tr className="transition-colors hover:bg-neutral-50/50 dark:hover:bg-neutral-900/30">
+                        <td className={`py-3 sm:py-4 pr-3 sm:pr-6 font-bold text-xs sm:text-sm lg:text-base tracking-tight ${isLight ? "text-neutral-900" : "text-white"}`}>
+                          Redemption
+                        </td>
+                        <td className={`py-3 sm:py-4 px-2 sm:px-6 text-[11px] sm:text-xs lg:text-sm leading-snug ${isLight ? "text-neutral-600" : "text-neutral-300"}`}>
+                          Do they use the reward they chose?
+                        </td>
+                        <td className="py-3 sm:py-4 pl-2 sm:pl-6 text-right sm:text-center">
+                          <span className="inline-flex items-center justify-center px-2.5 sm:px-3.5 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold tracking-wide bg-[#0d2818] text-[#4ade80] border border-[#1b4332]">
+                            Up
+                          </span>
+                        </td>
+                      </tr>
+
+                      {/* Row 5: Payment completion */}
+                      <tr className="transition-colors hover:bg-neutral-50/50 dark:hover:bg-neutral-900/30">
+                        <td className={`py-3 sm:py-4 pr-3 sm:pr-6 font-bold text-xs sm:text-sm lg:text-base tracking-tight ${isLight ? "text-neutral-900" : "text-white"}`}>
+                          Payment completion
+                        </td>
+                        <td className={`py-3 sm:py-4 px-2 sm:px-6 text-[11px] sm:text-xs lg:text-sm leading-snug ${isLight ? "text-neutral-600" : "text-neutral-300"}`}>
+                          Guardrail: rewards must never slow paying.
+                        </td>
+                        <td className="py-3 sm:py-4 pl-2 sm:pl-6 text-right sm:text-center">
+                          <span className="inline-flex items-center justify-center px-2.5 sm:px-3.5 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold tracking-wide bg-[#1e2330] text-neutral-300 border border-neutral-700">
+                            Hold
+                          </span>
+                        </td>
+                      </tr>
+
+                      {/* Row 6: Reward cost */}
+                      <tr className="transition-colors hover:bg-neutral-50/50 dark:hover:bg-neutral-900/30">
+                        <td className={`py-3 sm:py-4 pr-3 sm:pr-6 font-bold text-xs sm:text-sm lg:text-base tracking-tight ${isLight ? "text-neutral-900" : "text-white"}`}>
+                          Reward cost
+                        </td>
+                        <td className={`py-3 sm:py-4 px-2 sm:px-6 text-[11px] sm:text-xs lg:text-sm leading-snug ${isLight ? "text-neutral-600" : "text-neutral-300"}`}>
+                          Is the lift worth what the rewards cost?
+                        </td>
+                        <td className="py-3 sm:py-4 pl-2 sm:pl-6 text-right sm:text-center">
+                          <span className="inline-flex items-center justify-center px-2.5 sm:px-3.5 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold tracking-wide bg-[#2a1708] text-[#f59e0b] border border-[#78350f]">
+                            Watch
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                {/* Closing Paragraph */}
+                <div className="mt-8 sm:mt-12 max-w-3xl">
+                  <p
+                    className={`text-xs sm:text-sm lg:text-base leading-relaxed ${
+                      isLight ? "text-neutral-700" : "text-neutral-300"
                     }`}
                   >
-                    <span className="text-3xl sm:text-4xl font-instrument text-emerald-500 font-bold block mb-1">
-                      3.4×
-                    </span>
-                    <span className="text-xs text-neutral-500">
-                      Reward Claim & Usage Rate
-                    </span>
-                  </div>
-
-                  <div
-                    className={`p-6 rounded-2xl border text-center ${
-                      isLight
-                        ? "bg-white border-neutral-200/80 shadow-sm"
-                        : "bg-neutral-950 border-neutral-800"
-                    }`}
-                  >
-                    <span className="text-3xl sm:text-4xl font-instrument font-bold block mb-1 text-blue-500">
-                      +42%
-                    </span>
-                    <span className="text-xs text-neutral-500">
-                      Repeat Payment Habit Retention
-                    </span>
-                  </div>
-
-                  <div
-                    className={`p-6 rounded-2xl border text-center ${
-                      isLight
-                        ? "bg-white border-neutral-200/80 shadow-sm"
-                        : "bg-neutral-950 border-neutral-800"
-                    }`}
-                  >
-                    <span className="text-3xl sm:text-4xl font-instrument text-purple-500 font-bold block mb-1">
-                      88%
-                    </span>
-                    <span className="text-xs text-neutral-500">
-                      User Preference over Scratch Cards
-                    </span>
-                  </div>
+                    The success of Paytm Rewards shouldn't be measured by how many features it offers, but by how effectively it reduces the friction of reward earning. I'd want to validate whether users pick more freely, understand their milestone progress better, and feel more in control.
+                  </p>
                 </div>
               </>
             )}
           </section>
-
-          {!isLexora && (
-            <>
-          {/* 07 DESIGN SYSTEM / DECISIONS SECTION */}
-          <section
-            id="decisions"
-            className={`w-full max-w-5xl mx-auto px-6 sm:px-10 lg:px-14 py-16 border-t ${
-              isLight ? "border-neutral-200/80" : "border-neutral-800"
-            }`}
-          >
-            <div className="flex items-center gap-2 mb-3">
-              <span className={`text-xs font-mono font-semibold ${isLexora ? "text-red-700 dark:text-red-400" : "text-blue-600 dark:text-blue-400"}`}>
-                {isLexora ? "07" : "06"}
-              </span>
-              <span className="text-xs font-mono uppercase tracking-widest text-neutral-400">
-                {isLexora ? "Design System" : "Decisions"}
-              </span>
-            </div>
-            <h2
-              className={`text-2xl sm:text-3xl lg:text-4xl font-normal font-instrument leading-snug ${
-                isLight ? "text-neutral-900" : "text-white"
-              }`}
-            >
-              {isLexora
-                ? "Visual identity: Classical jurisprudence meets modern precision"
-                : "Key Design Trade-offs & Micro-Interactions"}
-            </h2>
-            <div
-              className={`prose max-w-none text-sm sm:text-base leading-relaxed space-y-4 mt-6 ${
-                isLight ? "text-neutral-700" : "text-neutral-300"
-              }`}
-            >
-              {isLexora ? (
-                <>
-                  <p>
-                    <strong>1. Architectural Palette:</strong> Warm limestone tones (#faf9f6), classical pillar sculptural cues, and rich burgundy (#800020) establish an atmosphere of calm stability and seriousness.
-                  </p>
-                  <p>
-                    <strong>2. Plain-Language Microcopy:</strong> Replaced complex latin phrases with clear guidance, giving users confidence during distressing financial or legal disputes.
-                  </p>
-                </>
-              ) : (
-                <>
-                  <p>
-                    <strong>1. No Forced Scratch Gestures:</strong> The physical scratching gesture created friction for hurried retail transactions. It was replaced by a tactile card snap and haptic confirmation.
-                  </p>
-                  <p>
-                    <strong>2. Transparent Minimum Order Value (MOV):</strong> The MOV is displayed boldly in the primary header of the card rather than hidden in 8pt legal disclaimers.
-                  </p>
-                </>
-              )}
-            </div>
-          </section>
-
-          {/* 08 REFLECTIONS SECTION */}
-          <section
-            id="reflections"
-            className={`w-full max-w-5xl mx-auto px-6 sm:px-10 lg:px-14 py-16 border-t ${
-              isLight ? "border-neutral-200/80" : "border-neutral-800"
-            }`}
-          >
-            <div className="flex items-center gap-2 mb-3">
-              <span className={`text-xs font-mono font-semibold ${isLexora ? "text-red-700 dark:text-red-400" : "text-blue-600 dark:text-blue-400"}`}>
-                {isLexora ? "07" : "08"}
-              </span>
-              <span className="text-xs font-mono uppercase tracking-widest text-neutral-400">
-                Reflections
-              </span>
-            </div>
-            <h2
-              className={`text-2xl sm:text-3xl lg:text-4xl font-normal font-instrument leading-snug ${
-                isLight ? "text-neutral-900" : "text-white"
-              }`}
-            >
-              Key Takeaways & Future Horizons
-            </h2>
-            <div
-              className={`prose max-w-none text-sm sm:text-base leading-relaxed space-y-4 mt-6 ${
-                isLight ? "text-neutral-700" : "text-neutral-300"
-              }`}
-            >
-              {isLexora ? (
-                <>
-                  <p>
-                    Designing for law requires deep empathy: users rarely seek a lawyer during happy moments. They are often stressed, anxious about financial ruin, or facing legal confrontation.
-                  </p>
-                  <p>
-                    By treating simplicity as a moral obligation, Lexora proves that digital design can transform an intimidating bureaucratic maze into an empowering, dignified experience.
-                  </p>
-                </>
-              ) : (
-                <>
-                  <p>
-                    Gamification only works when the reward represents genuine value to the user. Gimmicks like scratch cards can temporarily boost engagement numbers, but over time they erode consumer trust if the underlying reward feels manipulative.
-                  </p>
-                  <p>
-                    Designing for agency and clarity builds durable habits and aligns business growth with user satisfaction.
-                  </p>
-                </>
-              )}
-            </div>
-          </section>
-
-          {/* RESEARCH SUB-SECTIONS (for anchor links from sidebar) */}
-          <section
-            id={isLexora ? "why-lexora" : "why-paytm-rewards"}
-            className={`w-full max-w-5xl mx-auto px-6 sm:px-10 lg:px-14 py-12 border-t ${
-              isLight ? "border-neutral-200/80" : "border-neutral-800"
-            }`}
-          >
-            <span className="text-xs font-mono uppercase tracking-widest text-neutral-400 block mb-2">
-              Research & Process
-            </span>
-            <h3 className="text-xl font-semibold mb-3">
-              {isLexora ? "Why Lexora LegalTech" : "Why Paytm Rewards"}
-            </h3>
-            <p className="text-sm text-neutral-500 leading-relaxed">
-              {isLexora
-                ? "Over 40 million cases are pending in Indian courts. Bridging pre-litigation settlement, arbitration, and consumer banking disputes via digital access prevents minor issues from escalating into years of court battles."
-                : "Paytm has one of the deepest offline merchant networks in India. Revitalizing their reward mechanism provides an immediate competitive advantage over Google Pay and PhonePe by converting everyday transactions into direct merchant footfall."}
-            </p>
-          </section>
-
-          <section
-            id="scope"
-            className={`w-full max-w-5xl mx-auto px-6 sm:px-10 lg:px-14 py-12 border-t ${
-              isLight ? "border-neutral-200/80" : "border-neutral-800"
-            }`}
-          >
-            <span className="text-xs font-mono uppercase tracking-widest text-neutral-400 block mb-2">
-              Research & Process
-            </span>
-            <h3 className="text-xl font-semibold mb-3">
-              {isLexora ? "Scope & Regulatory Compliance" : "Scope & Constraints"}
-            </h3>
-            <p className="text-sm text-neutral-500 leading-relaxed">
-              {isLexora
-                ? "Adheres strictly to Bar Council of India guidelines prohibiting direct attorney advertising while maintaining end-to-end client confidentiality under attorney-client privilege."
-                : "This concept respects the existing NPCI / UPI payment transaction flow, ensuring zero added latency or extra confirmation steps during the critical authorization stage."}
-            </p>
-          </section>
-
-          <section
-            id="who-i-spoke-to"
-            className={`w-full max-w-5xl mx-auto px-6 sm:px-10 lg:px-14 py-12 border-t ${
-              isLight ? "border-neutral-200/80" : "border-neutral-800"
-            }`}
-          >
-            <span className="text-xs font-mono uppercase tracking-widest text-neutral-400 block mb-2">
-              Research & Process
-            </span>
-            <h3 className="text-xl font-semibold mb-3">User Interviews</h3>
-            <p className="text-sm text-neutral-500 leading-relaxed">
-              {isLexora
-                ? "Interviewed 14 individuals facing credit card recovery disputes, loan restructuring notices, and small-business trademark filings to map the emotional journey of legal distress."
-                : "Conducted 16 in-depth interviews with everyday UPI users across Tier-1 and Tier-2 Indian cities. 15 out of 16 participants stated they instinctively dismiss scratch cards without looking at them."}
-            </p>
-          </section>
-
-          <section
-            id="affinity-clusters"
-            className={`w-full max-w-5xl mx-auto px-6 sm:px-10 lg:px-14 py-12 border-t ${
-              isLight ? "border-neutral-200/80" : "border-neutral-800"
-            }`}
-          >
-            <span className="text-xs font-mono uppercase tracking-widest text-neutral-400 block mb-2">
-              Research & Process
-            </span>
-            <h3 className="text-xl font-semibold mb-3">Affinity Clusters</h3>
-            <p className="text-sm text-neutral-500 leading-relaxed">
-              {isLexora
-                ? "Identified the primary emotional drivers: 'Fear of Being Scammed', 'Shame Around Debt Disputes', and 'Urgent Need for Immediate Practical Guidance'."
-                : "Mapped user frustration into 3 core buckets: 'Deceptive Minimum Spends', 'Unwanted Brands', and 'Cluttered Expired Voucher Lists'."}
-            </p>
-          </section>
-
-            </>
-          )}
 
           {/* FOOTER */}
           <footer

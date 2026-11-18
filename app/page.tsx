@@ -646,6 +646,7 @@ export default function Home() {
               >
                 <span>Case Study</span>
               </button>
+
             </div>
           </div>
 
@@ -670,7 +671,7 @@ export default function Home() {
                       id: "paytm-rewards",
                       title: "Paytm Rewards",
                       description: "Turning generic scratch cards into goal-oriented rewards that users actually care to earn through choice architecture.",
-                      image: "/Create_iPhone_product_mockup_9ae62066_2K.jpg",
+                      image: "/paytm/paytm-upi-hero.jpg",
                       tags: [
                         "Fintech",
                         "Product Strategy",

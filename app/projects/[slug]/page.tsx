@@ -30,7 +30,6 @@ export default async function ProjectSlugPage({ params }: Props) {
   if (!project) {
     notFound();
   }
-
   // Editorial sidebar layout (Collapsible TOC, responsive mobile drawer & device hero)
   if (
     project.galleryLayout === "editorial-sidebar" ||
