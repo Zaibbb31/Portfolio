@@ -370,12 +370,7 @@ export default async function ProjectSlugPage({ params }: Props) {
                     "/schooldash/SchoolDash_Student_Flow_Reference_Style_BW_1920x1080.png",
                   ]
             ).map((img, idx) => {
-              const getBadge = (path: string) => {
-                if (path.toLowerCase().includes("admin")) return "01 · Administrator Portal Workflow";
-                if (path.toLowerCase().includes("teacher")) return "02 · Teacher Portal Workflow";
-                if (path.toLowerCase().includes("student")) return "03 · Student & Guardian Portal Workflow";
-                return `Flow 0${idx + 1}`;
-              };
+
 
               return (
                 <div
@@ -390,10 +385,7 @@ export default async function ProjectSlugPage({ params }: Props) {
                     className="object-contain transition-transform duration-700 ease-out"
                     sizes="(max-width: 1024px) 100vw, 896px"
                   />
-                  {/* Index tag */}
-                  <div className="absolute top-3.5 left-3.5 px-2.5 py-1 rounded bg-black/70 backdrop-blur-md border border-white/10 text-[10px] font-mono text-neutral-300 z-10">
-                    {getBadge(img)}
-                  </div>
+
                 </div>
               );
             })}
@@ -412,9 +404,7 @@ export default async function ProjectSlugPage({ params }: Props) {
                       className="object-cover object-center transition-transform duration-700 ease-out"
                       sizes="(max-width: 1024px) 100vw, 896px"
                     />
-                    <div className="absolute top-3.5 left-3.5 px-2 py-0.5 rounded bg-black/70 backdrop-blur-md border border-white/10 text-[10px] font-mono text-neutral-300">
-                      01
-                    </div>
+
                   </div>
                 ) : (
                   <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-neutral-800/80">
@@ -430,13 +420,7 @@ export default async function ProjectSlugPage({ params }: Props) {
                           className="object-cover object-center transition-transform duration-700 ease-out"
                           sizes="(max-width: 640px) 100vw, 480px"
                         />
-                        <div className="absolute top-3.5 left-3.5 px-2.5 py-1 rounded bg-black/70 backdrop-blur-md border border-white/10 text-[10px] font-mono text-neutral-300 z-10">
-                          {project.id === "schooldash"
-                            ? idx === 0
-                              ? "01 · Emmanuel Mission Dashboard Mockup"
-                              : "02 · Minimalist Laptop Workspace"
-                            : `0${idx + 1}`}
-                        </div>
+
                       </div>
                     ))}
                   </div>
@@ -457,13 +441,7 @@ export default async function ProjectSlugPage({ params }: Props) {
                 }`}
                 sizes="(max-width: 1024px) 100vw, 896px"
               />
-              <div className="absolute top-3.5 left-3.5 px-2.5 py-1 rounded bg-black/70 backdrop-blur-md border border-white/10 text-[10px] font-mono text-neutral-300 z-10">
-                {project.id === "schooldash"
-                  ? "03 · Administrator Command Center Workflow"
-                  : gridImages.length === 1
-                  ? "02"
-                  : "Showcase"}
-              </div>
+
             </section>
 
             {/* 5. BENTO GRID - ROW 2 (Rendered only if more than 2 grid images exist) */}
@@ -490,13 +468,7 @@ export default async function ProjectSlugPage({ params }: Props) {
                           }`}
                           sizes="(max-width: 640px) 100vw, 480px"
                         />
-                        <div className="absolute top-3.5 left-3.5 px-2.5 py-1 rounded bg-black/70 backdrop-blur-md border border-white/10 text-[10px] font-mono text-neutral-300 z-10">
-                          {project.id === "schooldash"
-                            ? idx === 0
-                              ? "04 · Teacher Daily Desk Workflow"
-                              : "05 · Student & Guardian Portal Workflow"
-                            : `0${idx + 3}`}
-                        </div>
+
                       </div>
                     );
                   })}

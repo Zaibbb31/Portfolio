@@ -151,9 +151,6 @@ export default function TheMessPage() {
                 sizes="(max-width: 640px) 100vw, 440px"
                 className="object-cover object-center"
               />
-              <div className="absolute top-3 right-3 px-2 py-0.5 rounded-md bg-black/80 backdrop-blur-md border border-neutral-800 text-[10px] font-mono text-neutral-300 z-10 select-none">
-                {cryptoMinimal.sizeLabel}
-              </div>
             </div>
 
             {/* Vine Coin Crypto App Mockup */}
@@ -170,9 +167,6 @@ export default function TheMessPage() {
                 sizes="(max-width: 640px) 100vw, 440px"
                 className="object-cover object-center"
               />
-              <div className="absolute top-3 right-3 px-2 py-0.5 rounded-md bg-black/80 backdrop-blur-md border border-neutral-800 text-[10px] font-mono text-neutral-300 z-10 select-none">
-                {cryptoVine.sizeLabel}
-              </div>
             </div>
 
             {/* iPhone Product Perspective Mockup */}
@@ -188,9 +182,6 @@ export default function TheMessPage() {
                 sizes="(max-width: 640px) 100vw, 440px"
                 className="object-cover object-center"
               />
-              <div className="absolute top-3 right-3 px-2 py-0.5 rounded-md bg-black/80 backdrop-blur-md border border-neutral-800 text-[10px] font-mono text-neutral-300 z-10 select-none">
-                {iphoneCreation.sizeLabel}
-              </div>
             </div>
 
             {/* iPhone Minimalist Device Showcase */}
@@ -206,9 +197,6 @@ export default function TheMessPage() {
                 sizes="(max-width: 640px) 100vw, 440px"
                 className="object-cover object-center"
               />
-              <div className="absolute top-3 right-3 px-2 py-0.5 rounded-md bg-black/80 backdrop-blur-md border border-neutral-800 text-[10px] font-mono text-neutral-300 z-10 select-none">
-                {iphoneStudio.sizeLabel}
-              </div>
             </div>
           </div>
 
@@ -226,10 +214,6 @@ export default function TheMessPage() {
               sizes="(max-width: 1024px) 100vw, 896px"
               className="object-cover object-center"
             />
-            {/* Top Right Dimension Pill */}
-            <div className="absolute top-3 right-3 px-2 py-0.5 rounded-md bg-black/80 backdrop-blur-md border border-neutral-800 text-[10px] font-mono text-neutral-300 z-10 select-none">
-              {trivora.sizeLabel}
-            </div>
           </div>
 
           {/* Bento Row 2: Split Vertical Mobile (1080x1920) + Dual 16:9 Cards (1920x1080 each) */}
@@ -247,9 +231,6 @@ export default function TheMessPage() {
                 sizes="(max-width: 768px) 100vw, 380px"
                 className="object-cover object-center"
               />
-              <div className="absolute top-3 right-3 px-2 py-0.5 rounded-md bg-black/80 backdrop-blur-md border border-neutral-800 text-[10px] font-mono text-neutral-300 z-10 select-none">
-                {pehnavriMobile.sizeLabel}
-              </div>
             </div>
 
             {/* Right: Dual 16:9 Cards (Video Reel + Pehnavri Widescreen) */}
@@ -318,9 +299,7 @@ export default function TheMessPage() {
                     )}
                   </button>
 
-                  <div className="px-2 py-0.5 rounded-md bg-black/80 backdrop-blur-md border border-neutral-800 text-[10px] font-mono text-neutral-300">
-                    {videoItem.sizeLabel}
-                  </div>
+
                 </div>
               </div>
 
@@ -337,9 +316,6 @@ export default function TheMessPage() {
                   sizes="(max-width: 768px) 100vw, 500px"
                   className="object-cover object-center"
                 />
-                <div className="absolute top-3 right-3 px-2 py-0.5 rounded-md bg-black/80 backdrop-blur-md border border-neutral-800 text-[10px] font-mono text-neutral-300 z-10 select-none">
-                  {pehnavri.sizeLabel}
-                </div>
               </div>
             </div>
           </div>
@@ -359,9 +335,6 @@ export default function TheMessPage() {
                 sizes="(max-width: 640px) 100vw, 440px"
                 className="object-cover object-center"
               />
-              <div className="absolute top-3 right-3 px-2 py-0.5 rounded-md bg-black/80 backdrop-blur-md border border-neutral-800 text-[10px] font-mono text-neutral-300 z-10 select-none">
-                {editorial1.sizeLabel}
-              </div>
             </div>
 
             {/* Editorial 2 */}
@@ -377,9 +350,6 @@ export default function TheMessPage() {
                 sizes="(max-width: 640px) 100vw, 440px"
                 className="object-cover object-center"
               />
-              <div className="absolute top-3 right-3 px-2 py-0.5 rounded-md bg-black/80 backdrop-blur-md border border-neutral-800 text-[10px] font-mono text-neutral-300 z-10 select-none">
-                {editorial2.sizeLabel}
-              </div>
             </div>
           </div>
 
@@ -396,9 +366,6 @@ export default function TheMessPage() {
               sizes="(max-width: 1024px) 100vw, 896px"
               className="object-cover object-center"
             />
-            <div className="absolute top-3 right-3 px-2 py-0.5 rounded-md bg-black/80 backdrop-blur-md border border-neutral-800 text-[10px] font-mono text-neutral-300 z-10 select-none">
-              {for4.sizeLabel}
-            </div>
           </div>
         </section>
 
