@@ -322,115 +322,154 @@ export default function EditorialSidebarCaseStudy({ project }: EditorialSidebarC
 
       {/* DESKTOP ROOT WRAPPER */}
       <div className="flex min-h-screen relative w-full">
-        {/* COLLAPSED RAIL TOGGLE BUTTON (When sidebar is collapsed on desktop) */}
-        {isCollapsed && (
-          <aside
-            className={`hidden lg:flex flex-col items-center py-5 px-2 border-r sticky top-[53px] h-[calc(100vh-53px)] z-30 shrink-0 transition-all duration-300 ${
-              isLight
-                ? "bg-[#faf9f6] border-neutral-200/80"
-                : "bg-[#09090b] border-neutral-800/80"
-            } w-14`}
-          >
-            <button
-              type="button"
-              onClick={() => setIsCollapsed(false)}
-              title="Expand sidebar"
-              className={`p-2 rounded-full border transition-all hover:scale-105 cursor-pointer ${
-                isLight
-                  ? "bg-white border-neutral-300 text-neutral-700 hover:bg-neutral-100"
-                  : "bg-neutral-900 border-neutral-800 text-neutral-300 hover:bg-neutral-800"
-              }`}
-            >
-              <span className="text-xs font-mono">›</span>
-            </button>
-            <span
-              className="text-[10px] font-mono uppercase tracking-widest text-neutral-400 mt-8 [writing-mode:vertical-rl] rotate-180 select-none"
-            >
-              {brandTitle}
-            </span>
-          </aside>
-        )}
-
-        {/* DESKTOP COLLAPSIBLE SIDEBAR */}
+        {/* DESKTOP SIDEBAR (EXPANDED OR FULLY COLLAPSED TO NUMBERS RAIL) */}
         <aside
-          className={`hidden lg:flex flex-col justify-between p-6 border-r sticky top-0 h-screen z-30 shrink-0 transition-all duration-300 select-none ${
-            isCollapsed ? "hidden" : "w-64 xl:w-72"
+          className={`hidden lg:flex flex-col justify-between border-r sticky top-[53px] h-[calc(100vh-53px)] z-30 shrink-0 transition-all duration-300 select-none ${
+            isCollapsed ? "w-14 xl:w-16 px-2 py-4 items-center" : "w-64 xl:w-72 p-6"
           } ${
             isLight
               ? "bg-[#faf9f6] border-neutral-200/80 text-neutral-900"
               : "bg-[#09090b] border-neutral-800/80 text-neutral-100"
           }`}
         >
-          <div className="flex flex-col gap-6 overflow-y-auto pr-1 scrollbar-thin">
-            {/* Header: Home pill + Collapse chevron */}
-            <div className="flex items-center justify-between">
-              <Link
-                href="/#projects"
-                className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium border transition-colors cursor-pointer ${
-                  isLight
-                    ? "bg-white border-neutral-300/90 text-neutral-800 hover:bg-neutral-100 shadow-sm"
-                    : "bg-neutral-900 border-neutral-800 text-neutral-200 hover:bg-neutral-800"
-                }`}
-              >
-                <span>← Home</span>
-              </Link>
+          {isCollapsed ? (
+            /* COLLAPSED VIEW: Expand button at top, clickable section numbers in middle, home link at bottom */
+            <>
+              {/* Top: Expand Button */}
+              <div className="flex flex-col items-center gap-2 w-full shrink-0">
+                <button
+                  type="button"
+                  onClick={() => setIsCollapsed(false)}
+                  title="Expand sidebar"
+                  className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all cursor-pointer ${
+                    isLight
+                      ? "bg-white border border-neutral-300 text-neutral-700 hover:bg-neutral-100 hover:text-black shadow-2xs"
+                      : "bg-neutral-900 border border-neutral-800 text-neutral-400 hover:text-white hover:bg-neutral-800"
+                  }`}
+                  aria-label="Expand sidebar"
+                >
+                  <span className="text-xs font-mono font-bold">›</span>
+                </button>
+                <div className="w-5 h-px bg-neutral-800 my-1" />
+              </div>
 
-              {/* Collapse Sidebar Button */}
-              <button
-                type="button"
-                onClick={() => setIsCollapsed(true)}
-                title="Collapse sidebar"
-                className="p-1.5 rounded-md text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors cursor-pointer"
-              >
-                <span className="text-xs font-mono">‹</span>
-              </button>
-            </div>
-
-            {/* Brand Title & Subtitle */}
-            <div className="pt-1">
-              <h2 className="text-base font-semibold tracking-tight text-neutral-900 dark:text-white">
-                {brandTitle}
-              </h2>
-              <p className="text-xs text-neutral-500 font-normal mt-0.5">{brandSub}</p>
-            </div>
-
-            {/* Main Table of Contents List */}
-            <nav className="flex flex-col space-y-0.5">
-              {navSections.map((sec) => {
-                const isActive = activeSection === sec.id;
-                return (
-                  <button
-                    key={sec.id}
-                    type="button"
-                    onClick={() => scrollToSection(sec.id)}
-                    className={`group flex items-center gap-2.5 py-1.5 px-2.5 text-xs text-left transition-all rounded-md cursor-pointer ${
-                      isActive
-                        ? isLight
-                          ? "font-semibold text-black border-l-2 border-black pl-2"
-                          : "font-semibold text-white border-l-2 border-white pl-2"
-                        : "text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-200"
-                    }`}
-                  >
-                    <span
-                      className={`font-mono text-[11px] ${
+              {/* Middle: Clickable Section Numbers */}
+              <nav className="flex flex-col items-center gap-2.5 my-auto w-full py-2">
+                {navSections.map((sec) => {
+                  const isActive = activeSection === sec.id;
+                  return (
+                    <button
+                      key={sec.id}
+                      type="button"
+                      onClick={() => scrollToSection(sec.id)}
+                      title={`${sec.num} · ${sec.label}`}
+                      className={`w-8 h-8 rounded-lg flex items-center justify-center font-mono text-xs transition-all cursor-pointer ${
                         isActive
-                          ? isLexora ? "text-red-700 dark:text-red-400" : "text-blue-600 dark:text-blue-400"
-                          : "text-neutral-400 group-hover:text-neutral-600 dark:group-hover:text-neutral-300"
+                          ? isLight
+                            ? "bg-neutral-200 text-black font-bold shadow-2xs"
+                            : isLexora
+                            ? "bg-red-500/20 border border-red-500/50 text-red-400 font-bold shadow-[0_0_12px_rgba(239,68,68,0.3)]"
+                            : "bg-blue-500/20 border border-blue-500/50 text-blue-400 font-bold shadow-[0_0_12px_rgba(59,130,246,0.3)]"
+                          : "text-neutral-500 hover:text-neutral-200 hover:bg-neutral-800/60"
                       }`}
                     >
-                      {sec.num}
-                    </span>
-                    <span className="truncate">{sec.label}</span>
-                  </button>
-                );
-              })}
-            </nav>
-          </div>
+                      <span>{sec.num}</span>
+                    </button>
+                  );
+                })}
+              </nav>
 
-          {/* Footer note */}
-          <div className="pt-4 border-t border-neutral-200/70 dark:border-neutral-800 text-[11px] text-neutral-400 font-normal">
-            {disclaimerNote}
-          </div>
+              {/* Bottom: Back to Projects Link */}
+              <div className="shrink-0 flex flex-col items-center pt-2">
+                <Link
+                  href="/#projects"
+                  title="Back to Projects"
+                  className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all ${
+                    isLight
+                      ? "text-neutral-500 hover:text-black hover:bg-neutral-100"
+                      : "text-neutral-500 hover:text-white hover:bg-neutral-800"
+                  }`}
+                >
+                  <span className="text-xs font-mono">←</span>
+                </Link>
+              </div>
+            </>
+          ) : (
+            /* EXPANDED VIEW: Home pill + Collapse button, Brand info, TOC list with labels, and disclaimer */
+            <>
+              <div className="flex flex-col gap-6 overflow-y-auto pr-1 scrollbar-thin">
+                {/* Header: Home pill + Collapse chevron */}
+                <div className="flex items-center justify-between">
+                  <Link
+                    href="/#projects"
+                    className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium border transition-colors cursor-pointer ${
+                      isLight
+                        ? "bg-white border-neutral-300/90 text-neutral-800 hover:bg-neutral-100 shadow-sm"
+                        : "bg-neutral-900 border-neutral-800 text-neutral-200 hover:bg-neutral-800"
+                    }`}
+                  >
+                    <span>← Home</span>
+                  </Link>
+
+                  {/* Collapse Sidebar Button */}
+                  <button
+                    type="button"
+                    onClick={() => setIsCollapsed(true)}
+                    title="Collapse sidebar"
+                    className={`w-7 h-7 rounded-lg flex items-center justify-center text-neutral-400 hover:text-white hover:bg-neutral-800 transition-colors cursor-pointer`}
+                    aria-label="Collapse sidebar"
+                  >
+                    <span className="text-xs font-mono">‹</span>
+                  </button>
+                </div>
+
+                {/* Brand Title & Subtitle */}
+                <div className="pt-1">
+                  <h2 className="text-base font-semibold tracking-tight text-neutral-900 dark:text-white">
+                    {brandTitle}
+                  </h2>
+                  <p className="text-xs text-neutral-500 font-normal mt-0.5">{brandSub}</p>
+                </div>
+
+                {/* Main Table of Contents List */}
+                <nav className="flex flex-col space-y-0.5">
+                  {navSections.map((sec) => {
+                    const isActive = activeSection === sec.id;
+                    return (
+                      <button
+                        key={sec.id}
+                        type="button"
+                        onClick={() => scrollToSection(sec.id)}
+                        className={`group flex items-center gap-2.5 py-1.5 px-2.5 text-xs text-left transition-all rounded-md cursor-pointer ${
+                          isActive
+                            ? isLight
+                              ? "font-semibold text-black border-l-2 border-black pl-2"
+                              : "font-semibold text-white border-l-2 border-white pl-2"
+                            : "text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-200"
+                        }`}
+                      >
+                        <span
+                          className={`font-mono text-[11px] ${
+                            isActive
+                              ? isLexora ? "text-red-700 dark:text-red-400" : "text-blue-600 dark:text-blue-400"
+                              : "text-neutral-400 group-hover:text-neutral-600 dark:group-hover:text-neutral-300"
+                          }`}
+                        >
+                          {sec.num}
+                        </span>
+                        <span className="truncate">{sec.label}</span>
+                      </button>
+                    );
+                  })}
+                </nav>
+              </div>
+
+              {/* Footer note */}
+              <div className="pt-4 border-t border-neutral-200/70 dark:border-neutral-800 text-[11px] text-neutral-400 font-normal">
+                {disclaimerNote}
+              </div>
+            </>
+          )}
         </aside>
 
         {/* MAIN EDITORIAL CONTENT AREA */}
@@ -5322,51 +5361,43 @@ export default function EditorialSidebarCaseStudy({ project }: EditorialSidebarC
               </>
             ) : (
               <>
-                {/* Section Header */}
-                <div className="mb-8 sm:mb-10">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xs font-mono font-semibold text-blue-400">
-                      05
-                    </span>
-                    <span className="text-xs font-mono uppercase tracking-widest text-neutral-400">
-                      Module Breakdown & Psychology
-                    </span>
-                  </div>
+                {/* Section Header (Exact Match to User Screenshot: No Eyebrow, Large Instrument Serif) */}
+                <div className="mb-8 sm:mb-12">
                   <h2
-                    className={`text-3xl sm:text-4xl lg:text-5xl font-normal font-instrument leading-tight tracking-tight ${
+                    className={`text-4xl sm:text-5xl lg:text-6xl font-normal font-instrument leading-[1.08] tracking-tight ${
                       isLight ? "text-neutral-900" : "text-white"
                     }`}
                   >
-                    Module breakdown <br className="hidden sm:block" />
+                    Module breakdown <br />
                     and psychology
                   </h2>
                 </div>
 
-                {/* 3 Core Psychology Cards: Choose, Build, Play (Matching User Screenshot) */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 mb-10 sm:mb-14">
+                {/* 3 Core Psychology Cards: Choose, Build, Play (Exact Match to User Screenshot) */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 mb-12 sm:mb-16">
                   {/* Card 01 - Choose */}
                   <div
-                    className={`p-5 sm:p-6 rounded-2xl border flex flex-col justify-start transition-all duration-200 ${
+                    className={`p-6 sm:p-7 rounded-2xl sm:rounded-3xl border flex flex-col justify-start transition-all duration-200 ${
                       isLight
                         ? "bg-white border-neutral-200/90 shadow-2xs hover:shadow-xs"
                         : "bg-[#0b0e17] border-[#1c2230] hover:border-[#2a3449]"
                     }`}
                   >
                     <span
-                      className={`self-start px-3 py-0.5 sm:py-1 rounded-full text-xs font-medium font-sans mb-3 sm:mb-4 ${
+                      className={`self-start px-3 py-1 rounded-full text-xs font-medium font-sans mb-4 ${
                         isLight
                           ? "bg-neutral-100 text-neutral-700 border border-neutral-200"
-                          : "bg-[#181d29] text-neutral-300 border border-[#263043]"
+                          : "bg-[#141a26] text-neutral-300 border border-[#222c3d]"
                       }`}
                     >
                       Choose
                     </span>
                     <h3
-                      className={`text-lg sm:text-xl font-bold font-sans tracking-tight mb-2 sm:mb-2.5 ${
+                      className={`text-xl sm:text-2xl font-bold font-sans tracking-tight mb-2.5 ${
                         isLight ? "text-neutral-900" : "text-white"
                       }`}
                     >
-                      “Is this for me?”
+                      &ldquo;Is this for me?&rdquo;
                     </h3>
                     <p
                       className={`text-xs sm:text-sm leading-relaxed ${
@@ -5379,60 +5410,60 @@ export default function EditorialSidebarCaseStudy({ project }: EditorialSidebarC
 
                   {/* Card 02 - Build */}
                   <div
-                    className={`p-5 sm:p-6 rounded-2xl border flex flex-col justify-start transition-all duration-200 ${
+                    className={`p-6 sm:p-7 rounded-2xl sm:rounded-3xl border flex flex-col justify-start transition-all duration-200 ${
                       isLight
                         ? "bg-white border-neutral-200/90 shadow-2xs hover:shadow-xs"
                         : "bg-[#0b0e17] border-[#1c2230] hover:border-[#2a3449]"
                     }`}
                   >
                     <span
-                      className={`self-start px-3 py-0.5 sm:py-1 rounded-full text-xs font-medium font-sans mb-3 sm:mb-4 ${
+                      className={`self-start px-3 py-1 rounded-full text-xs font-medium font-sans mb-4 ${
                         isLight
                           ? "bg-neutral-100 text-neutral-700 border border-neutral-200"
-                          : "bg-[#181d29] text-neutral-300 border border-[#263043]"
+                          : "bg-[#141a26] text-neutral-300 border border-[#222c3d]"
                       }`}
                     >
                       Build
                     </span>
                     <h3
-                      className={`text-lg sm:text-xl font-bold font-sans tracking-tight mb-2 sm:mb-2.5 ${
+                      className={`text-xl sm:text-2xl font-bold font-sans tracking-tight mb-2.5 ${
                         isLight ? "text-neutral-900" : "text-white"
                       }`}
                     >
-                      “Am I getting closer?”
+                      &ldquo;Am I getting closer?&rdquo;
                     </h3>
                     <p
                       className={`text-xs sm:text-sm leading-relaxed ${
                         isLight ? "text-neutral-600" : "text-neutral-400"
                       }`}
                     >
-                      “1 of 2 payments” shows the goal is underway.
+                      &ldquo;1 of 2 payments&rdquo; shows the goal is underway.
                     </p>
                   </div>
 
                   {/* Card 03 - Play */}
                   <div
-                    className={`p-5 sm:p-6 rounded-2xl border flex flex-col justify-start transition-all duration-200 ${
+                    className={`p-6 sm:p-7 rounded-2xl sm:rounded-3xl border flex flex-col justify-start transition-all duration-200 ${
                       isLight
                         ? "bg-white border-neutral-200/90 shadow-2xs hover:shadow-xs"
                         : "bg-[#0b0e17] border-[#1c2230] hover:border-[#2a3449]"
                     }`}
                   >
                     <span
-                      className={`self-start px-3 py-0.5 sm:py-1 rounded-full text-xs font-medium font-sans mb-3 sm:mb-4 ${
+                      className={`self-start px-3 py-1 rounded-full text-xs font-medium font-sans mb-4 ${
                         isLight
                           ? "bg-neutral-100 text-neutral-700 border border-neutral-200"
-                          : "bg-[#181d29] text-neutral-300 border border-[#263043]"
+                          : "bg-[#141a26] text-neutral-300 border border-[#222c3d]"
                       }`}
                     >
                       Play
                     </span>
                     <h3
-                      className={`text-lg sm:text-xl font-bold font-sans tracking-tight mb-2 sm:mb-2.5 ${
+                      className={`text-xl sm:text-2xl font-bold font-sans tracking-tight mb-2.5 ${
                         isLight ? "text-neutral-900" : "text-white"
                       }`}
                     >
-                      “What's next?”
+                      &ldquo;What&apos;s next?&rdquo;
                     </h3>
                     <p
                       className={`text-xs sm:text-sm leading-relaxed ${
@@ -5444,69 +5475,88 @@ export default function EditorialSidebarCaseStudy({ project }: EditorialSidebarC
                   </div>
                 </div>
 
-                {/* User Experience Loop Container (Matching User Screenshot) */}
-                <div className={`p-4 sm:p-7 rounded-2xl sm:rounded-3xl border space-y-6 sm:space-y-7 ${
-                  isLight ? "bg-neutral-50/70 border-neutral-200/90" : "bg-[#0b0e17]/80 border-[#1c2230]"
-                }`}>
-                  <div className="flex items-center gap-2 sm:gap-4 overflow-x-auto pb-2 scrollbar-none snap-x">
+                {/* Habit Loop Row (Exact Match to User Screenshot: Open Layout on Dark Background, Inline Arrows) */}
+                <div className="mb-12 sm:mb-16">
+                  <div className="flex items-start gap-4 sm:gap-6 lg:gap-8 overflow-x-auto pb-4 pt-1 scrollbar-none snap-x">
                     {/* Step 1: Home reminder */}
                     <div className="flex flex-col items-start shrink-0 snap-start">
-                      <span className={`text-sm sm:text-base lg:text-lg font-bold tracking-tight whitespace-nowrap ${isLight ? "text-neutral-900" : "text-white"}`}>
-                        Home reminder
-                      </span>
-                      <span className={`mt-1.5 px-2 sm:px-2.5 py-0.5 rounded-full text-[10px] sm:text-[11px] font-mono uppercase tracking-wider font-semibold ${
-                        isLight ? "bg-white text-neutral-600 border border-neutral-200 shadow-2xs" : "bg-[#181d29] text-neutral-300 border border-[#263043]"
+                      <div className="flex items-center gap-4 sm:gap-6 lg:gap-8">
+                        <span className={`text-base sm:text-lg lg:text-xl font-bold tracking-tight whitespace-nowrap ${
+                          isLight ? "text-neutral-900" : "text-white"
+                        }`}>
+                          Home reminder
+                        </span>
+                        <span className="text-neutral-500 text-base sm:text-lg select-none">
+                          →
+                        </span>
+                      </div>
+                      <span className={`mt-2 px-3 py-0.5 rounded-full text-[11px] sm:text-xs font-semibold ${
+                        isLight
+                          ? "bg-neutral-100 text-neutral-700 border border-neutral-300"
+                          : "bg-[#141a26] text-neutral-300 border border-[#222c3d]"
                       }`}>
                         Trigger
                       </span>
                     </div>
 
-                    {/* Arrow */}
-                    <span className={`select-none text-base sm:text-xl shrink-0 self-center mb-3 sm:mb-4 px-1 ${isLight ? "text-neutral-300" : "text-neutral-600"}`}>
-                      →
-                    </span>
-
                     {/* Step 2: Eligible payment */}
                     <div className="flex flex-col items-start shrink-0 snap-start">
-                      <span className={`text-sm sm:text-base lg:text-lg font-bold tracking-tight whitespace-nowrap ${isLight ? "text-neutral-900" : "text-white"}`}>
-                        Eligible payment
-                      </span>
-                      <span className={`mt-1.5 px-2 sm:px-2.5 py-0.5 rounded-full text-[10px] sm:text-[11px] font-mono uppercase tracking-wider font-semibold ${
-                        isLight ? "bg-white text-neutral-600 border border-neutral-200 shadow-2xs" : "bg-[#181d29] text-neutral-300 border border-[#263043]"
+                      <div className="flex items-center gap-4 sm:gap-6 lg:gap-8">
+                        <span className={`text-base sm:text-lg lg:text-xl font-bold tracking-tight whitespace-nowrap ${
+                          isLight ? "text-neutral-900" : "text-white"
+                        }`}>
+                          Eligible payment
+                        </span>
+                        <span className="text-neutral-500 text-base sm:text-lg select-none">
+                          →
+                        </span>
+                      </div>
+                      <span className={`mt-2 px-3 py-0.5 rounded-full text-[11px] sm:text-xs font-semibold ${
+                        isLight
+                          ? "bg-neutral-100 text-neutral-700 border border-neutral-300"
+                          : "bg-[#141a26] text-neutral-300 border border-[#222c3d]"
                       }`}>
                         Action
                       </span>
                     </div>
 
-                    {/* Arrow */}
-                    <span className={`select-none text-base sm:text-xl shrink-0 self-center mb-3 sm:mb-4 px-1 ${isLight ? "text-neutral-300" : "text-neutral-600"}`}>
-                      →
-                    </span>
-
                     {/* Step 3: Visible progress */}
                     <div className="flex flex-col items-start shrink-0 snap-start">
-                      <span className={`text-sm sm:text-base lg:text-lg font-bold tracking-tight whitespace-nowrap ${isLight ? "text-neutral-900" : "text-white"}`}>
-                        Visible progress
-                      </span>
-                      <span className={`mt-1.5 px-2 sm:px-2.5 py-0.5 rounded-full text-[10px] sm:text-[11px] font-mono uppercase tracking-wider font-semibold ${
-                        isLight ? "bg-white text-neutral-600 border border-neutral-200 shadow-2xs" : "bg-[#181d29] text-neutral-300 border border-[#263043]"
+                      <div className="flex items-center gap-4 sm:gap-6 lg:gap-8">
+                        <span className={`text-base sm:text-lg lg:text-xl font-bold tracking-tight whitespace-nowrap ${
+                          isLight ? "text-neutral-900" : "text-white"
+                        }`}>
+                          Visible progress
+                        </span>
+                        <span className="text-neutral-500 text-base sm:text-lg select-none">
+                          →
+                        </span>
+                      </div>
+                      <span className={`mt-2 px-3 py-0.5 rounded-full text-[11px] sm:text-xs font-semibold ${
+                        isLight
+                          ? "bg-neutral-100 text-neutral-700 border border-neutral-300"
+                          : "bg-[#141a26] text-neutral-300 border border-[#222c3d]"
                       }`}>
                         Reward
                       </span>
                     </div>
 
-                    {/* Arrow */}
-                    <span className={`select-none text-base sm:text-xl shrink-0 self-center mb-3 sm:mb-4 px-1 ${isLight ? "text-neutral-300" : "text-neutral-600"}`}>
-                      →
-                    </span>
-
                     {/* Step 4: Choose the next reward */}
                     <div className="flex flex-col items-start shrink-0 snap-start">
-                      <span className={`text-sm sm:text-base lg:text-lg font-bold tracking-tight whitespace-nowrap flex items-center gap-1 ${isLight ? "text-neutral-900" : "text-white"}`}>
-                        Choose the next reward <span className="text-xs text-neutral-400">↺</span>
-                      </span>
-                      <span className={`mt-1.5 px-2 sm:px-2.5 py-0.5 rounded-full text-[10px] sm:text-[11px] font-mono uppercase tracking-wider font-semibold ${
-                        isLight ? "bg-white text-neutral-600 border border-neutral-200 shadow-2xs" : "bg-[#181d29] text-neutral-300 border border-[#263043]"
+                      <div className="flex items-center gap-2">
+                        <span className={`text-base sm:text-lg lg:text-xl font-bold tracking-tight whitespace-nowrap ${
+                          isLight ? "text-neutral-900" : "text-white"
+                        }`}>
+                          Choose the next reward
+                        </span>
+                        <span className="text-sm sm:text-base text-neutral-400 select-none">
+                          ↺
+                        </span>
+                      </div>
+                      <span className={`mt-2 px-3 py-0.5 rounded-full text-[11px] sm:text-xs font-semibold ${
+                        isLight
+                          ? "bg-neutral-100 text-neutral-700 border border-neutral-300"
+                          : "bg-[#141a26] text-neutral-300 border border-[#222c3d]"
                       }`}>
                         Investment
                       </span>
@@ -5514,17 +5564,15 @@ export default function EditorialSidebarCaseStudy({ project }: EditorialSidebarC
                   </div>
                 </div>
 
-                {/* Closing Design Rationale Callout with Cyan Accent Line (Matching User Screenshot) */}
-                <div className="mt-8 sm:mt-12 pt-2">
-                  <div className="pl-4 sm:pl-5 border-l-2 border-cyan-400 py-0.5 max-w-3xl">
-                    <p
-                      className={`text-xs sm:text-sm lg:text-base leading-relaxed ${
-                        isLight ? "text-neutral-800" : "text-neutral-200"
-                      }`}
-                    >
-                      The reminder should prompt, not pressure. The payment should be one the user already intends to make. That's the loop I'd want to test.
-                    </p>
-                  </div>
+                {/* Closing Callout with Cyan Accent Line (Exact Match to User Screenshot) */}
+                <div className="pl-4 sm:pl-5 border-l-4 border-cyan-400 py-1 max-w-3xl">
+                  <p
+                    className={`text-sm sm:text-base lg:text-lg leading-relaxed font-normal ${
+                      isLight ? "text-neutral-800" : "text-neutral-200"
+                    }`}
+                  >
+                    The reminder should prompt, not pressure. The payment should be one the user already intends to make. That&apos;s the loop I&apos;d want to test.
+                  </p>
                 </div>
               </>
             )}
@@ -5715,154 +5763,139 @@ export default function EditorialSidebarCaseStudy({ project }: EditorialSidebarC
               </>
             ) : (
               <>
-                {/* Header (Matching User Screenshot) */}
-                <div className="mb-6 sm:mb-8">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xs font-mono font-semibold text-blue-400">
-                      06
-                    </span>
-                    <span className="text-xs font-mono uppercase tracking-widest text-neutral-400">
-                      Outcomes
-                    </span>
-                  </div>
+                {/* Header (Exact Match to User Screenshot: No Eyebrow, Large Instrument Serif) */}
+                <div className="mb-8 sm:mb-10">
                   <h2
-                    className={`text-3xl sm:text-4xl lg:text-5xl font-normal font-instrument leading-tight tracking-tight ${
+                    className={`text-4xl sm:text-5xl lg:text-6xl font-normal font-instrument leading-[1.08] tracking-tight ${
                       isLight ? "text-neutral-900" : "text-white"
                     }`}
                   >
-                    Outcomes: <br className="hidden sm:block" />
+                    Outcomes: <br />
                     hypotheses, not results
                   </h2>
                   <p
-                    className={`text-xs sm:text-sm lg:text-base leading-relaxed max-w-2xl mt-3 ${
-                      isLight ? "text-neutral-600" : "text-neutral-400"
+                    className={`text-sm sm:text-base leading-relaxed max-w-2xl mt-4 sm:mt-5 ${
+                      isLight ? "text-neutral-600" : "text-neutral-300"
                     }`}
                   >
                     Relevant choices should lift selection and redemption. Visible progress may lift repeat payments and D7/D14 retention. Tested against the current scratch-card flow.
                   </p>
                 </div>
 
-                {/* Metrics Table (Matching User Screenshot) */}
-                <div className="w-full overflow-x-auto mt-6 sm:mt-8">
-                  <table className="w-full text-left border-collapse min-w-[340px] sm:min-w-[560px]">
+                {/* Metrics Table (Exact Match to User Screenshot) */}
+                <div className="w-full overflow-x-auto mt-6 sm:mt-10">
+                  <table className="w-full text-left border-collapse min-w-[500px]">
                     <thead>
-                      <tr
-                        className={`border-b text-[10px] sm:text-[11px] font-mono uppercase tracking-wider ${
-                          isLight ? "border-neutral-200 text-neutral-500" : "border-neutral-800 text-neutral-400"
-                        }`}
-                      >
-                        <th className="py-2.5 sm:py-3.5 pr-3 sm:pr-6 font-semibold w-[32%] sm:w-[28%]">Metric</th>
-                        <th className="py-2.5 sm:py-3.5 px-2 sm:px-6 font-semibold w-[48%] sm:w-[52%]">Question</th>
-                        <th className="py-2.5 sm:py-3.5 pl-2 sm:pl-6 font-semibold w-[20%] text-right sm:text-center">Want</th>
+                      <tr className="border-b border-neutral-800 text-xs sm:text-sm text-neutral-400 font-normal">
+                        <th className="pb-3 pr-4 font-normal w-[26%] sm:w-[24%]">Metric</th>
+                        <th className="pb-3 px-4 font-normal w-[56%] sm:w-[62%]">Question</th>
+                        <th className="pb-3 pl-4 font-normal w-[18%] sm:w-[14%] text-right">Want</th>
                       </tr>
                     </thead>
-                    <tbody
-                      className={`divide-y ${
-                        isLight ? "divide-neutral-200/80" : "divide-neutral-800/80"
-                      }`}
-                    >
+                    <tbody className="divide-y divide-neutral-800/60">
                       {/* Row 1: Repeat payments */}
-                      <tr className="transition-colors hover:bg-neutral-50/50 dark:hover:bg-neutral-900/30">
-                        <td className={`py-3 sm:py-4 pr-3 sm:pr-6 font-bold text-xs sm:text-sm lg:text-base tracking-tight ${isLight ? "text-neutral-900" : "text-white"}`}>
+                      <tr className="transition-colors hover:bg-neutral-900/20">
+                        <td className={`py-4 pr-4 font-bold text-sm sm:text-base tracking-tight ${
+                          isLight ? "text-neutral-900" : "text-white"
+                        }`}>
                           Repeat payments
                         </td>
-                        <td className={`py-3 sm:py-4 px-2 sm:px-6 text-[11px] sm:text-xs lg:text-sm leading-snug ${isLight ? "text-neutral-600" : "text-neutral-300"}`}>
+                        <td className="py-4 px-4 text-xs sm:text-sm text-neutral-300 leading-relaxed">
                           Do people come back to pay with Paytm?
                         </td>
-                        <td className="py-3 sm:py-4 pl-2 sm:pl-6 text-right sm:text-center">
-                          <span className="inline-flex items-center justify-center px-2.5 sm:px-3.5 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold tracking-wide bg-[#0d2818] text-[#4ade80] border border-[#1b4332]">
+                        <td className="py-4 pl-4 text-right">
+                          <span className="inline-flex items-center justify-center px-3.5 py-0.5 rounded-full text-xs font-semibold tracking-wide bg-[#0a2318] text-[#34d399] border border-[#164e33]">
                             Up
                           </span>
                         </td>
                       </tr>
 
                       {/* Row 2: D7 / D14 retention */}
-                      <tr className="transition-colors hover:bg-neutral-50/50 dark:hover:bg-neutral-900/30">
-                        <td className={`py-3 sm:py-4 pr-3 sm:pr-6 font-bold text-xs sm:text-sm lg:text-base tracking-tight ${isLight ? "text-neutral-900" : "text-white"}`}>
+                      <tr className="transition-colors hover:bg-neutral-900/20">
+                        <td className={`py-4 pr-4 font-bold text-sm sm:text-base tracking-tight ${
+                          isLight ? "text-neutral-900" : "text-white"
+                        }`}>
                           D7 / D14 retention
                         </td>
-                        <td className={`py-3 sm:py-4 px-2 sm:px-6 text-[11px] sm:text-xs lg:text-sm leading-snug ${isLight ? "text-neutral-600" : "text-neutral-300"}`}>
+                        <td className="py-4 px-4 text-xs sm:text-sm text-neutral-300 leading-relaxed">
                           Does the test group stay longer?
                         </td>
-                        <td className="py-3 sm:py-4 pl-2 sm:pl-6 text-right sm:text-center">
-                          <span className="inline-flex items-center justify-center px-2.5 sm:px-3.5 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold tracking-wide bg-[#0d2818] text-[#4ade80] border border-[#1b4332]">
+                        <td className="py-4 pl-4 text-right">
+                          <span className="inline-flex items-center justify-center px-3.5 py-0.5 rounded-full text-xs font-semibold tracking-wide bg-[#0a2318] text-[#34d399] border border-[#164e33]">
                             Up
                           </span>
                         </td>
                       </tr>
 
                       {/* Row 3: Selection */}
-                      <tr className="transition-colors hover:bg-neutral-50/50 dark:hover:bg-neutral-900/30">
-                        <td className={`py-3 sm:py-4 pr-3 sm:pr-6 font-bold text-xs sm:text-sm lg:text-base tracking-tight ${isLight ? "text-neutral-900" : "text-white"}`}>
+                      <tr className="transition-colors hover:bg-neutral-900/20">
+                        <td className={`py-4 pr-4 font-bold text-sm sm:text-base tracking-tight ${
+                          isLight ? "text-neutral-900" : "text-white"
+                        }`}>
                           Selection
                         </td>
-                        <td className={`py-3 sm:py-4 px-2 sm:px-6 text-[11px] sm:text-xs lg:text-sm leading-snug ${isLight ? "text-neutral-600" : "text-neutral-300"}`}>
+                        <td className="py-4 px-4 text-xs sm:text-sm text-neutral-300 leading-relaxed">
                           After paying, do people choose a reward?
                         </td>
-                        <td className="py-3 sm:py-4 pl-2 sm:pl-6 text-right sm:text-center">
-                          <span className="inline-flex items-center justify-center px-2.5 sm:px-3.5 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold tracking-wide bg-[#0d2818] text-[#4ade80] border border-[#1b4332]">
+                        <td className="py-4 pl-4 text-right">
+                          <span className="inline-flex items-center justify-center px-3.5 py-0.5 rounded-full text-xs font-semibold tracking-wide bg-[#0a2318] text-[#34d399] border border-[#164e33]">
                             Up
                           </span>
                         </td>
                       </tr>
 
                       {/* Row 4: Redemption */}
-                      <tr className="transition-colors hover:bg-neutral-50/50 dark:hover:bg-neutral-900/30">
-                        <td className={`py-3 sm:py-4 pr-3 sm:pr-6 font-bold text-xs sm:text-sm lg:text-base tracking-tight ${isLight ? "text-neutral-900" : "text-white"}`}>
+                      <tr className="transition-colors hover:bg-neutral-900/20">
+                        <td className={`py-4 pr-4 font-bold text-sm sm:text-base tracking-tight ${
+                          isLight ? "text-neutral-900" : "text-white"
+                        }`}>
                           Redemption
                         </td>
-                        <td className={`py-3 sm:py-4 px-2 sm:px-6 text-[11px] sm:text-xs lg:text-sm leading-snug ${isLight ? "text-neutral-600" : "text-neutral-300"}`}>
+                        <td className="py-4 px-4 text-xs sm:text-sm text-neutral-300 leading-relaxed">
                           Do they use the reward they chose?
                         </td>
-                        <td className="py-3 sm:py-4 pl-2 sm:pl-6 text-right sm:text-center">
-                          <span className="inline-flex items-center justify-center px-2.5 sm:px-3.5 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold tracking-wide bg-[#0d2818] text-[#4ade80] border border-[#1b4332]">
+                        <td className="py-4 pl-4 text-right">
+                          <span className="inline-flex items-center justify-center px-3.5 py-0.5 rounded-full text-xs font-semibold tracking-wide bg-[#0a2318] text-[#34d399] border border-[#164e33]">
                             Up
                           </span>
                         </td>
                       </tr>
 
                       {/* Row 5: Payment completion */}
-                      <tr className="transition-colors hover:bg-neutral-50/50 dark:hover:bg-neutral-900/30">
-                        <td className={`py-3 sm:py-4 pr-3 sm:pr-6 font-bold text-xs sm:text-sm lg:text-base tracking-tight ${isLight ? "text-neutral-900" : "text-white"}`}>
+                      <tr className="transition-colors hover:bg-neutral-900/20">
+                        <td className={`py-4 pr-4 font-bold text-sm sm:text-base tracking-tight ${
+                          isLight ? "text-neutral-900" : "text-white"
+                        }`}>
                           Payment completion
                         </td>
-                        <td className={`py-3 sm:py-4 px-2 sm:px-6 text-[11px] sm:text-xs lg:text-sm leading-snug ${isLight ? "text-neutral-600" : "text-neutral-300"}`}>
+                        <td className="py-4 px-4 text-xs sm:text-sm text-neutral-300 leading-relaxed">
                           Guardrail: rewards must never slow paying.
                         </td>
-                        <td className="py-3 sm:py-4 pl-2 sm:pl-6 text-right sm:text-center">
-                          <span className="inline-flex items-center justify-center px-2.5 sm:px-3.5 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold tracking-wide bg-[#1e2330] text-neutral-300 border border-neutral-700">
+                        <td className="py-4 pl-4 text-right">
+                          <span className="inline-flex items-center justify-center px-3.5 py-0.5 rounded-full text-xs font-semibold tracking-wide bg-[#161c28] text-neutral-300 border border-[#263143]">
                             Hold
                           </span>
                         </td>
                       </tr>
 
                       {/* Row 6: Reward cost */}
-                      <tr className="transition-colors hover:bg-neutral-50/50 dark:hover:bg-neutral-900/30">
-                        <td className={`py-3 sm:py-4 pr-3 sm:pr-6 font-bold text-xs sm:text-sm lg:text-base tracking-tight ${isLight ? "text-neutral-900" : "text-white"}`}>
+                      <tr className="transition-colors hover:bg-neutral-900/20">
+                        <td className={`py-4 pr-4 font-bold text-sm sm:text-base tracking-tight ${
+                          isLight ? "text-neutral-900" : "text-white"
+                        }`}>
                           Reward cost
                         </td>
-                        <td className={`py-3 sm:py-4 px-2 sm:px-6 text-[11px] sm:text-xs lg:text-sm leading-snug ${isLight ? "text-neutral-600" : "text-neutral-300"}`}>
+                        <td className="py-4 px-4 text-xs sm:text-sm text-neutral-300 leading-relaxed">
                           Is the lift worth what the rewards cost?
                         </td>
-                        <td className="py-3 sm:py-4 pl-2 sm:pl-6 text-right sm:text-center">
-                          <span className="inline-flex items-center justify-center px-2.5 sm:px-3.5 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold tracking-wide bg-[#2a1708] text-[#f59e0b] border border-[#78350f]">
+                        <td className="py-4 pl-4 text-right">
+                          <span className="inline-flex items-center justify-center px-3.5 py-0.5 rounded-full text-xs font-semibold tracking-wide bg-[#241705] text-[#fbbf24] border border-[#52330a]">
                             Watch
                           </span>
                         </td>
                       </tr>
                     </tbody>
                   </table>
-                </div>
-
-                {/* Closing Paragraph */}
-                <div className="mt-8 sm:mt-12 max-w-3xl">
-                  <p
-                    className={`text-xs sm:text-sm lg:text-base leading-relaxed ${
-                      isLight ? "text-neutral-700" : "text-neutral-300"
-                    }`}
-                  >
-                    The success of Paytm Rewards shouldn't be measured by how many features it offers, but by how effectively it reduces the friction of reward earning. I'd want to validate whether users pick more freely, understand their milestone progress better, and feel more in control.
-                  </p>
                 </div>
               </>
             )}
