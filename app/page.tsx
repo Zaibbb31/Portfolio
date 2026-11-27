@@ -1,8 +1,15 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useSyncExternalStore } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import {
+  type ProjectCategory,
+  getServerProjectCategory,
+  getStoredProjectCategory,
+  setStoredProjectCategory,
+  subscribeProjectCategory,
+} from "@/lib/projectCategory";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
   Search01Icon,
@@ -76,7 +83,18 @@ const EXPERIENCES: ExperienceItem[] = [
 ];
 
 export default function Home() {
-  const [projectCategory, setProjectCategory] = useState<"ui-screens" | "case-study">("ui-screens");
+  const projectCategory = useSyncExternalStore(
+    subscribeProjectCategory,
+    getStoredProjectCategory,
+    getServerProjectCategory
+  );
+  const setProjectCategory = (category: ProjectCategory) => {
+    setStoredProjectCategory(category);
+  };
+  const handleProjectCardClick = () => {
+    playClickSound();
+    setStoredProjectCategory(projectCategory);
+  };
   const [soundEnabled, setSoundEnabled] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [isAvailable, setIsAvailable] = useState(true);
@@ -613,8 +631,24 @@ export default function Home() {
               Projects
             </h2>
 
-            {/* Filter Pills: UI Screens & Case Study */}
+            {/* Filter Pills: Case Studies & UI Screens */}
             <div className="flex items-center gap-2.5">
+              <button
+                type="button"
+                onClick={() => {
+                  playClickSound();
+                  setProjectCategory("case-study");
+                }}
+                className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs sm:text-[13px] font-medium transition-all duration-200 cursor-pointer ${
+                  projectCategory === "case-study"
+                    ? "bg-white text-black font-semibold shadow-sm"
+                    : "bg-neutral-900 border border-neutral-800 text-neutral-400 hover:text-white hover:border-neutral-700 hover:bg-neutral-800/80"
+                }`}
+                aria-pressed={projectCategory === "case-study"}
+              >
+                <span>Case Studies</span>
+              </button>
+
               <button
                 type="button"
                 onClick={() => {
@@ -629,22 +663,6 @@ export default function Home() {
                 aria-pressed={projectCategory === "ui-screens"}
               >
                 <span>UI Screens</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => {
-                  playClickSound();
-                  setProjectCategory("case-study");
-                }}
-                className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs sm:text-[13px] font-medium transition-all duration-200 cursor-pointer ${
-                  projectCategory === "case-study"
-                    ? "bg-white text-black font-semibold shadow-sm"
-                    : "bg-neutral-900 border border-neutral-800 text-neutral-400 hover:text-white hover:border-neutral-700 hover:bg-neutral-800/80"
-                }`}
-                aria-pressed={projectCategory === "case-study"}
-              >
-                <span>Case Study</span>
               </button>
 
             </div>
@@ -755,7 +773,7 @@ export default function Home() {
                 {/* Preview Image Box - Clickable link to slug page */}
                 <Link
                   href={`/projects/${project.id}`}
-                  onClick={playClickSound}
+                  onClick={handleProjectCardClick}
                   className="relative w-full aspect-[16/10] rounded-xl overflow-hidden border border-neutral-800 bg-[#09090b] mb-3.5 flex items-center justify-center group-hover:border-neutral-600 transition-colors cursor-pointer"
                   aria-label={`View ${project.title}`}
                 >
@@ -772,7 +790,7 @@ export default function Home() {
                 <div className="flex items-center justify-between gap-2">
                   <Link
                     href={`/projects/${project.id}`}
-                    onClick={playClickSound}
+                    onClick={handleProjectCardClick}
                     className="hover:text-neutral-300 transition-colors group/title"
                   >
                     <h3 className="text-base sm:text-lg font-normal font-instrument text-white tracking-tight group-hover/title:underline underline-offset-4">
@@ -783,7 +801,7 @@ export default function Home() {
                   <div className="flex items-center gap-2 flex-shrink-0">
                     <Link
                       href={`/projects/${project.id}`}
-                      onClick={playClickSound}
+                      onClick={handleProjectCardClick}
                       className="inline-flex items-center justify-center px-3.5 py-1.5 rounded-full bg-neutral-900 border border-neutral-800 hover:border-neutral-600 hover:bg-neutral-800 text-neutral-300 hover:text-white text-xs font-medium transition-all duration-150 active:scale-95 cursor-pointer"
                     >
                       <span>{project.buttonLabel || "View Screens"}</span>
@@ -818,7 +836,7 @@ export default function Home() {
                 {/* Short description */}
                 <Link
                   href={`/projects/${project.id}`}
-                  onClick={playClickSound}
+                  onClick={handleProjectCardClick}
                   className="text-xs text-neutral-400 hover:text-neutral-300 font-normal line-clamp-1 mt-1.5 transition-colors"
                 >
                   {project.description}

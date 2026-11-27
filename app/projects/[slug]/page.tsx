@@ -5,6 +5,7 @@ import { PROJECTS } from "../../data/projects";
 import Footer from "../../components/Footer";
 import CopyEmailButton from "../../components/CopyEmailButton";
 import EditorialSidebarCaseStudy from "../../components/EditorialSidebarCaseStudy";
+import ProjectCategoryPersistence from "../../components/ProjectCategoryPersistence";
 
 interface Props {
   params: Promise<{
@@ -107,6 +108,7 @@ export default async function ProjectSlugPage({ params }: Props) {
 
   return (
     <div className="relative min-h-screen w-full bg-[#000000] text-[#ededed] font-sans selection:bg-neutral-800 selection:text-white">
+      <ProjectCategoryPersistence projectId={project.id} />
       {/* MAIN CONTAINER: exact max-w-4xl with vertical borders matching portfolio */}
       <main className="w-full max-w-4xl mx-auto border-x border-neutral-800/80 bg-[#000000] min-h-screen flex flex-col relative">
         

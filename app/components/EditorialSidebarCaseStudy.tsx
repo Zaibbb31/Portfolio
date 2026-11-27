@@ -6,6 +6,7 @@ import Image from "next/image";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Search01Icon } from "@hugeicons/core-free-icons";
 import { Project } from "@/app/data/projects";
+import ProjectCategoryPersistence from "./ProjectCategoryPersistence";
 
 interface EditorialSidebarCaseStudyProps {
   project: Project;
@@ -185,6 +186,7 @@ export default function EditorialSidebarCaseStudy({ project }: EditorialSidebarC
 
   return (
     <div className="min-h-screen w-full font-sans bg-[#000000] text-[#ededed] selection:bg-neutral-800 selection:text-white">
+      <ProjectCategoryPersistence projectId={project.id} />
       {/* 1. TOP HEADER / NAVBAR (Exact same design and structure as home page) */}
       <header className="sticky top-0 z-40 w-full px-5 sm:px-8 py-3 flex items-center justify-between border-b backdrop-blur-md select-none transition-colors duration-300 border-neutral-800/80 bg-[#000000]/90">
         {/* Logo brand on left */}
