@@ -674,7 +674,7 @@ export default function Home() {
                 ? [
                     {
                       id: "lexora",
-                      title: "Lexora",
+                      title: "Lexora (Actual UI Screens Not Displayed Due to NDA)",
                       description: "End-to-end legal support for banking, loan settlement, trademark, cyber law, and compliance, redesigned into a seamless mobile experience.",
                       image: "/lexora/Lexora Legal App Promo.png",
                       tags: [
@@ -787,13 +787,13 @@ export default function Home() {
                 </Link>
 
                 {/* Title & Action Buttons */}
-                <div className="flex items-center justify-between gap-2">
+                <div className="flex items-start justify-between gap-3">
                   <Link
                     href={`/projects/${project.id}`}
                     onClick={handleProjectCardClick}
-                    className="hover:text-neutral-300 transition-colors group/title"
+                    className="min-w-0 hover:text-neutral-300 transition-colors group/title"
                   >
-                    <h3 className="text-base sm:text-lg font-normal font-instrument text-white tracking-tight group-hover/title:underline underline-offset-4">
+                    <h3 className="text-base sm:text-lg font-normal font-instrument text-white tracking-tight leading-snug group-hover/title:underline underline-offset-4">
                       {project.title}
                     </h3>
                   </Link>
