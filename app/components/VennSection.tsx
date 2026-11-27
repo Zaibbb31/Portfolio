@@ -146,7 +146,7 @@ export default function VennSection({ onBookCall }: VennSectionProps) {
 
       {/* Resume link button */}
       <a
-        href="/Zaib_UI-UX_Designer_Resume copy.pdf"
+        href="/Zaib_UI_UX_Designer_Resume.pdf"
         target="_blank"
         rel="noopener noreferrer"
         onClick={onBookCall}

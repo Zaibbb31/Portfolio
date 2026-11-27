@@ -216,7 +216,7 @@ export default function Home() {
     { title: "Activity", category: "Section", href: "#activity" },
     { title: "Featured Projects", category: "Section", href: "#projects" },
     { title: "The Mess. (Creative Archive)", category: "Archive", href: "/the-mess" },
-    { title: "View Resume (PDF)", category: "Document", href: "/Zaib_UI-UX_Designer_Resume copy.pdf", isExternal: true },
+    { title: "View Resume (PDF)", category: "Document", href: "/Zaib_UI_UX_Designer_Resume.pdf", isExternal: true },
     { title: "Send Email (zaib.work31@gmail.com)", category: "Contact", href: "mailto:zaib.work31@gmail.com" },
     ...PROJECTS.map((p) => ({
       title: p.title,
@@ -379,7 +379,7 @@ export default function Home() {
               
               {/* View resume */}
               <a
-                href="/Zaib_UI-UX_Designer_Resume copy.pdf"
+                href="/Zaib_UI_UX_Designer_Resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={playClickSound}
@@ -454,7 +454,7 @@ export default function Home() {
             
             {/* Resume button */}
             <a
-              href="/Zaib_UI-UX_Designer_Resume copy.pdf"
+              href="/Zaib_UI_UX_Designer_Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
               onClick={playClickSound}

@@ -212,7 +212,7 @@ export default async function ProjectSlugPage({ params }: Props) {
             <div className="flex flex-wrap items-center gap-3 pt-6 mt-6 border-t border-neutral-800/80">
               {/* View resume button */}
               <a
-                href="/Zaib_UI-UX_Designer_Resume copy.pdf"
+                href="/Zaib_UI_UX_Designer_Resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white text-black hover:bg-neutral-200 text-xs sm:text-sm font-semibold transition-all duration-150 shadow-sm active:scale-95 cursor-pointer"
